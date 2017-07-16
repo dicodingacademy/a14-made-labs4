@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NIM"
+        android:id="@+id/txt_nim"
+        android:padding="@dimen/activity_horizontal_margin"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NAMA"
+        android:layout_toRightOf="@id/txt_nim"
+        android:id="@+id/txt_nama"
+        android:padding="@dimen/activity_horizontal_margin"/>
+
+</RelativeLayout>

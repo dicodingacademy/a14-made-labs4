@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MyPreLoadData</string>
+    <string name="app_first_run">first_run</string>
+    <string name="title_activity_mahasiswa">MahasiswaActivity</string>
+</resources>
