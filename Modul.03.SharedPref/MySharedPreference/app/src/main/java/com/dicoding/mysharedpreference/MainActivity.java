@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity
     private TextView tvName, tvAge, tvPhoneNo, tvEmail, tvIsLoveMU;
     private Button btnSave;
     private UserPreference mUserPreference;
-    
+
     private boolean isPreferenceEmpty = false;
 
     @Override

@@ -46,8 +46,6 @@ public class MahasiswaHelper {
         return database.rawQuery("SELECT * FROM "+DATABASE_TABLE+" WHERE "+DatabaseHelper.FIELD_NAMA+" LIKE '%"+query+"%'", null);
     }
 
-
-
     public String getData(String kata){
         String result = "";
         Cursor cursor = searchQueryByName(kata);
@@ -97,6 +95,32 @@ public class MahasiswaHelper {
         initialValues.put(DatabaseHelper.FIELD_NAMA, mahasiswaModel.getName());
         initialValues.put(DatabaseHelper.FIELD_NIM, mahasiswaModel.getNim());
         return database.insert(DATABASE_TABLE, null, initialValues);
+    }
+
+
+
+    public void beginTransaction(){
+        database.beginTransaction();
+    }
+
+    public void setTransactionSuccess(){
+        database.setTransactionSuccessful();
+    }
+
+    public void endTransaction(){
+        database.endTransaction();
+    }
+
+    public void insertTransaction2(MahasiswaModel mahasiswaModel){
+
+        String sql = "INSERT INTO "+DATABASE_TABLE+" ("+DatabaseHelper.FIELD_NAMA+", "+DatabaseHelper.FIELD_NIM
+                +") VALUES (?, ?)";
+        SQLiteStatement stmt = database.compileStatement(sql);
+        stmt.bindString(1, mahasiswaModel.getName());
+        stmt.bindString(2, mahasiswaModel.getNim());
+        stmt.execute();
+        stmt.clearBindings();
+
     }
 
     public void insertTransaction(ArrayList<MahasiswaModel> mahasiswaModels) {

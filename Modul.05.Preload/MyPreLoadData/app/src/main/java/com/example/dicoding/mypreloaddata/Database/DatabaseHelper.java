@@ -27,18 +27,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        // TODO Auto-generated constructor stub
     }
 
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // TODO Auto-generated method stub
         db.execSQL(CREATE_TABLE_MAHASISWA);
     }
+
+    /*
+    Method onUpgrade akan di panggil ketika terjadi perbedaan versi
+    Gunakan method onUpgrade untuk melakukan proses migrasi data
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // TODO Auto-generated method stub
+        /*
+        Drop table tidak dianjurkan ketika proses migrasi terjadi dikarenakan data user akan hilang,
+         */
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
         onCreate(db);
     }

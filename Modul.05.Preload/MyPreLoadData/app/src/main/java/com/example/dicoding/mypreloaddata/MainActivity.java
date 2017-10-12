@@ -3,7 +3,6 @@ package com.example.dicoding.mypreloaddata;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,72 +20,107 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        progressBar = (ProgressBar)findViewById(R.id.progress_bar);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         new LoadData().execute();
     }
 
-    private class LoadData extends AsyncTask<Void, Integer, Void>
-    {
-
+    /*
+    Asynctask untuk menjalankan preload data
+     */
+    private class LoadData extends AsyncTask<Void, Integer, Void> {
+        final String TAG = LoadData.class.getSimpleName();
         MahasiswaHelper mahasiswaHelper;
         AppPreference appPreference;
         double progress;
         double maxprogress = 100;
-        //Before running code in separate thread
+
+        /*
+        Persiapan sebelum proses dimulai
+        Berjalan di Main Thread
+         */
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
 
             mahasiswaHelper = new MahasiswaHelper(MainActivity.this);
             appPreference = new AppPreference(MainActivity.this);
         }
 
-        //The code to be executed in a background thread.
+        /*
+        Proses background terjadi di method doInBackground
+         */
         @Override
-        protected Void doInBackground(Void... params)
-        {
+        protected Void doInBackground(Void... params) {
 
+            /*
+            Panggil preference first run
+             */
             Boolean firstRun = appPreference.getFirstRun();
-            Log.d("First run",":"+firstRun);
+
+            /*
+            Jika first run true maka melakukan proses pre load,
+            jika first run false maka akan langsung menuju home
+             */
             if (firstRun) {
+                /*
+                Load raw data dari file txt ke dalam array model mahasiswa
+                 */
                 ArrayList<MahasiswaModel> mahasiswaModels = preLoadRaw();
-
-                Log.d("size"," "+mahasiswaModels.size());
-                progress = 30;
-
-                publishProgress((int)progress);
 
                 mahasiswaHelper.open();
 
+                progress = 30;
+                publishProgress((int) progress);
                 Double progressMaxInsert = 80.0;
                 Double progressDiff = (progressMaxInsert - progress) / mahasiswaModels.size();
 
-                mahasiswaHelper.insertTransaction(mahasiswaModels);
 
+                /*
+                Gunakan ini untuk query insert yang transactional
+                 */
+                mahasiswaHelper.beginTransaction();
+
+                try {
+                    for (MahasiswaModel model : mahasiswaModels) {
+                        mahasiswaHelper.insertTransaction2(model);
+                        progress += progressDiff;
+                        publishProgress((int) progress);
+                    }
+                    // Jika semua proses telah di set success maka akan dicommit ke database
+                    mahasiswaHelper.setTransactionSuccess();
+                } catch (Exception e) {
+                    Log.e(TAG, "doInBackground: Exception");
+                }
+                mahasiswaHelper.endTransaction();
+
+
+
+                /*
+                Insert query dengan menggunakan standar query
+                 */
 //                for (MahasiswaModel model : mahasiswaModels) {
-//
 //                    mahasiswaHelper.insert(model);
-//
 //                    progress += progressDiff;
-//
 //                    publishProgress((int)progress);
-//
 //                }
-
 
 
                 mahasiswaHelper.close();
 
+                /*
+                Set preference first run ke false
+                Agar proses preload tidak dijalankan untuk kedua kalinya
+                */
                 appPreference.setFirstRun(false);
 
-                publishProgress((int)maxprogress);
-            }
-            else {
+                publishProgress((int) maxprogress);
+
+            } else {
 
                 try {
                     synchronized (this) {
@@ -95,42 +129,44 @@ public class MainActivity extends AppCompatActivity {
                         publishProgress(50);
 
                         this.wait(2000);
-                        publishProgress((int)maxprogress);
+                        publishProgress((int) maxprogress);
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
-
-
             }
             return null;
         }
 
-        //Update the progress
+        //Update prosesnya
         @Override
-        protected void onProgressUpdate(Integer... values)
-        {
+        protected void onProgressUpdate(Integer... values) {
             progressBar.setProgress(values[0]);
         }
 
-        //after executing the code in the thread
+        /*
+        Setelah proses selesai
+        Berjalan di Main Thread
+        */
         @Override
-        protected void onPostExecute(Void result)
-        {
-
-            Intent i = new Intent(MainActivity.this,MahasiswaActivity.class);
+        protected void onPostExecute(Void result) {
+            Intent i = new Intent(MainActivity.this, MahasiswaActivity.class);
             startActivity(i);
             finish();
         }
     }
 
-    public ArrayList<MahasiswaModel> preLoadRaw(){
 
+    /**
+     * Parsing raw data text berupa data menjadi array mahasiswa
+     *
+     * @return array model dari semua mahasiswa
+     */
+    public ArrayList<MahasiswaModel> preLoadRaw() {
         ArrayList<MahasiswaModel> mahasiswaModels = new ArrayList<>();
         String line = null;
         BufferedReader reader;
-        try
-        {
+        try {
 
             Resources res = getResources();
             InputStream raw_dict = res.openRawResource(R.raw.data_mahasiswa);
@@ -138,22 +174,19 @@ public class MainActivity extends AppCompatActivity {
             reader = new BufferedReader(new InputStreamReader(raw_dict));
             int count = 0;
             do {
-                //Log.d("Raw"+count, line);
                 line = reader.readLine();
                 String[] splitstr = line.split("\t");
 
 
                 MahasiswaModel mahasiswaModel;
 
-                mahasiswaModel = new MahasiswaModel(splitstr[0],splitstr[1]);
+                mahasiswaModel = new MahasiswaModel(splitstr[0], splitstr[1]);
                 mahasiswaModels.add(mahasiswaModel);
                 count++;
 
-            }while (line != null);
+            } while (line != null);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

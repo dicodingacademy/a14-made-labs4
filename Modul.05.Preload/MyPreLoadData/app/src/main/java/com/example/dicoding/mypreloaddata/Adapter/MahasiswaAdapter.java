@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
  public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.MahasiswaHolder> {
     private ArrayList<MahasiswaModel> mData = new ArrayList<>();
-    Context context;
+    private Context context;
     private LayoutInflater mInflater;
 
     public MahasiswaAdapter(Context context) {
