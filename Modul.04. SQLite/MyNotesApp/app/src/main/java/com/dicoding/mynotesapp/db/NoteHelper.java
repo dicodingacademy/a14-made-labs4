@@ -10,12 +10,15 @@ import com.dicoding.mynotesapp.entity.Note;
 
 import java.util.ArrayList;
 
+import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.*;
+import static com.dicoding.mynotesapp.db.DatabaseContract.TABLE_NOTE;
+
 /**
  * Created by sidiqpermana on 11/23/16.
  */
 
 public class NoteHelper {
-    private static String DATABASE_TABLE = DatabaseHelper.TABLE_NAME;
+    private static String DATABASE_TABLE = TABLE_NOTE;
     private Context context;
     private DatabaseHelper dataBaseHelper;
 
@@ -36,7 +39,7 @@ public class NoteHelper {
     }
 
     public Cursor searchQuery(String title){
-        return database.rawQuery("SELECT * FROM "+DATABASE_TABLE+" WHERE "+DatabaseHelper.FIELD_TITLE+" LIKE '%"+title+"%'", null);
+        return database.rawQuery("SELECT * FROM "+DATABASE_TABLE+" WHERE "+TITLE+" LIKE '%"+title+"%'", null);
     }
 
 
@@ -48,10 +51,10 @@ public class NoteHelper {
         if (cursor.getCount()>0) {
             do {
                 note = new Note();
-                note.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.FIELD_ID)));
-                note.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.FIELD_TITLE)));
-                note.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.FIELD_DESCRIPTION)));
-                note.setDate(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.FIELD_DATE)));
+                note.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
+                note.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));
+                note.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(DESCRIPTION)));
+                note.setDate(cursor.getString(cursor.getColumnIndexOrThrow(DATE)));
 
                 arrayList.add(note);
                 cursor.moveToNext();
@@ -77,7 +80,7 @@ public class NoteHelper {
     }
 
     public Cursor queryAllData(){
-        return database.rawQuery("SELECT * FROM "+DATABASE_TABLE+" ORDER BY "+DatabaseHelper.FIELD_ID+" DESC", null);
+        return database.rawQuery("SELECT * FROM "+DATABASE_TABLE+" ORDER BY "+_ID+" DESC", null);
     }
 
     public ArrayList<Note> getAllData(){
@@ -89,10 +92,10 @@ public class NoteHelper {
             do {
 
                 note = new Note();
-                note.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.FIELD_ID)));
-                note.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.FIELD_TITLE)));
-                note.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.FIELD_DESCRIPTION)));
-                note.setDate(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.FIELD_DATE)));
+                note.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
+                note.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));
+                note.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(DESCRIPTION)));
+                note.setDate(cursor.getString(cursor.getColumnIndexOrThrow(DATE)));
 
                 arrayList.add(note);
                 cursor.moveToNext();
@@ -105,21 +108,21 @@ public class NoteHelper {
 
     public long insert(Note note){
         ContentValues initialValues =  new ContentValues();
-        initialValues.put(DatabaseHelper.FIELD_TITLE, note.getTitle());
-        initialValues.put(DatabaseHelper.FIELD_DESCRIPTION, note.getDescription());
-        initialValues.put(DatabaseHelper.FIELD_DATE, note.getDate());
+        initialValues.put(TITLE, note.getTitle());
+        initialValues.put(DESCRIPTION, note.getDescription());
+        initialValues.put(DATE, note.getDate());
         return database.insert(DATABASE_TABLE, null, initialValues);
     }
 
     public void update(Note note){
         ContentValues args = new ContentValues();
-        args.put(DatabaseHelper.FIELD_TITLE, note.getTitle());
-        args.put(DatabaseHelper.FIELD_DESCRIPTION, note.getDescription());
-        args.put(DatabaseHelper.FIELD_DATE, note.getDate());
-        database.update(DATABASE_TABLE, args, DatabaseHelper.FIELD_ID + "= '" + note.getId() + "'", null);
+        args.put(TITLE, note.getTitle());
+        args.put(DESCRIPTION, note.getDescription());
+        args.put(DATE, note.getDate());
+        database.update(DATABASE_TABLE, args, _ID + "= '" + note.getId() + "'", null);
     }
 
     public void delete(int id){
-        database.delete(DatabaseHelper.TABLE_NAME, DatabaseHelper.FIELD_ID + " = '"+id+"'", null);
+        database.delete(TABLE_NOTE, _ID + " = '"+id+"'", null);
     }
 }

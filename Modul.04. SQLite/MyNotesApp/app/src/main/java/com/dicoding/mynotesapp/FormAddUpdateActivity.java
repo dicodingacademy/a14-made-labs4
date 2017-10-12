@@ -21,20 +21,18 @@ import java.util.Date;
 
 public class FormAddUpdateActivity extends AppCompatActivity
     implements View.OnClickListener{
-    private EditText edtTitle, edtDescription;
-    private Button btnSubmit;
+    EditText edtTitle, edtDescription;
+    Button btnSubmit;
 
     public static String EXTRA_NOTE = "extra_note";
     public static String EXTRA_POSITION = "extra_position";
+
     private boolean isEdit = false;
     public static int REQUEST_ADD = 100;
     public static int RESULT_ADD = 101;
     public static int REQUEST_UPDATE = 200;
     public static int RESULT_UPDATE = 201;
     public static int RESULT_DELETE = 301;
-
-    private final int ALERT_DIALOG_CLOSE = 10;
-    private final int ALERT_DIALOG_DELETE = 20;
 
     private Note note;
     private int position;
@@ -96,6 +94,9 @@ public class FormAddUpdateActivity extends AppCompatActivity
 
             boolean isEmpty = false;
 
+            /*
+            Jika fieldnya masih kosong maka tampilkan error
+             */
             if (TextUtils.isEmpty(title)){
                 isEmpty = true;
                 edtTitle.setError("Field can not be blank");
@@ -108,6 +109,9 @@ public class FormAddUpdateActivity extends AppCompatActivity
 
                 Intent intent = new Intent();
 
+                /*
+                Jika merupakan edit setresultnya UPDATE, dan jika bukan maka setresultnya ADD
+                 */
                 if (isEdit){
                     newNote.setDate(note.getDate());
                     newNote.setId(note.getId());
@@ -141,7 +145,6 @@ public class FormAddUpdateActivity extends AppCompatActivity
             case R.id.action_delete:
                 showAlertDialog(ALERT_DIALOG_DELETE);
                 break;
-
             case android.R.id.home:
                 showAlertDialog(ALERT_DIALOG_CLOSE);
                 break;
@@ -156,6 +159,14 @@ public class FormAddUpdateActivity extends AppCompatActivity
         return dateFormat.format(date);
     }
 
+    final int ALERT_DIALOG_CLOSE = 10;
+    final int ALERT_DIALOG_DELETE = 20;
+
+    /*
+    Konfirmasi dialog sebelum proses batal atau hapus
+    type close = 10
+    type edelete = 20
+     */
     private void showAlertDialog(int type){
         final boolean isDialogClose = type == ALERT_DIALOG_CLOSE;
         String dialogTitle = null, dialogMessage = null;

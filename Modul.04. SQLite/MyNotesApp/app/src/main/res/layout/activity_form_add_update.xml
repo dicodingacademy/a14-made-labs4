@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:hint="Judul"
+            android:hint="@string/judul"
             android:inputType="textCapSentences"/>
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
@@ -31,13 +31,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:hint="Deskripsi"
+            android:hint="@string/deskripsi"
             android:inputType="textCapSentences"/>
     </android.support.design.widget.TextInputLayout>
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit"
+        android:text="@string/submit"
         style="@style/Base.Widget.AppCompat.Button.Colored"/>
 </LinearLayout>

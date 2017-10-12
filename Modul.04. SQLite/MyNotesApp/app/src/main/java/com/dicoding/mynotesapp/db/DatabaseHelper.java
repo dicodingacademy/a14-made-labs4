@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns;
+
+
 /**
  * Created by sidiqpermana on 11/23/16.
  */
@@ -11,33 +14,33 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static String DATABASE_NAME = "dbnoteapp";
-    public static String TABLE_NAME = "note";
-    public static String FIELD_TITLE = "title";
-    public static String FIELD_DESCRIPTION = "description";
-    public static String FIELD_DATE = "date";
-    public static String FIELD_ID = "id";
 
     private static final int DATABASE_VERSION = 1;
 
-    public static String CREATE_TABLE_NOTE = "create table "+TABLE_NAME+" ("+FIELD_ID+" integer primary key autoincrement, " +
-            FIELD_TITLE+" text not null, " +
-            FIELD_DESCRIPTION+" text not null, " +
-            FIELD_DATE+" text not null);";
+    private static final String SQL_CREATE_TABLE_NOTE = String.format("CREATE TABLE %s"
+                    + " (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " %s TEXT NOT NULL," +
+                    " %s TEXT NOT NULL," +
+                    " %s TEXT NOT NULL)",
+            DatabaseContract.TABLE_NOTE,
+            NoteColumns._ID,
+            NoteColumns.TITLE,
+            NoteColumns.DESCRIPTION,
+            NoteColumns.DATE
+    );
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // TODO Auto-generated method stub
-        db.execSQL(CREATE_TABLE_NOTE);
+        db.execSQL(SQL_CREATE_TABLE_NOTE);
     }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // TODO Auto-generated method stub
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.TABLE_NOTE);
         onCreate(db);
     }
 }

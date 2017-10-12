@@ -104,21 +104,28 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        /*
+        Akan dipanggil jika result codenya ADD
+         */
         if (requestCode == FormAddUpdateActivity.REQUEST_ADD){
             if (resultCode == FormAddUpdateActivity.RESULT_ADD){
                 rvNotes.getLayoutManager().smoothScrollToPosition(rvNotes, new RecyclerView.State(), 0);
             }
         }
-
-        if (requestCode == FormAddUpdateActivity.REQUEST_UPDATE){
+        /*
+        Akan dipanggil jika result codenya UPDATE
+         */
+        else if (requestCode == FormAddUpdateActivity.REQUEST_UPDATE){
             if (resultCode == FormAddUpdateActivity.RESULT_UPDATE){
                 int position = data.getIntExtra(FormAddUpdateActivity.EXTRA_POSITION, 0);
                 showSnackbarMessage("Satu item berhasil diubah");
                 rvNotes.getLayoutManager().smoothScrollToPosition(rvNotes, new RecyclerView.State(), position);
             }
         }
-
-        if (resultCode == FormAddUpdateActivity.RESULT_DELETE){
+        /*
+        Akan dipanggil jika result codenya DELETE
+         */
+        else if (resultCode == FormAddUpdateActivity.RESULT_DELETE){
             int position = data.getIntExtra(FormAddUpdateActivity.EXTRA_POSITION, 0);
             list.remove(position);
             adapter.setListNotes(list);
@@ -136,6 +143,10 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Tampilkan snackbar dengan
+     * @param message inputan message
+     */
     private void showSnackbarMessage(String message){
         Snackbar.make(rvNotes, message, Snackbar.LENGTH_SHORT).show();
     }
