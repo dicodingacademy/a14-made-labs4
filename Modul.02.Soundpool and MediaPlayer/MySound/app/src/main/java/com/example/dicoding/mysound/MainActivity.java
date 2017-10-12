@@ -21,13 +21,12 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btnSound;
     Button btnMedia;
     Button btnMediaStop;
 
-    // MediaService mediaService = new MediaService();
     Intent it;
 
     @Override
@@ -35,13 +34,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnSound = (Button)findViewById(R.id.btn_soundpool);
-        btnMedia = (Button)findViewById(R.id.btn_mediaplayer);
-        btnMediaStop = (Button)findViewById(R.id.btn_mediaplayer_stop);
+        btnSound = (Button) findViewById(R.id.btn_soundpool);
+        btnMedia = (Button) findViewById(R.id.btn_mediaplayer);
+        btnMediaStop = (Button) findViewById(R.id.btn_mediaplayer_stop);
         btnSound.setOnClickListener(this);
         btnMedia.setOnClickListener(this);
         btnMediaStop.setOnClickListener(this);
 
+        /*
+        API di atas lollipop maka menggunakan builder soundpool, sedangkan di bawah lollipop create kelas soundpool baru
+         */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             sp = new SoundPool.Builder()
                     .setMaxStreams(10)
@@ -50,22 +52,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             sp = new SoundPool(10, AudioManager.STREAM_MUSIC, 1);
         }
 
+        /*
+        Tambahkan listener ke soundpool jika proses load sudah selesai
+         */
         sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            public void onLoadComplete(SoundPool soundPool, int sampleId,int status) {
-                //Log.d("Load","true");
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
                 spLoaded = true;
             }
         });
 
-        wav = sp.load(this, R.raw.clinking_glasses, 1); // in 2nd param u have to pass your desire ringtone
+        /*
+        Load raw clinking_glasses ke soundpool, jika selesai maka id nya dimasukkan ke variable soundId
+         */
+        soundId = sp.load(this, R.raw.clinking_glasses, 1); // in 2nd param u have to pass your desire ringtone
 
+
+        /*
+        Start service untuk media player
+         */
         it = new Intent(this, MediaService.class);
         it.setAction(MediaService.ACTION_CREATE);
         it.setPackage(MediaService.ACTION_PACKAGE);
         startService(it);
     }
-    SoundPool sp ;
-    int wav;
+
+    SoundPool sp;
+    int soundId;
     boolean spLoaded = false;
 
     @Override
@@ -73,24 +85,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id = view.getId();
         switch (id) {
             case R.id.btn_soundpool:
-                if (spLoaded == true ){
-                    sp.play(wav, 1, 1, 0, 0, 1);
+                if (spLoaded) {
+                    sp.play(soundId, 1, 1, 0, 0, 1);
                 }
                 break;
-
             case R.id.btn_mediaplayer:
-                 it.setAction(MediaService.ACTION_PLAY);
+                it.setAction(MediaService.ACTION_PLAY);
                 it.setPackage(MediaService.ACTION_PACKAGE);
                 startService(it);
 
                 break;
             case R.id.btn_mediaplayer_stop:
-                it = new Intent(this,MediaService.class);
+                it = new Intent(this, MediaService.class);
                 it.setAction(MediaService.ACTION_STOP);
                 it.setPackage(MediaService.ACTION_PACKAGE);
                 startService(it);
                 break;
-
             default:
                 break;
         }

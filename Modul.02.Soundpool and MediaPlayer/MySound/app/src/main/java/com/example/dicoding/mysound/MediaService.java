@@ -48,6 +48,12 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
 
     }
 
+    /*
+     Menerima command dari activity
+     Create ketika command create di kirimkan
+     Play ketika command play dikirimkan
+     Stop ketika command stop dikirimkan
+     */
      public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent.getAction();
         switch(action) {
@@ -66,7 +72,6 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
                 break;
         }
 
-
         return flags;
     }
 
@@ -84,6 +89,5 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
     public void onDestroy() {
         if (mMediaPlayer != null) mMediaPlayer.release();
     }
-
 
 }
