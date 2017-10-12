@@ -14,9 +14,7 @@ public class MainActivity extends AppCompatActivity
     private TextView tvName, tvAge, tvPhoneNo, tvEmail, tvIsLoveMU;
     private Button btnSave;
     private UserPreference mUserPreference;
-
-    private final String TEXT_EMPTY = "Tidak Ada";
-
+    
     private boolean isPreferenceEmpty = false;
 
     @Override
@@ -40,6 +38,9 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /*
+    Set tampilan menggunakan preferences
+     */
     private void showExistingPreference(){
         if (!TextUtils.isEmpty(mUserPreference.getName())){
             tvName.setText(mUserPreference.getName());
@@ -48,8 +49,10 @@ public class MainActivity extends AppCompatActivity
             tvEmail.setText(mUserPreference.getEmail());
             tvPhoneNo.setText(mUserPreference.getPhoneNumber());
 
-            btnSave.setText("Rubah");
+            btnSave.setText("Ubah");
         }else{
+            final String TEXT_EMPTY = "Tidak Ada";
+
             tvName.setText(TEXT_EMPTY);
             tvAge.setText(TEXT_EMPTY);
             tvIsLoveMU.setText(TEXT_EMPTY);
@@ -75,6 +78,9 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /*
+    Akan dipanggil ketika formuserpreferenceactivity ditutup
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

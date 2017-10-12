@@ -21,7 +21,7 @@
                 android:id="@+id/edt_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name"
+                android:hint="@string/name"
                 android:inputType="textPersonName"
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
@@ -33,7 +33,7 @@
                 android:id="@+id/edt_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
@@ -45,7 +45,7 @@
                 android:id="@+id/edt_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="No Handphone"
+                android:hint="@string/no_handphone"
                 android:inputType="phone"
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
@@ -57,14 +57,14 @@
                 android:id="@+id/edt_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Age"
+                android:hint="@string/age"
                 android:inputType="number"
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Suka Manchester United"
+            android:text="@string/suka_manchester_united"
             android:layout_marginBottom="@dimen/activity_vertical_margin"/>
         <RadioGroup
             android:id="@+id/rg_love_mu"
@@ -77,19 +77,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Ya"/>
+                android:text="@string/ya"/>
             <RadioButton
                 android:id="@+id/rb_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Tidak"/>
+                android:text="@string/tidak"/>
         </RadioGroup>
         <Button
             android:id="@+id/btn_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Simpan"
+            android:text="@string/simpan"
             style="@style/Widget.AppCompat.Button.Colored"/>
     </LinearLayout>
 

@@ -13,21 +13,21 @@ import android.widget.Toast;
 
 public class FormUserPreferenceActivity extends AppCompatActivity
     implements View.OnClickListener{
-    private EditText edtName, edtEmail, edtPhone, edtAge;
-    private RadioGroup rgLoveMu;
-    private RadioButton rbYes, rbNo;
-    private Button btnSave;
+    EditText edtName, edtEmail, edtPhone, edtAge;
+    RadioGroup rgLoveMu;
+    RadioButton rbYes, rbNo;
+    Button btnSave;
 
     public static String EXTRA_TYPE_FORM = "extra_type_form";
     public static int REQUEST_CODE = 100;
 
     public static int TYPE_ADD = 1;
     public static int TYPE_EDIT = 2;
-    private int formType;
+    int formType;
 
-    private final String FIELD_REQUIRED = "Field tidak boleh kosong";
-    private final String FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik";
-    private final String FIELD_ISNOT_VALID = "Email tidak valid";
+    final String FIELD_REQUIRED = "Field tidak boleh kosong";
+    final String FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik";
+    final String FIELD_ISNOT_VALID = "Email tidak valid";
 
     private UserPreference mUserPreference;
 
@@ -57,7 +57,7 @@ public class FormUserPreferenceActivity extends AppCompatActivity
             actionBarTitle = "Tambah Baru";
             btnTitle = "Simpan";
         }else{
-            actionBarTitle = "Rubah";
+            actionBarTitle = "Ubah";
             btnTitle = "Update";
             showPreferenceInForm();
         }
@@ -142,6 +142,12 @@ public class FormUserPreferenceActivity extends AppCompatActivity
 
         }
     }
+
+    /**
+     * Cek apakah emailnya valid
+     * @param email inputan email
+     * @return true jika email valid
+     */
 
     private boolean isValidEmail(CharSequence email) {
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
