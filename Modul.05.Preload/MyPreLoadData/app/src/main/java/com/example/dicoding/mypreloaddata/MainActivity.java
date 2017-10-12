@@ -66,17 +66,17 @@ public class MainActivity extends AppCompatActivity {
                 Double progressMaxInsert = 80.0;
                 Double progressDiff = (progressMaxInsert - progress) / mahasiswaModels.size();
 
-                //mahasiswaHelper.insertTransaction(mahasiswaModels);
+                mahasiswaHelper.insertTransaction(mahasiswaModels);
 
-                for (MahasiswaModel model : mahasiswaModels) {
-
-                    mahasiswaHelper.insert(model);
-
-                    progress += progressDiff;
-
-                    publishProgress((int)progress);
-
-                }
+//                for (MahasiswaModel model : mahasiswaModels) {
+//
+//                    mahasiswaHelper.insert(model);
+//
+//                    progress += progressDiff;
+//
+//                    publishProgress((int)progress);
+//
+//                }
 
 
 

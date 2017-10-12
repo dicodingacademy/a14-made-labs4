@@ -58,7 +58,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
+    /**
+     * Clear semua data yang sudah ditampilkan
+     */
     public void newFile() {
 
         editTitle.setText("");
@@ -72,20 +74,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         showList();
     }
 
-    public void saveFile() {
-        if (editTitle.getText().toString().isEmpty()) {
-
-            Toast.makeText(this,"Title harus diisi terlebih dahulu",Toast.LENGTH_SHORT).show();
-        }
-        else {
-            String title = editTitle.getText().toString();
-            String text = editText.getText().toString();
-            FileHelper.writeToFile(title, text, this);
-            Toast.makeText(this,"Saving "+editTitle.getText().toString()+" file", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
+    /**
+     * Method untuk menampilkan semua file yang ada
+     */
     private void showList() {
         final ArrayList<String> arrayList = new ArrayList<String>();
         for (String file : path.list()) {
@@ -105,6 +96,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alert.show();
     }
 
+    /**
+     * Method untuk save data, nama file akan diambil dari editTitle
+     */
+    public void saveFile() {
+        if (editTitle.getText().toString().isEmpty()) {
+
+            Toast.makeText(this,"Title harus diisi terlebih dahulu",Toast.LENGTH_SHORT).show();
+        }
+        else {
+            String title = editTitle.getText().toString();
+            String text = editText.getText().toString();
+            FileHelper.writeToFile(title, text, this);
+            Toast.makeText(this,"Saving "+editTitle.getText().toString()+" file", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Method untuk load data
+     * @param title nama file
+     */
     private void loadData(String title){
         String text = FileHelper.readFromFile(this,title);
         editTitle.setText(title);

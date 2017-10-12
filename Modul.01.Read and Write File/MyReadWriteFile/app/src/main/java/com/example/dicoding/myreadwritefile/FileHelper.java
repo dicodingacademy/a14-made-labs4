@@ -18,7 +18,13 @@ import java.io.OutputStreamWriter;
 
 public class FileHelper {
 
-    public static void writeToFile(String filename, String data, Context context) {
+    /**
+     * Method yang digunakan untuk menuliskan data berupa string menjadi file
+     * @param filename nama file
+     * @param data data dalam bentuk file
+     * @param context context aplikasi
+     */
+    static void writeToFile(String filename, String data, Context context) {
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(filename, Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
@@ -29,7 +35,13 @@ public class FileHelper {
         }
     }
 
-    public static String readFromFile(Context context,String filename) {
+    /**
+     * Method yang digunakan untuk membaca data dari file
+     * @param context context aplikasi
+     * @param filename nama file
+     * @return data berupa string
+     */
+    static String readFromFile(Context context,String filename) {
 
         String ret = "";
 
