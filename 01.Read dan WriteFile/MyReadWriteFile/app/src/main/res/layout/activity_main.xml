@@ -38,36 +38,39 @@
             android:layout_width="64dp"
             android:layout_height="match_parent"
             android:id="@+id/button_new"
-            android:text="New"
+            android:text="@string/file_new"
             android:layout_marginBottom="@dimen/tiny_margin"
             />
         <Button
             android:layout_width="64dp"
             android:layout_height="match_parent"
-            android:text="Open"
+            android:text="@string/file_open"
             android:id="@+id/button_open"
             android:layout_marginBottom="@dimen/tiny_margin"
             android:layout_marginLeft="@dimen/tiny_margin"
+            android:layout_marginStart="@dimen/tiny_margin"
             />
         <Button
             android:layout_width="64dp"
             android:layout_height="match_parent"
             android:id="@+id/button_save"
-            android:text="Save"
+            android:text="@string/file_save"
             android:layout_marginBottom="@dimen/tiny_margin"
             android:layout_marginLeft="@dimen/tiny_margin"
+            android:layout_marginStart="@dimen/tiny_margin"
             />
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:inputType="textPersonName|textNoSuggestions"
-            android:hint="title"
+            android:hint="@string/title"
             android:ems="10"
             android:id="@+id/editTitle"
             android:background="@android:color/white"
             android:layout_weight="1"
             android:layout_marginBottom="@dimen/tiny_margin"
             android:layout_marginLeft="@dimen/tiny_margin"
+            android:layout_marginStart="@dimen/tiny_margin"
             android:padding="@dimen/tiny_margin"
             />
     </LinearLayout>

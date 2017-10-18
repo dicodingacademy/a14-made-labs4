@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FormAddUpdateActivity"></activity>
+        <activity android:name=".FormAddUpdateActivity"/>
         <provider
             android:authorities="com.dicoding.mynotesapp"
             android:name=".provider.NoteProvider"

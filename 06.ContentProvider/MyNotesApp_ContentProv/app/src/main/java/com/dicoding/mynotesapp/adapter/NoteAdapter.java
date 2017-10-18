@@ -71,7 +71,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
 
         if (listNotes == null) return 0;
 
-
         Log.e("GET", "getItemCount: " +(listNotes != null) +"  "+listNotes.getCount() );
 
         return listNotes.getCount();

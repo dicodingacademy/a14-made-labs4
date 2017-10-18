@@ -11,8 +11,8 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity
     implements View.OnClickListener{
 
-    private TextView tvName, tvAge, tvPhoneNo, tvEmail, tvIsLoveMU;
-    private Button btnSave;
+    TextView tvName, tvAge, tvPhoneNo, tvEmail, tvIsLoveMU;
+    Button btnSave;
     private UserPreference mUserPreference;
 
     private boolean isPreferenceEmpty = false;

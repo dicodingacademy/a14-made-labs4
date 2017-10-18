@@ -14,13 +14,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
+        android:text="@string/name"
         android:layout_marginBottom="8dp"/>
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name"
+        tools:text="Narenda Wicaksono"
         android:textStyle="bold"
         android:textSize="16sp"
         android:layout_marginBottom="@dimen/activity_vertical_margin"/>
@@ -28,13 +28,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
+        android:text="@string/email"
         android:layout_marginBottom="8dp"/>
     <TextView
         android:id="@+id/tv_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Email"
+        tools:text="narenda@dicoding.com"
         android:textStyle="bold"
         android:textSize="16sp"
         android:layout_marginBottom="@dimen/activity_vertical_margin"/>
@@ -42,13 +42,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Phone No"
+        android:text="@string/phone_no"
         android:layout_marginBottom="8dp"/>
     <TextView
         android:id="@+id/tv_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Phone"
+        tools:text="123456"
         android:textStyle="bold"
         android:textSize="16sp"
         android:layout_marginBottom="@dimen/activity_vertical_margin"/>
@@ -56,13 +56,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Age"
+        android:text="@string/age"
         android:layout_marginBottom="8dp"/>
     <TextView
         android:id="@+id/tv_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Age"
+        tools:text="30"
         android:textStyle="bold"
         android:textSize="16sp"
         android:layout_marginBottom="@dimen/activity_vertical_margin"/>
@@ -70,13 +70,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Love manchester united?"
+        android:text="@string/love_manchester_united"
         android:layout_marginBottom="8dp"/>
     <TextView
         android:id="@+id/tv_is_love_mu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="IsLoveMU"
+        tools:text="IsLoveMU"
         android:textStyle="bold"
         android:textSize="16sp"
         android:layout_marginBottom="@dimen/activity_vertical_margin"/>
@@ -85,6 +85,6 @@
         android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="@string/save"
         style="@style/Base.Widget.AppCompat.Button.Colored"/>
 </LinearLayout>

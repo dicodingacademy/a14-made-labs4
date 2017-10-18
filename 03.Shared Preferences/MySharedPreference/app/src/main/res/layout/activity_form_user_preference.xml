@@ -92,5 +92,4 @@
             android:text="@string/simpan"
             style="@style/Widget.AppCompat.Button.Colored"/>
     </LinearLayout>
-
 </ScrollView>
