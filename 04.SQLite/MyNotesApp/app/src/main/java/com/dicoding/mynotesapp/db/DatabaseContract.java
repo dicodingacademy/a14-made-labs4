@@ -8,16 +8,16 @@ import android.provider.BaseColumns;
 
 public class DatabaseContract {
 
-    public static String TABLE_NOTE = "note";
+    static String TABLE_NOTE = "note";
 
-    public static final class NoteColumns implements BaseColumns {
+    static final class NoteColumns implements BaseColumns {
 
         //Note title
-        public static String TITLE = "title";
+        static String TITLE = "title";
         //Note description
-        public static String DESCRIPTION = "description";
+        static String DESCRIPTION = "description";
         //Note date
-        public static String DATE = "date";
+        static String DATE = "date";
 
     }
 }

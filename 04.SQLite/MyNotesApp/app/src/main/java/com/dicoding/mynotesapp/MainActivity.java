@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity
             if (resultCode == FormAddUpdateActivity.RESULT_ADD){
                 new LoadNoteAsync().execute();
                 showSnackbarMessage("Satu item berhasil ditambahkan");
-                // rvNotes.getLayoutManager().smoothScrollToPosition(rvNotes, new RecyclerView.State(), 0);
+                rvNotes.getLayoutManager().smoothScrollToPosition(rvNotes, new RecyclerView.State(), 0);
             }
         }
         // Update dan Delete memiliki request code sama akan tetapi result codenya berbeda
@@ -125,8 +125,8 @@ public class MainActivity extends AppCompatActivity
             if (resultCode == FormAddUpdateActivity.RESULT_UPDATE) {
                 new LoadNoteAsync().execute();
                 showSnackbarMessage("Satu item berhasil diubah");
-                // int position = data.getIntExtra(FormAddUpdateActivity.EXTRA_POSITION, 0);
-                // rvNotes.getLayoutManager().smoothScrollToPosition(rvNotes, new RecyclerView.State(), position);
+                 int position = data.getIntExtra(FormAddUpdateActivity.EXTRA_POSITION, 0);
+                 rvNotes.getLayoutManager().smoothScrollToPosition(rvNotes, new RecyclerView.State(), position);
             }
             /*
             Akan dipanggil jika result codenya DELETE
