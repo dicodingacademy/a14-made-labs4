@@ -1,12 +1,10 @@
 package com.dicoding.mynotesapp;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,11 +13,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.dicoding.mynotesapp.adapter.NoteAdapter;
-import com.dicoding.mynotesapp.db.NoteHelper;
-import com.dicoding.mynotesapp.entity.Note;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
 
 import static com.dicoding.mynotesapp.FormAddUpdateActivity.REQUEST_UPDATE;
 import static com.dicoding.mynotesapp.db.DatabaseContract.CONTENT_URI;
@@ -51,12 +44,14 @@ public class MainActivity extends AppCompatActivity
         adapter = new NoteAdapter(this);
         adapter.setListNotes(list);
         rvNotes.setAdapter(adapter);
+
+        new LoadNoteAsync().execute();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        new LoadNoteAsync().execute();
     }
 
     @Override
@@ -85,10 +80,6 @@ public class MainActivity extends AppCompatActivity
             super.onPostExecute(notes);
             progressBar.setVisibility(View.GONE);
 
-
-            while(notes.moveToNext()){
-
-            }
             list = notes;
             adapter.setListNotes(list);
             adapter.notifyDataSetChanged();

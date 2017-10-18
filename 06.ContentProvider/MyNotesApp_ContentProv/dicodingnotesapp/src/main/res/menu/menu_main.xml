@@ -3,6 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_add"
-        android:title="Buat Baru"
+        android:title="@string/buat_baru"
         app:showAsAction="always"/>
 </menu>

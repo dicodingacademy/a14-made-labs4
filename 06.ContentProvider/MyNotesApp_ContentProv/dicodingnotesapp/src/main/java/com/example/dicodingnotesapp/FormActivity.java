@@ -29,26 +29,22 @@ import static com.example.dicodingnotesapp.db.DatabaseContract.NoteColumns.TITLE
 
 
 public class FormActivity extends AppCompatActivity implements View.OnClickListener{
-    private EditText edtTitle, edtDescription;
-    private Button btnSubmit;
-
+    EditText edtTitle, edtDescription;
+    Button btnSubmit;
 
     public static String EXTRA_NOTE_ITEM = "extra_note_item";
     private NoteItem noteItem = null;
     private boolean isUpdate = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
 
-
         edtTitle = (EditText)findViewById(R.id.edt_title);
         edtDescription = (EditText)findViewById(R.id.edt_description);
         btnSubmit = (Button)findViewById(R.id.btn_submit);
         btnSubmit.setOnClickListener(this);
-
 
         // Uri yang di dapatkan disini akan digunakan untuk ambil data dari provider
         // content://com.dicoding.mynotesapp/note/id
@@ -63,7 +59,6 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
                 if(cursor.moveToFirst()) noteItem = new NoteItem(cursor);
                 cursor.close();
             }
-
         }
 
         String actionBarTitle = null;
@@ -73,10 +68,8 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
             actionBarTitle = "Update";
             btnActionTitle = "Simpan";
 
-
             edtTitle.setText(noteItem.getTitle());
             edtDescription.setText(noteItem.getDescription());
-
 
         }else{
             actionBarTitle = "Tambah Baru";
@@ -87,13 +80,11 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_submit){
             String title = edtTitle.getText().toString().trim();
             String description = edtDescription.getText().toString().trim();
-
 
             boolean isEmptyField = false;
             if (TextUtils.isEmpty(title)){
@@ -101,48 +92,34 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
                 edtTitle.setError("Field tidak boleh kosong");
             }
 
-
             if (!isEmptyField){
                 ContentValues mContentValues = new ContentValues();
                 mContentValues.put(TITLE, title);
                 mContentValues.put(DESCRIPTION, description);
                 mContentValues.put(DATE, getCurrentDate());
 
-
                 if (isUpdate){
-
                     Uri uri = getIntent().getData();
                     getContentResolver().update(uri, mContentValues, null, null);
 
-
                     Toast.makeText(this, "Satu catatan berhasil diupdate", Toast.LENGTH_SHORT).show();
                 }else{
-
-
-
                     getContentResolver().insert(CONTENT_URI, mContentValues);
-
 
                     Toast.makeText(this, "Satu catatan berhasil diinputkan", Toast.LENGTH_SHORT).show();
                 }
 
-
                 finish();
-
 
             }
         }
     }
 
-
     private String getCurrentDate(){
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-
-
         return dateFormat.format(date);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -151,7 +128,6 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         }
         return super.onCreateOptionsMenu(menu);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -193,7 +169,6 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-
 
     }
 }

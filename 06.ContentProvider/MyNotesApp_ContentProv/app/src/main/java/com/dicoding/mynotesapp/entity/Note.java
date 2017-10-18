@@ -4,7 +4,13 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import static com.dicoding.mynotesapp.db.DatabaseContract.*;
+import com.dicoding.mynotesapp.db.DatabaseContract;
+
+import static android.provider.BaseColumns._ID;
+import static com.dicoding.mynotesapp.db.DatabaseContract.getColumnInt;
+import static com.dicoding.mynotesapp.db.DatabaseContract.getColumnString;
+
+
 /**
  * Created by sidiqpermana on 11/23/16.
  */
@@ -66,10 +72,10 @@ public class Note implements Parcelable {
     }
 
     public Note(Cursor cursor){
-        this.id = getColumnInt(cursor, NoteColumns._ID);
-        this.title = getColumnString(cursor, NoteColumns.TITLE);
-        this.description = getColumnString(cursor, NoteColumns.DESCRIPTION);
-        this.date = getColumnString(cursor, NoteColumns.DATE);
+        this.id = getColumnInt(cursor, _ID);
+        this.title = getColumnString(cursor, DatabaseContract.NoteColumns.TITLE);
+        this.description = getColumnString(cursor, DatabaseContract.NoteColumns.DESCRIPTION);
+        this.date = getColumnString(cursor, DatabaseContract.NoteColumns.DATE);
     }
 
     protected Note(Parcel in) {

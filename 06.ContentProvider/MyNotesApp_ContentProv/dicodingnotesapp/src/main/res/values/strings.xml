@@ -6,4 +6,6 @@
     <string name="date">Date</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
+    <string name="hapus">Hapus</string>
+    <string name="buat_baru">Buat Baru</string>
 </resources>

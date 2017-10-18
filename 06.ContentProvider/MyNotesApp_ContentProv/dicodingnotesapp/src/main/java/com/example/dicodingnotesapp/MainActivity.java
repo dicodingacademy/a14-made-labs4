@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements
         AdapterView.OnItemClickListener{
 
     private DicodingNotesAdapter dicodingNotesAdapter;
-    private ListView lvNotes;
+    ListView lvNotes;
 
     private final int LOAD_NOTES_ID = 110;
 

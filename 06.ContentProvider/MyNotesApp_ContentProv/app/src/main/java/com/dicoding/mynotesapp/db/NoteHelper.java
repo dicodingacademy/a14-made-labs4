@@ -118,7 +118,7 @@ public class NoteHelper {
 
     /*
     METHOD DI BAWAH INI ADALAH QUERY UNTUK CONTENT PROVIDER
-    NILAI BALIK CUROSR
+    NILAI BALIK CURSOR
     */
 
     /**
@@ -150,7 +150,6 @@ public class NoteHelper {
                 ,null
                 ,null
                 ,_ID + " DESC");
-                //("SELECT * FROM "+DATABASE_TABLE+" ORDER BY "+_ID+" DESC", null);
     }
 
     /**

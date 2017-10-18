@@ -75,7 +75,6 @@ public class FormAddUpdateActivity extends AppCompatActivity
             }
         }
 
-
         String actionBarTitle = null;
         String btnTitle = null;
 
@@ -241,5 +240,4 @@ public class FormAddUpdateActivity extends AppCompatActivity
 
         return dateFormat.format(date);
     }
-
 }

@@ -106,19 +106,17 @@ public class NoteProvider extends ContentProvider {
             default:
                 added = 0;
                 break;
-
         }
 
         if (added > 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
-
         return Uri.parse(CONTENT_URI + "/" + added);
     }
 
 
     @Override
-    public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
+    public int update(@NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
         int updated ;
         switch (sUriMatcher.match(uri)) {
             case NOTE_ID:
@@ -153,9 +151,5 @@ public class NoteProvider extends ContentProvider {
 
         return deleted;
     }
-
-
-
-
 
 }

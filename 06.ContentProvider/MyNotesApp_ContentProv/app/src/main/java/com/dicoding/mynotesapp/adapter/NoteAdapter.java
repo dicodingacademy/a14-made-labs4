@@ -40,8 +40,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
     @Override
     public NoteViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent, false);
-        NoteViewholder noteViewholder = new NoteViewholder(view);
-        return noteViewholder;
+        return new NoteViewholder(view);
     }
 
     @Override
@@ -58,7 +57,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
                 // Set intent dengan data uri row note by id
                 // content://com.dicoding.mynotesapp/note/id
                 Uri uri = Uri.parse(CONTENT_URI+"/"+note.getId());
-                intent.setData(uri);
+                intent.setData(uri)
                 //intent.putExtra(FormAddUpdateActivity.EXTRA_POSITION, position);
                 //intent.putExtra(FormAddUpdateActivity.EXTRA_NOTE, note);
                 activity.startActivityForResult(intent, FormAddUpdateActivity.REQUEST_UPDATE);
@@ -68,27 +67,22 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
 
     @Override
     public int getItemCount() {
-
         if (listNotes == null) return 0;
-
-        Log.e("GET", "getItemCount: " +(listNotes != null) +"  "+listNotes.getCount() );
-
         return listNotes.getCount();
     }
 
-    public Note getItem(int position){
+    private Note getItem(int position){
         if (!listNotes.moveToPosition(position)) {
             throw new IllegalStateException("Position invalid");
         }
-
         return new Note(listNotes);
     }
 
-    public class NoteViewholder extends RecyclerView.ViewHolder{
+    class NoteViewholder extends RecyclerView.ViewHolder{
         TextView tvTitle, tvDescription, tvDate;
         CardView cvNote;
 
-        public NoteViewholder(View itemView) {
+        NoteViewholder(View itemView) {
             super(itemView);
             tvTitle = (TextView)itemView.findViewById(R.id.tv_item_title);
             tvDescription = (TextView)itemView.findViewById(R.id.tv_item_description);
