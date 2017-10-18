@@ -6,16 +6,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NIM"
+        android:text="@string/nim"
         android:id="@+id/txt_nim"
-        android:padding="@dimen/activity_horizontal_margin"
-        />
+        android:padding="@dimen/activity_horizontal_margin" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NAMA"
+        android:text="@string/nama"
         android:layout_toRightOf="@id/txt_nim"
+        android:layout_toEndOf="@id/txt_nim"
         android:id="@+id/txt_nama"
         android:padding="@dimen/activity_horizontal_margin"/>
 

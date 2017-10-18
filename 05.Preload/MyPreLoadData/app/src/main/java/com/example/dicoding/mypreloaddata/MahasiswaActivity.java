@@ -31,6 +31,7 @@ public class MahasiswaActivity extends AppCompatActivity {
 
         mahasiswaHelper.open();
 
+        // Ambil semua data mahasiswa di database
         ArrayList<MahasiswaModel> mahasiswaModels = mahasiswaHelper.getAllData();
 
         mahasiswaHelper.close();

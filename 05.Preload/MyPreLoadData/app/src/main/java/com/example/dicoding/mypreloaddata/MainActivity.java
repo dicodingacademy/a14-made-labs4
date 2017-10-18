@@ -87,21 +87,20 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     for (MahasiswaModel model : mahasiswaModels) {
-                        mahasiswaHelper.insertTransaction2(model);
+                        mahasiswaHelper.insertTransaction(model);
                         progress += progressDiff;
                         publishProgress((int) progress);
                     }
-                    // Jika semua proses telah di set success maka akan dicommit ke database
+                    // Jika semua proses telah di set success maka akan di commit ke database
                     mahasiswaHelper.setTransactionSuccess();
                 } catch (Exception e) {
+                    // Jika gagal maka do nothing
                     Log.e(TAG, "doInBackground: Exception");
                 }
                 mahasiswaHelper.endTransaction();
 
-
-
                 /*
-                Insert query dengan menggunakan standar query
+                Gunakan ini untuk insert query dengan menggunakan standar query
                  */
 //                for (MahasiswaModel model : mahasiswaModels) {
 //                    mahasiswaHelper.insert(model);
