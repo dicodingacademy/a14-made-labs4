@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 //                    publishProgress((int)progress);
 //                }
 
-
+                // Close helper ketika proses query sudah selesai
                 mahasiswaHelper.close();
 
                 /*
@@ -120,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
                 publishProgress((int) maxprogress);
 
             } else {
-
                 try {
                     synchronized (this) {
                         this.wait(2000);
@@ -131,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                         publishProgress((int) maxprogress);
                     }
                 } catch (Exception e) {
-
                 }
             }
             return null;
@@ -155,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * Parsing raw data text berupa data menjadi array mahasiswa
      *
@@ -166,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
         String line = null;
         BufferedReader reader;
         try {
-
             Resources res = getResources();
             InputStream raw_dict = res.openRawResource(R.raw.data_mahasiswa);
 
@@ -176,21 +172,15 @@ public class MainActivity extends AppCompatActivity {
                 line = reader.readLine();
                 String[] splitstr = line.split("\t");
 
-
                 MahasiswaModel mahasiswaModel;
 
                 mahasiswaModel = new MahasiswaModel(splitstr[0], splitstr[1]);
                 mahasiswaModels.add(mahasiswaModel);
                 count++;
-
             } while (line != null);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         return mahasiswaModels;
-
     }
 }

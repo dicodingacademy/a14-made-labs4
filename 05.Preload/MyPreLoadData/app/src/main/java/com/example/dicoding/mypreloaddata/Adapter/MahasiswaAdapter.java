@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by dicoding on 12/6/2016.
  */
- public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.MahasiswaHolder> {
+public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.MahasiswaHolder> {
     private ArrayList<MahasiswaModel> mData = new ArrayList<>();
     private Context context;
     private LayoutInflater mInflater;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
     public MahasiswaAdapter(Context context) {
         this.context = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-     }
+    }
 
     @Override
     public MahasiswaHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -76,5 +76,3 @@ import java.util.ArrayList;
 
     }
 }
-
-
