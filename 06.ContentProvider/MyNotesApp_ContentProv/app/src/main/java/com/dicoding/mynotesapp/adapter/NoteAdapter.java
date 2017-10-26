@@ -57,7 +57,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
                 // Set intent dengan data uri row note by id
                 // content://com.dicoding.mynotesapp/note/id
                 Uri uri = Uri.parse(CONTENT_URI+"/"+note.getId());
-                intent.setData(uri)
+                intent.setData(uri);
                 //intent.putExtra(FormAddUpdateActivity.EXTRA_POSITION, position);
                 //intent.putExtra(FormAddUpdateActivity.EXTRA_NOTE, note);
                 activity.startActivityForResult(intent, FormAddUpdateActivity.REQUEST_UPDATE);
