@@ -15,7 +15,6 @@ public class UserPreference {
     private String KEY_AGE = "age";
 
     private SharedPreferences preferences;
-    private SharedPreferences.Editor editor;
     
     public UserPreference(Context context){
         String PREFS_NAME = "UserPref";
@@ -23,7 +22,7 @@ public class UserPreference {
     }
 
     public void setName(String name){
-        editor = preferences.edit();
+        SharedPreferences.Editor editor = preferences.edit();
         editor.putString(KEY_NAME, name);
         editor.apply();
     }
@@ -33,7 +32,7 @@ public class UserPreference {
     }
 
     void setEmail(String email){
-        editor = preferences.edit();
+        SharedPreferences.Editor editor = preferences.edit();
         editor.putString(KEY_EMAIL, email);
         editor.apply();
     }
@@ -43,7 +42,7 @@ public class UserPreference {
     }
 
     void setLoveMU(boolean status){
-        editor = preferences.edit();
+        SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(KEY_LOVE_MU, status);
         editor.apply();
     }
@@ -53,7 +52,7 @@ public class UserPreference {
     }
 
     void setPhoneNumber(String phoneNumber){
-        editor = preferences.edit();
+        SharedPreferences.Editor editor = preferences.edit();
         editor.putString(KEY_PHONE_NUMBER, phoneNumber);
         editor.apply();
     }
@@ -63,7 +62,7 @@ public class UserPreference {
     }
 
     void setAge(int age){
-        editor = preferences.edit();
+        SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(KEY_AGE, age);
         editor.apply();
     }
