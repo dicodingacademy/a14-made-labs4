@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_save:
                 saveFile();
                 break;
-
         }
     }
 
@@ -67,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText.setText("");
 
         Toast.makeText(this,"Clearing file", Toast.LENGTH_SHORT).show();
-
     }
 
     public void openFile() {
@@ -101,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void saveFile() {
         if (editTitle.getText().toString().isEmpty()) {
-
             Toast.makeText(this,"Title harus diisi terlebih dahulu",Toast.LENGTH_SHORT).show();
         }
         else {
