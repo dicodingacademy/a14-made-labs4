@@ -48,7 +48,6 @@ public class MahasiswaHelper {
      * @return NIM dari mahasiswa
      */
     public ArrayList<MahasiswaModel> getDataByName(String nama) {
-        String result = "";
         Cursor cursor = database.query(TABLE_NAME, null, NAMA + " LIKE ?", new String[]{nama}, null, null, _ID + " ASC", null);
         cursor.moveToFirst();
         ArrayList<MahasiswaModel> arrayList = new ArrayList<>();

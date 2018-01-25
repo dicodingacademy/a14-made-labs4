@@ -1,6 +1,5 @@
 package com.example.dicoding.mypreloaddata.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +16,8 @@ import java.util.ArrayList;
  */
 public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.MahasiswaHolder> {
     private ArrayList<MahasiswaModel> mData = new ArrayList<>();
-    private Context context;
-    private LayoutInflater mInflater;
 
-    public MahasiswaAdapter(Context context) {
-        this.context = context;
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public MahasiswaAdapter() {
     }
 
     @Override

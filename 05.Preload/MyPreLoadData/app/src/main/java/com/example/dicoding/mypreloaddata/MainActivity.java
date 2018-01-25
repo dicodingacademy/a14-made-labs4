@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public ArrayList<MahasiswaModel> preLoadRaw() {
         ArrayList<MahasiswaModel> mahasiswaModels = new ArrayList<>();
-        String line = null;
+        String line;
         BufferedReader reader;
         try {
             Resources res = getResources();

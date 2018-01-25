@@ -24,7 +24,7 @@ public class MahasiswaActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 
         mahasiswaHelper = new MahasiswaHelper(this);
-        mahasiswaAdapter = new MahasiswaAdapter(this);
+        mahasiswaAdapter = new MahasiswaAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         recyclerView.setAdapter(mahasiswaAdapter);
