@@ -1,9 +1,7 @@
-package com.example.dicoding.mypreloaddata.Model;
+package com.example.dicoding.mypreloaddata.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.example.dicoding.mypreloaddata.Database.MahasiswaHelper;
 
 /**
  * Created by dicoding on 12/6/2016.
@@ -14,16 +12,16 @@ public class MahasiswaModel implements Parcelable {
     private String name;
     private String nim;
 
-    public MahasiswaModel(){
+    public MahasiswaModel() {
 
     }
 
-    public MahasiswaModel(String name,String nim){
+    public MahasiswaModel(String name, String nim) {
         this.name = name;
         this.nim = nim;
     }
 
-    public MahasiswaModel(int id,String name,String nim){
+    public MahasiswaModel(int id, String name, String nim) {
         this.id = id;
         this.name = name;
         this.nim = nim;

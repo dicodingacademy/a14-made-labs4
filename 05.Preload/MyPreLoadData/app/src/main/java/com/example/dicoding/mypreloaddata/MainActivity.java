@@ -3,14 +3,14 @@ package com.example.dicoding.mypreloaddata;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
 
-import com.example.dicoding.mypreloaddata.Database.MahasiswaHelper;
-import com.example.dicoding.mypreloaddata.Model.MahasiswaModel;
-import com.example.dicoding.mypreloaddata.Prefs.AppPreference;
+import com.example.dicoding.mypreloaddata.database.MahasiswaHelper;
+import com.example.dicoding.mypreloaddata.model.MahasiswaModel;
+import com.example.dicoding.mypreloaddata.prefs.AppPreference;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                 publishProgress((int) progress);
                 Double progressMaxInsert = 80.0;
                 Double progressDiff = (progressMaxInsert - progress) / mahasiswaModels.size();
-
 
                 /*
                 Gunakan ini untuk query insert yang transactional

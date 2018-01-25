@@ -1,4 +1,4 @@
-package com.example.dicoding.mypreloaddata.Database;
+package com.example.dicoding.mypreloaddata.database;
 
 import android.provider.BaseColumns;
 

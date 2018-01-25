@@ -1,18 +1,14 @@
-package com.example.dicoding.mypreloaddata.Adapter;
+package com.example.dicoding.mypreloaddata.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.dicoding.mypreloaddata.Database.MahasiswaHelper;
-import com.example.dicoding.mypreloaddata.Model.MahasiswaModel;
 import com.example.dicoding.mypreloaddata.R;
-
-import org.w3c.dom.Text;
+import com.example.dicoding.mypreloaddata.model.MahasiswaModel;
 
 import java.util.ArrayList;
 

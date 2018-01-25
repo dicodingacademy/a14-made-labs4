@@ -1,14 +1,13 @@
 package com.example.dicoding.mypreloaddata;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ListView;
 
-import com.example.dicoding.mypreloaddata.Adapter.MahasiswaAdapter;
-import com.example.dicoding.mypreloaddata.Database.MahasiswaHelper;
-import com.example.dicoding.mypreloaddata.Model.MahasiswaModel;
+import com.example.dicoding.mypreloaddata.adapter.MahasiswaAdapter;
+import com.example.dicoding.mypreloaddata.database.MahasiswaHelper;
+import com.example.dicoding.mypreloaddata.model.MahasiswaModel;
 
 import java.util.ArrayList;
 
@@ -17,6 +16,7 @@ public class MahasiswaActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MahasiswaAdapter mahasiswaAdapter;
     MahasiswaHelper mahasiswaHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
