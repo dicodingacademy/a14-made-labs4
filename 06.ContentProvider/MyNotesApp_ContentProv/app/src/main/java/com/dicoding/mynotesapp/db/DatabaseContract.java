@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
  * Created by dicoding on 10/12/2017.
  */
 
-public class DatabaseContract {
+public class DatabaseContract {z
     public static String TABLE_NOTE = "note";
 
     /*

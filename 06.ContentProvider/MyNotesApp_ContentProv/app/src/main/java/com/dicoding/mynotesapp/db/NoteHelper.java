@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
 
 import com.dicoding.mynotesapp.entity.Note;
 
@@ -85,7 +86,7 @@ public class NoteHelper {
      * @return id dari data yang baru saja dimasukkan
      */
     public long insert(Note note){
-        ContentValues initialValues =  new ContentValues();
+          ContentValues initialValues =  new ContentValues();
         initialValues.put(TITLE, note.getTitle());
         initialValues.put(DESCRIPTION, note.getDescription());
         initialValues.put(DATE, note.getDate());

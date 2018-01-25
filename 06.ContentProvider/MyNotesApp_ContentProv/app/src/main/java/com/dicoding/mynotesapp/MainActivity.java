@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+
     private class LoadNoteAsync extends AsyncTask<Void, Void, Cursor>{
         @Override
         protected void onPreExecute() {
