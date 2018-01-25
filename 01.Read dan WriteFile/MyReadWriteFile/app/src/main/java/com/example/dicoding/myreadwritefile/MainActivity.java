@@ -2,13 +2,11 @@ package com.example.dicoding.myreadwritefile;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.io.File;
@@ -65,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTitle.setText("");
         editText.setText("");
 
-        Toast.makeText(this,"Clearing file", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Clearing file", Toast.LENGTH_SHORT).show();
     }
 
     public void openFile() {
@@ -99,25 +97,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void saveFile() {
         if (editTitle.getText().toString().isEmpty()) {
-            Toast.makeText(this,"Title harus diisi terlebih dahulu",Toast.LENGTH_SHORT).show();
-        }
-        else {
+            Toast.makeText(this, "Title harus diisi terlebih dahulu", Toast.LENGTH_SHORT).show();
+        } else {
             String title = editTitle.getText().toString();
             String text = editText.getText().toString();
             FileHelper.writeToFile(title, text, this);
-            Toast.makeText(this,"Saving "+editTitle.getText().toString()+" file", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Saving " + editTitle.getText().toString() + " file", Toast.LENGTH_SHORT).show();
         }
     }
 
     /**
      * Method untuk load data
+     *
      * @param title nama file
      */
-    private void loadData(String title){
-        String text = FileHelper.readFromFile(this,title);
+    private void loadData(String title) {
+        String text = FileHelper.readFromFile(this, title);
         editTitle.setText(title);
         editText.setText(text);
-        Toast.makeText(this,"Loading "+title+" data", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Loading " + title + " data", Toast.LENGTH_SHORT).show();
     }
 
 
