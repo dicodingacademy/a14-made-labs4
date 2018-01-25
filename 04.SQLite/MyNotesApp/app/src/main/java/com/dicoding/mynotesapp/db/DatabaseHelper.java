@@ -42,7 +42,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     Method onUpgrade akan di panggil ketika terjadi perbedaan versi
     Gunakan method onUpgrade untuk melakukan proses migrasi data
      */
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         /*

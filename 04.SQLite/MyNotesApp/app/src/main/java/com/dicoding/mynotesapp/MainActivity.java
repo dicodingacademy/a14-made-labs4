@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity
     ProgressBar progressBar;
     FloatingActionButton fabAdd;
 
-    private LinkedList<Note> list;
+    private ArrayList<Note> list;
     private NoteAdapter adapter;
     private NoteHelper noteHelper;
 
@@ -51,14 +51,13 @@ public class MainActivity extends AppCompatActivity
         noteHelper = new NoteHelper(this);
         noteHelper.open();
 
-        list = new LinkedList<>();
+        list = new ArrayList<>();
 
         adapter = new NoteAdapter(this);
         adapter.setListNotes(list);
         rvNotes.setAdapter(adapter);
 
         new LoadNoteAsync().execute();
-
     }
 
     @Override

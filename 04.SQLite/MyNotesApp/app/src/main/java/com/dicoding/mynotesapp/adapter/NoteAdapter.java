@@ -14,6 +14,7 @@ import com.dicoding.mynotesapp.FormAddUpdateActivity;
 import com.dicoding.mynotesapp.R;
 import com.dicoding.mynotesapp.entity.Note;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -21,18 +22,18 @@ import java.util.LinkedList;
  */
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder>{
-    private LinkedList<Note> listNotes;
+    private ArrayList<Note> listNotes;
     private Activity activity;
 
     public NoteAdapter(Activity activity) {
         this.activity = activity;
     }
 
-    public LinkedList<Note> getListNotes() {
+    public ArrayList<Note> getListNotes() {
         return listNotes;
     }
 
-    public void setListNotes(LinkedList<Note> listNotes) {
+    public void setListNotes(ArrayList<Note> listNotes) {
         this.listNotes = listNotes;
     }
 
