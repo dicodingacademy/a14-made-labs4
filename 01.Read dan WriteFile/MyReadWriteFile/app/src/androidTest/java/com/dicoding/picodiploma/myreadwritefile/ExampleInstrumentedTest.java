@@ -1,4 +1,4 @@
-package com.example.dicoding.myreadwritefile;
+package com.dicoding.picodiploma.myreadwritefile;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

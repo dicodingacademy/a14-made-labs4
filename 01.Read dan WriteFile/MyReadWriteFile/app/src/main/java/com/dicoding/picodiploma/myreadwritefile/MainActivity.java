@@ -1,4 +1,4 @@
-package com.example.dicoding.myreadwritefile;
+package com.dicoding.picodiploma.myreadwritefile;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnNew = (Button) findViewById(R.id.button_new);
         btnOpen = (Button) findViewById(R.id.button_open);
         btnSave = (Button) findViewById(R.id.button_save);
-        editText = (EditText) findViewById(R.id.editFile);
-        editTitle = (EditText) findViewById(R.id.editTitle);
+        editText = (EditText) findViewById(R.id.edit_file);
+        editTitle = (EditText) findViewById(R.id.edit_title);
 
         btnNew.setOnClickListener(this);
         btnOpen.setOnClickListener(this);
@@ -117,6 +117,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText.setText(text);
         Toast.makeText(this, "Loading " + title + " data", Toast.LENGTH_SHORT).show();
     }
-
-
 }
