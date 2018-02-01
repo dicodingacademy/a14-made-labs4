@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnNew;
     Button btnOpen;
     Button btnSave;
-    EditText editText;
+    EditText editContent;
     EditText editTitle;
 
     File path;
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnNew = (Button) findViewById(R.id.button_new);
         btnOpen = (Button) findViewById(R.id.button_open);
         btnSave = (Button) findViewById(R.id.button_save);
-        editText = (EditText) findViewById(R.id.edit_file);
+        editContent = (EditText) findViewById(R.id.edit_file);
         editTitle = (EditText) findViewById(R.id.edit_title);
 
         btnNew.setOnClickListener(this);
@@ -61,9 +61,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void newFile() {
 
         editTitle.setText("");
-        editText.setText("");
+        editContent.setText("");
 
         Toast.makeText(this, "Clearing file", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Method untuk load data
+     *
+     * @param title nama file
+     */
+    private void loadData(String title) {
+        String text = FileHelper.readFromFile(this, title);
+        editTitle.setText(title);
+        editContent.setText(text);
+        Toast.makeText(this, "Loading " + title + " data", Toast.LENGTH_SHORT).show();
     }
 
     public void openFile() {
@@ -84,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.setTitle("Pilih file yang diinginkan");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
-                // Do something with the selection
                 loadData(items[item].toString());
             }
         });
@@ -100,21 +111,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "Title harus diisi terlebih dahulu", Toast.LENGTH_SHORT).show();
         } else {
             String title = editTitle.getText().toString();
-            String text = editText.getText().toString();
+            String text = editContent.getText().toString();
             FileHelper.writeToFile(title, text, this);
             Toast.makeText(this, "Saving " + editTitle.getText().toString() + " file", Toast.LENGTH_SHORT).show();
         }
     }
 
-    /**
-     * Method untuk load data
-     *
-     * @param title nama file
-     */
-    private void loadData(String title) {
-        String text = FileHelper.readFromFile(this, title);
-        editTitle.setText(title);
-        editText.setText(text);
-        Toast.makeText(this, "Loading " + title + " data", Toast.LENGTH_SHORT).show();
-    }
 }
