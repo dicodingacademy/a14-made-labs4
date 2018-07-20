@@ -1,4 +1,4 @@
-package com.dicoding.mysharedpreference;
+package com.dicoding.picodiploma.mysharedpreference;
 
 import android.content.Context;
 import android.content.SharedPreferences;

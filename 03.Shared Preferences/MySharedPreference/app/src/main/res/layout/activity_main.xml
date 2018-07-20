@@ -4,87 +4,92 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
-    tools:context="com.dicoding.mysharedpreference.MainActivity">
+    tools:context="com.dicoding.picodiploma.mysharedpreference.MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/name"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:text="@string/name" />
+
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Narenda Wicaksono"
-        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:textSize="16sp"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+        android:textStyle="bold"
+        tools:text="Narenda Wicaksono" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/email"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:text="@string/email" />
+
     <TextView
         android:id="@+id/tv_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="narenda@dicoding.com"
-        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:textSize="16sp"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+        android:textStyle="bold"
+        tools:text="narenda@dicoding.com" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/phone_no"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:text="@string/phone_no" />
+
     <TextView
         android:id="@+id/tv_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="123456"
-        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:textSize="16sp"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+        android:textStyle="bold"
+        tools:text="123456" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/age"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:text="@string/age" />
+
     <TextView
         android:id="@+id/tv_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="30"
-        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:textSize="16sp"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+        android:textStyle="bold"
+        tools:text="30" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/love_manchester_united"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:text="@string/love_manchester_united" />
+
     <TextView
         android:id="@+id/tv_is_love_mu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="IsLoveMU"
-        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:textSize="16sp"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+        android:textStyle="bold"
+        tools:text="IsLoveMU" />
 
     <Button
         android:id="@+id/btn_save"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/save"
-        style="@style/Base.Widget.AppCompat.Button.Colored"/>
+        android:text="@string/save" />
 </LinearLayout>
