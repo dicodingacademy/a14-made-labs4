@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -86,10 +87,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Method untuk menampilkan semua file yang ada
      */
     private void showList() {
-        final ArrayList<String> arrayList = new ArrayList<String>();
-        for (String file : path.list()) {
-            arrayList.add(file);
-        }
+        final ArrayList<String> arrayList = new ArrayList<>();
+        Collections.addAll(arrayList, path.list());
+
         final CharSequence[] items = arrayList.toArray(new CharSequence[arrayList.size()]);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

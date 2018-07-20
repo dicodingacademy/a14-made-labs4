@@ -15,59 +15,59 @@ public class UserPreference {
     private String KEY_AGE = "age";
 
     private SharedPreferences preferences;
-    
-    public UserPreference(Context context){
+
+    UserPreference(Context context) {
         String PREFS_NAME = "UserPref";
         preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(KEY_NAME, name);
         editor.apply();
     }
 
-    public String getName(){
+    public String getName() {
         return preferences.getString(KEY_NAME, null);
     }
 
-    void setEmail(String email){
+    void setEmail(String email) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(KEY_EMAIL, email);
         editor.apply();
     }
 
-    String getEmail(){
+    String getEmail() {
         return preferences.getString(KEY_EMAIL, null);
     }
 
-    void setLoveMU(boolean status){
+    void setLoveMU(boolean status) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(KEY_LOVE_MU, status);
         editor.apply();
     }
 
-    boolean isLoveMU(){
+    boolean isLoveMU() {
         return preferences.getBoolean(KEY_LOVE_MU, false);
     }
 
-    void setPhoneNumber(String phoneNumber){
+    void setPhoneNumber(String phoneNumber) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(KEY_PHONE_NUMBER, phoneNumber);
         editor.apply();
     }
 
-    String getPhoneNumber(){
+    String getPhoneNumber() {
         return preferences.getString(KEY_PHONE_NUMBER, null);
     }
 
-    void setAge(int age){
+    void setAge(int age) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(KEY_AGE, age);
         editor.apply();
     }
 
-    int getAge(){
+    int getAge() {
         return preferences.getInt(KEY_AGE, 0);
     }
 }
