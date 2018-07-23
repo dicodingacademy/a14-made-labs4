@@ -1,25 +1,17 @@
 package com.dicoding.mynotesapp.provider;
 
 import android.content.ContentProvider;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
 
-import com.dicoding.mynotesapp.db.DatabaseContract;
-import com.dicoding.mynotesapp.db.DatabaseHelper;
 import com.dicoding.mynotesapp.db.NoteHelper;
 
-import static android.provider.BaseColumns._ID;
 import static com.dicoding.mynotesapp.db.DatabaseContract.AUTHORITY;
-import static com.dicoding.mynotesapp.db.DatabaseContract.CONTENT_URI;
-import static com.dicoding.mynotesapp.db.DatabaseContract.TABLE_NOTE;
+import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
+import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.TABLE_NAME;
 
 /**
  * Created by dicoding on 12/13/2016.
@@ -44,11 +36,11 @@ public class NoteProvider extends ContentProvider {
     static {
 
         // content://com.dicoding.mynotesapp/note
-        sUriMatcher.addURI(AUTHORITY, DatabaseContract.TABLE_NOTE, NOTE);
+        sUriMatcher.addURI(AUTHORITY, TABLE_NAME, NOTE);
 
         // content://com.dicoding.mynotesapp/note/id
         sUriMatcher.addURI(AUTHORITY,
-                DatabaseContract.TABLE_NOTE+ "/#",
+                TABLE_NAME + "/#",
                 NOTE_ID);
     }
 
@@ -69,7 +61,7 @@ public class NoteProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, String[] strings, String s, String[] strings1, String s1) {
         Cursor cursor;
-        switch(sUriMatcher.match(uri)){
+        switch (sUriMatcher.match(uri)) {
             case NOTE:
                 cursor = noteHelper.queryProvider();
                 break;
@@ -81,8 +73,8 @@ public class NoteProvider extends ContentProvider {
                 break;
         }
 
-        if (cursor != null){
-            cursor.setNotificationUri(getContext().getContentResolver(),uri);
+        if (cursor != null) {
+            cursor.setNotificationUri(getContext().getContentResolver(), uri);
         }
 
         return cursor;
@@ -97,9 +89,9 @@ public class NoteProvider extends ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues contentValues) {
 
-        long added ;
+        long added;
 
-        switch (sUriMatcher.match(uri)){
+        switch (sUriMatcher.match(uri)) {
             case NOTE:
                 added = noteHelper.insertProvider(contentValues);
                 break;
@@ -117,10 +109,10 @@ public class NoteProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
-        int updated ;
+        int updated;
         switch (sUriMatcher.match(uri)) {
             case NOTE_ID:
-                updated =  noteHelper.updateProvider(uri.getLastPathSegment(),contentValues);
+                updated = noteHelper.updateProvider(uri.getLastPathSegment(), contentValues);
                 break;
             default:
                 updated = 0;
@@ -138,7 +130,7 @@ public class NoteProvider extends ContentProvider {
         int deleted;
         switch (sUriMatcher.match(uri)) {
             case NOTE_ID:
-                deleted =  noteHelper.deleteProvider(uri.getLastPathSegment());
+                deleted = noteHelper.deleteProvider(uri.getLastPathSegment());
                 break;
             default:
                 deleted = 0;

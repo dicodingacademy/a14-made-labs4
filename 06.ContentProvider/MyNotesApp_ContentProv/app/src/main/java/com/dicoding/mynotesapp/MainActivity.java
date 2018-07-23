@@ -3,10 +3,10 @@ package com.dicoding.mynotesapp;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,10 +15,11 @@ import android.widget.ProgressBar;
 import com.dicoding.mynotesapp.adapter.NoteAdapter;
 
 import static com.dicoding.mynotesapp.FormAddUpdateActivity.REQUEST_UPDATE;
-import static com.dicoding.mynotesapp.db.DatabaseContract.CONTENT_URI;
+import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
+
 
 public class MainActivity extends AppCompatActivity
-        implements View.OnClickListener{
+        implements View.OnClickListener {
     RecyclerView rvNotes;
     ProgressBar progressBar;
     FloatingActionButton fabAdd;
@@ -33,12 +34,12 @@ public class MainActivity extends AppCompatActivity
 
         getSupportActionBar().setTitle("Notes");
 
-        rvNotes = (RecyclerView)findViewById(R.id.rv_notes);
+        rvNotes = (RecyclerView) findViewById(R.id.rv_notes);
         rvNotes.setLayoutManager(new LinearLayoutManager(this));
         rvNotes.setHasFixedSize(true);
 
-        progressBar = (ProgressBar)findViewById(R.id.progressbar);
-        fabAdd = (FloatingActionButton)findViewById(R.id.fab_add);
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
         fabAdd.setOnClickListener(this);
 
         adapter = new NoteAdapter(this);
@@ -56,15 +57,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.fab_add){
+        if (view.getId() == R.id.fab_add) {
             Intent intent = new Intent(MainActivity.this, FormAddUpdateActivity.class);
             startActivityForResult(intent, FormAddUpdateActivity.REQUEST_ADD);
         }
     }
 
-
-
-    private class LoadNoteAsync extends AsyncTask<Void, Void, Cursor>{
+    private class LoadNoteAsync extends AsyncTask<Void, Void, Cursor> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected Cursor doInBackground(Void... voids) {
-            return getContentResolver().query(CONTENT_URI,null,null,null,null);
+            return getContentResolver().query(CONTENT_URI, null, null, null, null);
         }
 
         @Override
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity
             adapter.setListNotes(list);
             adapter.notifyDataSetChanged();
 
-            if (list.getCount() == 0){
+            if (list.getCount() == 0) {
                 showSnackbarMessage("Tidak ada data saat ini");
             }
         }
@@ -97,8 +96,8 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
 
         // Akan dipanggil jika request codenya ADD
-        if (requestCode == FormAddUpdateActivity.REQUEST_ADD){
-            if (resultCode == FormAddUpdateActivity.RESULT_ADD){
+        if (requestCode == FormAddUpdateActivity.REQUEST_ADD) {
+            if (resultCode == FormAddUpdateActivity.RESULT_ADD) {
                 new LoadNoteAsync().execute();
                 showSnackbarMessage("Satu item berhasil ditambahkan");
             }
@@ -132,9 +131,10 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * Tampilkan snackbar
+     *
      * @param message inputan message
      */
-    private void showSnackbarMessage(String message){
+    private void showSnackbarMessage(String message) {
         Snackbar.make(rvNotes, message, Snackbar.LENGTH_SHORT).show();
     }
 }

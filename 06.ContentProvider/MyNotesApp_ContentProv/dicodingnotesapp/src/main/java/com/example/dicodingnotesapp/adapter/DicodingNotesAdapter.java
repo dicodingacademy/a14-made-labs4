@@ -28,8 +28,7 @@ public class DicodingNotesAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_dicoding_note, viewGroup, false);
-        return view;
+        return LayoutInflater.from(context).inflate(R.layout.item_dicoding_note, viewGroup, false);
     }
 
 

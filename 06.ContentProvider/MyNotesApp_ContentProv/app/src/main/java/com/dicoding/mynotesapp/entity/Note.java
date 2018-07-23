@@ -71,7 +71,7 @@ public class Note implements Parcelable {
 
     }
 
-    public Note(Cursor cursor){
+    public Note(Cursor cursor) {
         this.id = getColumnInt(cursor, _ID);
         this.title = getColumnString(cursor, DatabaseContract.NoteColumns.TITLE);
         this.description = getColumnString(cursor, DatabaseContract.NoteColumns.DESCRIPTION);

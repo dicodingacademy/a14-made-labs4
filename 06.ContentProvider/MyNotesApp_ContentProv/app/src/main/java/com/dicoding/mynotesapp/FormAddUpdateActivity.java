@@ -2,7 +2,6 @@ package com.dicoding.mynotesapp;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,8 +20,9 @@ import com.dicoding.mynotesapp.entity.Note;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
-import static com.dicoding.mynotesapp.db.DatabaseContract.CONTENT_URI;
+import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
 import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.DATE;
 import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.DESCRIPTION;
 import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.TITLE;
@@ -68,9 +68,9 @@ public class FormAddUpdateActivity extends AppCompatActivity
         if (uri != null) {
             Cursor cursor = getContentResolver().query(uri, null, null, null, null);
 
-            if (cursor != null){
+            if (cursor != null) {
 
-                if(cursor.moveToFirst()) note = new Note(cursor);
+                if (cursor.moveToFirst()) note = new Note(cursor);
                 cursor.close();
             }
         }
@@ -126,8 +126,8 @@ public class FormAddUpdateActivity extends AppCompatActivity
 
                 // Gunakan contentvalues untuk menampung data
                 ContentValues values = new ContentValues();
-                values.put(TITLE,title);
-                values.put(DESCRIPTION,description);
+                values.put(TITLE, title);
+                values.put(DESCRIPTION, description);
 
                 /*
                 Jika merupakan edit setresultnya UPDATE, dan jika bukan maka setresultnya ADD
@@ -136,16 +136,16 @@ public class FormAddUpdateActivity extends AppCompatActivity
 
                     // Gunakan uri dari intent activity ini
                     // content://com.dicoding.mynotesapp/note/id
-                    getContentResolver().update(getIntent().getData(),values, null, null);
+                    getContentResolver().update(getIntent().getData(), values, null, null);
 
                     setResult(RESULT_UPDATE);
                     finish();
                 } else {
-                    values.put(DATE,getCurrentDate());
+                    values.put(DATE, getCurrentDate());
 
                     // Gunakan content uri untuk insert
                     // content://com.dicoding.mynotesapp/note/
-                    getContentResolver().insert(CONTENT_URI,values);
+                    getContentResolver().insert(CONTENT_URI, values);
 
                     setResult(RESULT_ADD);
                     finish();
@@ -176,12 +176,10 @@ public class FormAddUpdateActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onBackPressed() {
         showAlertDialog(ALERT_DIALOG_CLOSE);
     }
-
 
     final int ALERT_DIALOG_CLOSE = 10;
     final int ALERT_DIALOG_DELETE = 20;
@@ -218,7 +216,7 @@ public class FormAddUpdateActivity extends AppCompatActivity
 
                             // Gunakan uri dari intent activity ini
                             // content://com.dicoding.mynotesapp/note/id
-                            getContentResolver().delete(getIntent().getData(),null,null);
+                            getContentResolver().delete(getIntent().getData(), null, null);
                             setResult(RESULT_DELETE, null);
                             finish();
                         }
@@ -235,7 +233,7 @@ public class FormAddUpdateActivity extends AppCompatActivity
     }
 
     private String getCurrentDate() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
         Date date = new Date();
 
         return dateFormat.format(date);

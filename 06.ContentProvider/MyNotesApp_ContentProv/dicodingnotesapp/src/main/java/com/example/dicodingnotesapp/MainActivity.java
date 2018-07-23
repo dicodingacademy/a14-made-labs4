@@ -16,12 +16,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.dicodingnotesapp.adapter.DicodingNotesAdapter;
+import com.example.dicodingnotesapp.db.DatabaseContract;
 
-import static com.example.dicodingnotesapp.db.DatabaseContract.*;
+import static com.example.dicodingnotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
+
 
 public class MainActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor>,
-        AdapterView.OnItemClickListener{
+        AdapterView.OnItemClickListener {
 
     private DicodingNotesAdapter dicodingNotesAdapter;
     ListView lvNotes;
@@ -33,11 +35,9 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         getSupportActionBar().setTitle("Dicoding Notes");
 
-
-        lvNotes = (ListView)findViewById(R.id.lv_notes);
+        lvNotes = (ListView) findViewById(R.id.lv_notes);
         dicodingNotesAdapter = new DicodingNotesAdapter(this, null, true);
         lvNotes.setAdapter(dicodingNotesAdapter);
         lvNotes.setOnItemClickListener(this);
@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        getSupportLoaderManager().destroyLoader(LOAD_NOTES_ID);
     }
 
 
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_add){
+        if (item.getItemId() == R.id.action_add) {
             Intent intent = new Intent(MainActivity.this, FormActivity.class);
             startActivity(intent);
         }
@@ -100,9 +99,9 @@ public class MainActivity extends AppCompatActivity implements
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Cursor cursor = (Cursor) dicodingNotesAdapter.getItem(i);
 
-        int id = cursor.getInt(cursor.getColumnIndexOrThrow(NoteColumns._ID));
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns._ID));
         Intent intent = new Intent(MainActivity.this, FormActivity.class);
-        intent.setData(Uri.parse(CONTENT_URI+"/"+id));
+        intent.setData(Uri.parse(CONTENT_URI + "/" + id));
         startActivity(intent);
     }
 }

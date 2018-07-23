@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +16,13 @@ import com.dicoding.mynotesapp.FormAddUpdateActivity;
 import com.dicoding.mynotesapp.R;
 import com.dicoding.mynotesapp.entity.Note;
 
-import java.util.LinkedList;
-
-import static com.dicoding.mynotesapp.db.DatabaseContract.CONTENT_URI;
+import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
 
 /**
  * Created by sidiqpermana on 11/23/16.
  */
 
-public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder>{
+public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder> {
     private Cursor listNotes;
     private Activity activity;
 
@@ -56,7 +53,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
 
                 // Set intent dengan data uri row note by id
                 // content://com.dicoding.mynotesapp/note/id
-                Uri uri = Uri.parse(CONTENT_URI+"/"+note.getId());
+                Uri uri = Uri.parse(CONTENT_URI + "/" + note.getId());
                 intent.setData(uri);
                 //intent.putExtra(FormAddUpdateActivity.EXTRA_POSITION, position);
                 //intent.putExtra(FormAddUpdateActivity.EXTRA_NOTE, note);
@@ -71,23 +68,23 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
         return listNotes.getCount();
     }
 
-    private Note getItem(int position){
+    private Note getItem(int position) {
         if (!listNotes.moveToPosition(position)) {
             throw new IllegalStateException("Position invalid");
         }
         return new Note(listNotes);
     }
 
-    class NoteViewholder extends RecyclerView.ViewHolder{
+    class NoteViewholder extends RecyclerView.ViewHolder {
         TextView tvTitle, tvDescription, tvDate;
         CardView cvNote;
 
         NoteViewholder(View itemView) {
             super(itemView);
-            tvTitle = (TextView)itemView.findViewById(R.id.tv_item_title);
-            tvDescription = (TextView)itemView.findViewById(R.id.tv_item_description);
-            tvDate = (TextView)itemView.findViewById(R.id.tv_item_date);
-            cvNote = (CardView)itemView.findViewById(R.id.cv_item_note);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_item_title);
+            tvDescription = (TextView) itemView.findViewById(R.id.tv_item_description);
+            tvDate = (TextView) itemView.findViewById(R.id.tv_item_date);
+            cvNote = (CardView) itemView.findViewById(R.id.cv_item_note);
         }
     }
 }
