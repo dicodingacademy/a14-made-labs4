@@ -8,9 +8,8 @@ import android.provider.BaseColumns;
 
 public class DatabaseContract {
 
-    static String TABLE_NOTE = "note";
-
     static final class NoteColumns implements BaseColumns {
+        static String TABLE_NAME = "note";
 
         //Note title
         static String TITLE = "title";

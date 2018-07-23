@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns;
 
+import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.TABLE_NAME;
+
 
 /**
  * Created by sidiqpermana on 11/23/16.
@@ -22,7 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL)",
-            DatabaseContract.TABLE_NOTE,
+            TABLE_NAME,
             NoteColumns._ID,
             NoteColumns.TITLE,
             NoteColumns.DESCRIPTION,
@@ -47,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         /*
         Drop table tidak dianjurkan ketika proses migrasi terjadi dikarenakan data user akan hilang,
          */
-        db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.TABLE_NOTE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
 }

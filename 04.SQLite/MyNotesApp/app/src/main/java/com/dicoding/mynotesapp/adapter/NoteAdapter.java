@@ -64,11 +64,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
         return getListNotes().size();
     }
 
-    public class NoteViewholder extends RecyclerView.ViewHolder{
+    class NoteViewholder extends RecyclerView.ViewHolder{
         TextView tvTitle, tvDescription, tvDate;
         CardView cvNote;
 
-        public NoteViewholder(View itemView) {
+        NoteViewholder(View itemView) {
             super(itemView);
             tvTitle = (TextView)itemView.findViewById(R.id.tv_item_title);
             tvDescription = (TextView)itemView.findViewById(R.id.tv_item_description);
