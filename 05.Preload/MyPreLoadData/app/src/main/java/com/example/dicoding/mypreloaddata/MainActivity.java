@@ -90,12 +90,14 @@ public class MainActivity extends AppCompatActivity {
                         progress += progressDiff;
                         publishProgress((int) progress);
                     }
-                    // Jika semua proses telah di set success maka akan di commit ke database
-                    mahasiswaHelper.setTransactionSuccess();
+
                 } catch (Exception e) {
                     // Jika gagal maka do nothing
                     Log.e(TAG, "doInBackground: Exception");
                 }
+
+                // Jika semua proses telah di set success maka akan di commit ke database
+                mahasiswaHelper.setTransactionSuccess();
                 mahasiswaHelper.endTransaction();
 
                 /*
@@ -182,4 +184,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return mahasiswaModels;
     }
+
 }
