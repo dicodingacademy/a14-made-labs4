@@ -16,6 +16,8 @@ import java.io.OutputStreamWriter;
 
 public class FileHelper {
 
+    private static final String TAG = FileHelper.class.getName();
+
     /**
      * Method yang digunakan untuk menuliskan data berupa string menjadi file
      *
@@ -29,7 +31,7 @@ public class FileHelper {
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
+            Log.e(TAG, "File write failed :", e);
         }
     }
 
@@ -61,9 +63,9 @@ public class FileHelper {
                 ret = stringBuilder.toString();
             }
         } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
+            Log.e(TAG, "File not found :", e);
         } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
+            Log.e(TAG, "Can not read file :", e);
         }
 
         return ret;
