@@ -28,11 +28,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnNew = (Button) findViewById(R.id.button_new);
-        btnOpen = (Button) findViewById(R.id.button_open);
-        btnSave = (Button) findViewById(R.id.button_save);
-        editContent = (EditText) findViewById(R.id.edit_file);
-        editTitle = (EditText) findViewById(R.id.edit_title);
+        btnNew = findViewById(R.id.button_new);
+        btnOpen = findViewById(R.id.button_open);
+        btnSave = findViewById(R.id.button_save);
+        editContent = findViewById(R.id.edit_file);
+        editTitle = findViewById(R.id.edit_title);
 
         btnNew.setOnClickListener(this);
         btnOpen.setOnClickListener(this);
@@ -116,5 +116,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "Saving " + editTitle.getText().toString() + " file", Toast.LENGTH_SHORT).show();
         }
     }
-
 }
