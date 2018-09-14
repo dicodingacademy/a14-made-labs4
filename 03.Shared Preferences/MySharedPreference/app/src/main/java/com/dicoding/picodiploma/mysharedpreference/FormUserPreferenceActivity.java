@@ -27,7 +27,7 @@ public class FormUserPreferenceActivity extends AppCompatActivity
 
     final String FIELD_REQUIRED = "Field tidak boleh kosong";
     final String FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik";
-    final String FIELD_ISNOT_VALID = "Email tidak valid";
+    final String FIELD_IS_NOT_VALID = "Email tidak valid";
 
     private UserPreference mUserPreference;
 
@@ -36,22 +36,22 @@ public class FormUserPreferenceActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_user_preference);
 
-        edtName = (EditText) findViewById(R.id.edt_name);
-        edtAge = (EditText) findViewById(R.id.edt_age);
-        edtEmail = (EditText) findViewById(R.id.edt_email);
-        edtPhone = (EditText) findViewById(R.id.edt_phone);
-        rgLoveMu = (RadioGroup) findViewById(R.id.rg_love_mu);
-        rbYes = (RadioButton) findViewById(R.id.rb_yes);
-        rbNo = (RadioButton) findViewById(R.id.rb_no);
-        btnSave = (Button) findViewById(R.id.btn_save);
+        edtName = findViewById(R.id.edt_name);
+        edtAge = findViewById(R.id.edt_age);
+        edtEmail = findViewById(R.id.edt_email);
+        edtPhone = findViewById(R.id.edt_phone);
+        rgLoveMu = findViewById(R.id.rg_love_mu);
+        rbYes = findViewById(R.id.rb_yes);
+        rbNo = findViewById(R.id.rb_no);
+        btnSave = findViewById(R.id.btn_save);
         btnSave.setOnClickListener(this);
 
         formType = getIntent().getIntExtra(EXTRA_TYPE_FORM, 0);
 
         mUserPreference = new UserPreference(this);
 
-        String actionBarTitle = null;
-        String btnTitle = null;
+        String actionBarTitle;
+        String btnTitle;
 
         if (formType == 1) {
             actionBarTitle = "Tambah Baru";
@@ -62,6 +62,7 @@ public class FormUserPreferenceActivity extends AppCompatActivity
             showPreferenceInForm();
         }
 
+        assert getSupportActionBar() != null;
         getSupportActionBar().setTitle(actionBarTitle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -99,46 +100,45 @@ public class FormUserPreferenceActivity extends AppCompatActivity
             String phoneNo = edtPhone.getText().toString().trim();
             boolean isLoveMU = rgLoveMu.getCheckedRadioButtonId() == R.id.rb_yes;
 
-            boolean isEmpty = false;
-
             if (TextUtils.isEmpty(name)) {
-                isEmpty = true;
                 edtName.setError(FIELD_REQUIRED);
+                return;
             }
 
             if (TextUtils.isEmpty(email)) {
-                isEmpty = true;
                 edtEmail.setError(FIELD_REQUIRED);
-            } else if (!isValidEmail(email)) {
-                isEmpty = true;
-                edtEmail.setError(FIELD_ISNOT_VALID);
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                edtEmail.setError(FIELD_IS_NOT_VALID);
+                return;
             }
 
             if (TextUtils.isEmpty(age)) {
-                isEmpty = true;
                 edtAge.setError(FIELD_REQUIRED);
+                return;
             }
 
             if (TextUtils.isEmpty(phoneNo)) {
-                isEmpty = true;
                 edtPhone.setError(FIELD_REQUIRED);
-            } else if (!TextUtils.isDigitsOnly(phoneNo)) {
-                isEmpty = true;
+                return;
+            }
+
+            if (!TextUtils.isDigitsOnly(phoneNo)) {
                 edtPhone.setError(FIELD_DIGIT_ONLY);
+                return;
             }
 
-            if (!isEmpty) {
-                mUserPreference.setName(name);
-                mUserPreference.setAge(Integer.parseInt(age));
-                mUserPreference.setEmail(email);
-                mUserPreference.setPhoneNumber(phoneNo);
-                mUserPreference.setLoveMU(isLoveMU);
+            mUserPreference.setName(name);
+            mUserPreference.setAge(Integer.parseInt(age));
+            mUserPreference.setEmail(email);
+            mUserPreference.setPhoneNumber(phoneNo);
+            mUserPreference.setLoveMU(isLoveMU);
 
-                Toast.makeText(this, "Data tersimpan", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Data tersimpan", Toast.LENGTH_SHORT).show();
 
-                finish();
-            }
-
+            finish();
         }
     }
 
