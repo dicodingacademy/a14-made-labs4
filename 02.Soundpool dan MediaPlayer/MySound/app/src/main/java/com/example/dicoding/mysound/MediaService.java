@@ -19,7 +19,6 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
     public static final String ACTION_PLAY = "com.example.action.PLAY";
     public static final String ACTION_STOP = "com.example.action.STOP";
     public static final String ACTION_CREATE = "com.example.action.CREATE";
-    public static final String ACTION_NULL = "com.example.action.NULL";
     MediaPlayer mMediaPlayer = null;
 
     @Nullable
@@ -27,7 +26,6 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
     public IBinder onBind(Intent intent) {
         return null;
     }
-
 
     public void init() {
         mMediaPlayer = new MediaPlayer();
@@ -53,6 +51,7 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent.getAction();
 
+        assert action != null;
         switch (action) {
             case ACTION_CREATE:
                 init();
