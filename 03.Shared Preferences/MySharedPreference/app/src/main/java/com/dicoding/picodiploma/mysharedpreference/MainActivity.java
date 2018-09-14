@@ -22,16 +22,17 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvName = (TextView) findViewById(R.id.tv_name);
-        tvAge = (TextView) findViewById(R.id.tv_age);
-        tvPhoneNo = (TextView) findViewById(R.id.tv_phone);
-        tvEmail = (TextView) findViewById(R.id.tv_email);
-        tvIsLoveMU = (TextView) findViewById(R.id.tv_is_love_mu);
-        btnSave = (Button) findViewById(R.id.btn_save);
+        tvName = findViewById(R.id.tv_name);
+        tvAge = findViewById(R.id.tv_age);
+        tvPhoneNo = findViewById(R.id.tv_phone);
+        tvEmail = findViewById(R.id.tv_email);
+        tvIsLoveMU = findViewById(R.id.tv_is_love_mu);
+        btnSave = findViewById(R.id.btn_save);
         btnSave.setOnClickListener(this);
 
         mUserPreference = new UserPreference(this);
 
+        assert getSupportActionBar() != null;
         getSupportActionBar().setTitle("My User Preference");
 
         showExistingPreference();
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity
             tvEmail.setText(mUserPreference.getEmail());
             tvPhoneNo.setText(mUserPreference.getPhoneNumber());
 
-            btnSave.setText("Ubah");
+            btnSave.setText(getString(R.string.change));
         } else {
             final String TEXT_EMPTY = "Tidak Ada";
 
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity
             tvEmail.setText(TEXT_EMPTY);
             tvPhoneNo.setText(TEXT_EMPTY);
 
-            btnSave.setText("Simpan");
+            btnSave.setText(getString(R.string.save));
 
             isPreferenceEmpty = true;
         }
