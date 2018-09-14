@@ -1,9 +1,7 @@
 package com.example.dicoding.mysound;
 
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.SoundPool;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,30 +15,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnMedia;
     Button btnMediaStop;
 
-    Intent it;
+    Intent mediaService;
+
+    SoundPool sp;
+    int soundId;
+    boolean spLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnSound = (Button) findViewById(R.id.btn_soundpool);
-        btnMedia = (Button) findViewById(R.id.btn_mediaplayer);
-        btnMediaStop = (Button) findViewById(R.id.btn_mediaplayer_stop);
+        btnSound = findViewById(R.id.btn_soundpool);
+        btnMedia = findViewById(R.id.btn_mediaplayer);
+        btnMediaStop = findViewById(R.id.btn_mediaplayer_stop);
         btnSound.setOnClickListener(this);
         btnMedia.setOnClickListener(this);
         btnMediaStop.setOnClickListener(this);
 
-        /*
-        API di atas lollipop maka menggunakan builder soundpool, sedangkan di bawah lollipop create kelas soundpool baru
-         */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            sp = new SoundPool.Builder()
-                    .setMaxStreams(10)
-                    .build();
-        } else {
-            sp = new SoundPool(10, AudioManager.STREAM_MUSIC, 1);
-        }
+
+        sp = new SoundPool.Builder()
+                .setMaxStreams(10)
+                .build();
 
         /*
         Tambahkan listener ke soundpool jika proses load sudah selesai
@@ -60,19 +56,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          */
         soundId = sp.load(this, R.raw.clinking_glasses, 1); // in 2nd param u have to pass your desire ringtone
 
-
         /*
         Start service untuk media player
          */
-        it = new Intent(this, MediaService.class);
-        it.setAction(MediaService.ACTION_CREATE);
-        it.setPackage(MediaService.ACTION_PACKAGE);
-        startService(it);
+        mediaService = new Intent(this, MediaService.class);
+        mediaService.setAction(MediaService.ACTION_CREATE);
+        mediaService.setPackage(MediaService.ACTION_PACKAGE);
+        startService(mediaService);
     }
-
-    SoundPool sp;
-    int soundId;
-    boolean spLoaded = false;
 
     @Override
     public void onClick(View view) {
@@ -84,16 +75,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btn_mediaplayer:
-                it.setAction(MediaService.ACTION_PLAY);
-                it.setPackage(MediaService.ACTION_PACKAGE);
-                startService(it);
+                mediaService.setAction(MediaService.ACTION_PLAY);
+                mediaService.setPackage(MediaService.ACTION_PACKAGE);
+                startService(mediaService);
 
                 break;
             case R.id.btn_mediaplayer_stop:
-                it = new Intent(this, MediaService.class);
-                it.setAction(MediaService.ACTION_STOP);
-                it.setPackage(MediaService.ACTION_PACKAGE);
-                startService(it);
+                mediaService = new Intent(this, MediaService.class);
+                mediaService.setAction(MediaService.ACTION_STOP);
+                mediaService.setPackage(MediaService.ACTION_PACKAGE);
+                startService(mediaService);
                 break;
             default:
                 break;
@@ -103,6 +94,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(it);
+        stopService(mediaService);
     }
 }
