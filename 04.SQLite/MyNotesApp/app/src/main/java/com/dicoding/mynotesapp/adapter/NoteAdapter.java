@@ -2,6 +2,7 @@ package com.dicoding.mynotesapp.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,51 +11,74 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dicoding.mynotesapp.CustomOnItemClickListener;
-import com.dicoding.mynotesapp.FormAddUpdateActivity;
+import com.dicoding.mynotesapp.NoteAddUpdateActivity;
 import com.dicoding.mynotesapp.R;
 import com.dicoding.mynotesapp.entity.Note;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
  * Created by sidiqpermana on 11/23/16.
  */
 
-public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder>{
-    private ArrayList<Note> listNotes;
+public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
+    private ArrayList<Note> listNotes = new ArrayList<>();
     private Activity activity;
 
     public NoteAdapter(Activity activity) {
         this.activity = activity;
     }
 
-    public ArrayList<Note> getListNotes() {
+    private ArrayList<Note> getListNotes() {
         return listNotes;
     }
 
     public void setListNotes(ArrayList<Note> listNotes) {
-        this.listNotes = listNotes;
+        this.listNotes = new ArrayList<>();
+        this.listNotes.addAll(listNotes);
+
+        notifyDataSetChanged();
     }
 
+    public void updateItem(int position, Note note) {
+        this.listNotes.set(position, note);
+        notifyItemChanged(position, note);
+    }
+
+    public void removeItem(int position) {
+        this.listNotes.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void addItem(Note note) {
+
+        if (listNotes.size() == 0) {
+            this.listNotes.add(listNotes.size(), note);
+        } else {
+            this.listNotes.add(listNotes.size() - 1, note);
+        }
+        notifyDataSetChanged();
+    }
+
+    @NonNull
     @Override
-    public NoteViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent, false);
-        return new NoteViewholder(view);
+        return new NoteViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(NoteViewholder holder, int position) {
+    public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         holder.tvTitle.setText(getListNotes().get(position).getTitle());
         holder.tvDate.setText(getListNotes().get(position).getDate());
         holder.tvDescription.setText(getListNotes().get(position).getDescription());
         holder.cvNote.setOnClickListener(new CustomOnItemClickListener(position, new CustomOnItemClickListener.OnItemClickCallback() {
             @Override
             public void onItemClicked(View view, int position) {
-                Intent intent = new Intent(activity, FormAddUpdateActivity.class);
-                intent.putExtra(FormAddUpdateActivity.EXTRA_POSITION, position);
-                intent.putExtra(FormAddUpdateActivity.EXTRA_NOTE, getListNotes().get(position));
-                activity.startActivityForResult(intent, FormAddUpdateActivity.REQUEST_UPDATE);
+                Intent intent = new Intent(activity, NoteAddUpdateActivity.class);
+                intent.putExtra(NoteAddUpdateActivity.EXTRA_POSITION, position);
+                intent.putExtra(NoteAddUpdateActivity.EXTRA_NOTE, getListNotes().get(position));
+                activity.startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_UPDATE);
             }
         }));
     }
@@ -64,16 +88,16 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
         return getListNotes().size();
     }
 
-    class NoteViewholder extends RecyclerView.ViewHolder{
+    class NoteViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle, tvDescription, tvDate;
         CardView cvNote;
 
-        NoteViewholder(View itemView) {
+        NoteViewHolder(View itemView) {
             super(itemView);
-            tvTitle = (TextView)itemView.findViewById(R.id.tv_item_title);
-            tvDescription = (TextView)itemView.findViewById(R.id.tv_item_description);
-            tvDate = (TextView)itemView.findViewById(R.id.tv_item_date);
-            cvNote = (CardView)itemView.findViewById(R.id.cv_item_note);
+            tvTitle = itemView.findViewById(R.id.tv_item_title);
+            tvDescription = itemView.findViewById(R.id.tv_item_description);
+            tvDate = itemView.findViewById(R.id.tv_item_date);
+            cvNote = itemView.findViewById(R.id.cv_item_note);
         }
     }
 }

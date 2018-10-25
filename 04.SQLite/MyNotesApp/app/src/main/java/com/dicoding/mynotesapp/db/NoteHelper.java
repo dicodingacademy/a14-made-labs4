@@ -23,32 +23,38 @@ import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.TITLE;
 
 public class NoteHelper {
     private static String DATABASE_TABLE = TABLE_NAME;
-    private Context context;
-    private DatabaseHelper dataBaseHelper;
+    private static DatabaseHelper dataBaseHelper;
+    private static NoteHelper helper;
 
-    private SQLiteDatabase database;
+    private static SQLiteDatabase database;
 
-    public NoteHelper(Context context) {
-        this.context = context;
-    }
-
-    public NoteHelper open() throws SQLException {
+    private NoteHelper(Context context) {
         dataBaseHelper = new DatabaseHelper(context);
-        database = dataBaseHelper.getWritableDatabase();
-        return this;
     }
 
-    public void close() {
+    public synchronized static void noteInstances(Context context) {
+        helper = new NoteHelper(context);
+    }
+
+    public static NoteHelper open() throws SQLException {
+        database = dataBaseHelper.getWritableDatabase();
+        return helper;
+    }
+
+    public static void close() {
         dataBaseHelper.close();
+
+        if (database.isOpen())
+            database.close();
     }
 
     /**
      * Gunakan method ini untuk ambil semua note yang ada
      * Otomatis di parsing ke dalam model Note
      *
-     * @return hasil query berbentuk array model note
+     * @return hasil getAllNotes berbentuk array model note
      */
-    public ArrayList<Note> query() {
+    public ArrayList<Note> getAllNotes() {
         ArrayList<Note> arrayList = new ArrayList<Note>();
         Cursor cursor = database.query(DATABASE_TABLE, null, null, null, null, null, _ID + " DESC", null);
         cursor.moveToFirst();
@@ -72,12 +78,12 @@ public class NoteHelper {
     }
 
     /**
-     * Gunakan method ini untuk query insert
+     * Gunakan method ini untuk getAllNotes insertNote
      *
      * @param note model note yang akan dimasukkan
      * @return id dari data yang baru saja dimasukkan
      */
-    public long insert(Note note) {
+    public long insertNote(Note note) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(TITLE, note.getTitle());
         initialValues.put(DESCRIPTION, note.getDescription());
@@ -86,12 +92,12 @@ public class NoteHelper {
     }
 
     /**
-     * Gunakan method ini untuk query update
+     * Gunakan method ini untuk getAllNotes updateNote
      *
      * @param note model note yang akan diubah
-     * @return int jumlah dari row yang ter-update, jika tidak ada yang diupdate maka nilainya 0
+     * @return int jumlah dari row yang ter-updateNote, jika tidak ada yang diupdate maka nilainya 0
      */
-    public int update(Note note) {
+    public int updateNote(Note note) {
         ContentValues args = new ContentValues();
         args.put(TITLE, note.getTitle());
         args.put(DESCRIPTION, note.getDescription());
@@ -100,12 +106,12 @@ public class NoteHelper {
     }
 
     /**
-     * Gunakan method ini untuk query delete
+     * Gunakan method ini untuk getAllNotes deleteNote
      *
-     * @param id id yang akan di delete
-     * @return int jumlah row yang di delete
+     * @param id id yang akan di deleteNote
+     * @return int jumlah row yang di deleteNote
      */
-    public int delete(int id) {
+    public int deleteNote(int id) {
         return database.delete(TABLE_NAME, _ID + " = '" + id + "'", null);
     }
 }

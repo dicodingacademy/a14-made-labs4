@@ -8,14 +8,13 @@ import com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns;
 
 import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.TABLE_NAME;
 
-
 /**
  * Created by sidiqpermana on 11/23/16.
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static String DATABASE_NAME = "dbnoteapp";
+    private static String DATABASE_NAME = "dbnoteapp";
 
     private static final int DATABASE_VERSION = 1;
 
@@ -31,7 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             NoteColumns.DATE
     );
 
-    public DatabaseHelper(Context context) {
+    DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
