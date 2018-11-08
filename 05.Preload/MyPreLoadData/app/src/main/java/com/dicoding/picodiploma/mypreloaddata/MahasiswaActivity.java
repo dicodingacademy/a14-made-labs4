@@ -1,13 +1,13 @@
-package com.example.dicoding.mypreloaddata;
+package com.dicoding.picodiploma.mypreloaddata;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.dicoding.mypreloaddata.adapter.MahasiswaAdapter;
-import com.example.dicoding.mypreloaddata.database.MahasiswaHelper;
-import com.example.dicoding.mypreloaddata.model.MahasiswaModel;
+import com.dicoding.picodiploma.mypreloaddata.adapter.MahasiswaAdapter;
+import com.dicoding.picodiploma.mypreloaddata.database.MahasiswaHelper;
+import com.dicoding.picodiploma.mypreloaddata.model.MahasiswaModel;
 
 import java.util.ArrayList;
 

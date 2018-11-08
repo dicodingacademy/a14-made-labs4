@@ -1,4 +1,4 @@
-package com.example.dicoding.mypreloaddata.database;
+package com.dicoding.picodiploma.mypreloaddata.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,14 +7,14 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import com.example.dicoding.mypreloaddata.model.MahasiswaModel;
+import com.dicoding.picodiploma.mypreloaddata.model.MahasiswaModel;
 
 import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
-import static com.example.dicoding.mypreloaddata.database.DatabaseContract.MahasiswaColumns.NAMA;
-import static com.example.dicoding.mypreloaddata.database.DatabaseContract.MahasiswaColumns.NIM;
-import static com.example.dicoding.mypreloaddata.database.DatabaseContract.TABLE_NAME;
+import static com.dicoding.picodiploma.mypreloaddata.database.DatabaseContract.MahasiswaColumns.NAMA;
+import static com.dicoding.picodiploma.mypreloaddata.database.DatabaseContract.MahasiswaColumns.NIM;
+import static com.dicoding.picodiploma.mypreloaddata.database.DatabaseContract.TABLE_NAME;
 
 /**
  * Created by dicoding on 12/1/2016.

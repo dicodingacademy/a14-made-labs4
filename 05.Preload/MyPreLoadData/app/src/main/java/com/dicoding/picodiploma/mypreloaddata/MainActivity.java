@@ -1,4 +1,4 @@
-package com.example.dicoding.mypreloaddata;
+package com.dicoding.picodiploma.mypreloaddata;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
 
-import com.example.dicoding.mypreloaddata.database.MahasiswaHelper;
-import com.example.dicoding.mypreloaddata.model.MahasiswaModel;
-import com.example.dicoding.mypreloaddata.prefs.AppPreference;
+import com.dicoding.picodiploma.mypreloaddata.database.MahasiswaHelper;
+import com.dicoding.picodiploma.mypreloaddata.model.MahasiswaModel;
+import com.dicoding.picodiploma.mypreloaddata.prefs.AppPreference;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

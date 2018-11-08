@@ -1,4 +1,4 @@
-package com.example.dicoding.mypreloaddata;
+package com.dicoding.picodiploma.mypreloaddata;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

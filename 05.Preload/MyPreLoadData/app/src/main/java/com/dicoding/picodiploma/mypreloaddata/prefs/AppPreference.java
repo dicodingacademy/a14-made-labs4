@@ -1,10 +1,10 @@
-package com.example.dicoding.mypreloaddata.prefs;
+package com.dicoding.picodiploma.mypreloaddata.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.example.dicoding.mypreloaddata.R;
+import com.dicoding.picodiploma.mypreloaddata.R;
 
 /**
  * Created by dicoding on 12/6/2016.

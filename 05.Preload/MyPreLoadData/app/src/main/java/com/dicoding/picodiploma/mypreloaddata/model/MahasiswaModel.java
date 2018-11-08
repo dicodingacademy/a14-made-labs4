@@ -1,4 +1,4 @@
-package com.example.dicoding.mypreloaddata.model;
+package com.dicoding.picodiploma.mypreloaddata.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

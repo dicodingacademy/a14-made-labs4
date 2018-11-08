@@ -1,4 +1,4 @@
-package com.example.dicoding.mypreloaddata.adapter;
+package com.dicoding.picodiploma.mypreloaddata.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.dicoding.mypreloaddata.R;
-import com.example.dicoding.mypreloaddata.model.MahasiswaModel;
+import com.dicoding.picodiploma.mypreloaddata.R;
+import com.dicoding.picodiploma.mypreloaddata.model.MahasiswaModel;
 
 import java.util.ArrayList;
 
