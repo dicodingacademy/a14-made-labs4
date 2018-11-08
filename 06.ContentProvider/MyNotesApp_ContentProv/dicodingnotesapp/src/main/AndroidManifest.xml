@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.dicodingnotesapp">
+    package="com.dicoding.picodiploma.dicodingnotesapp">
 
-    <uses-permission android:name="com.dicoding.mynotesapp.READ_DATABASE" />
-    <uses-permission android:name="com.dicoding.mynotesapp.WRITE_DATABASE" />
+    <uses-permission android:name="com.dicoding.picodiploma.mynotesapp.READ_DATABASE" />
+    <uses-permission android:name="com.dicoding.picodiploma.mynotesapp.WRITE_DATABASE" />
 
     <application
         android:allowBackup="true"
@@ -11,14 +11,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.dicoding.picodiploma.dicodingnotesapp.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FormActivity"/>
+        <activity android:name="com.dicoding.picodiploma.dicodingnotesapp.FormActivity"/>
     </application>
 
 </manifest>
