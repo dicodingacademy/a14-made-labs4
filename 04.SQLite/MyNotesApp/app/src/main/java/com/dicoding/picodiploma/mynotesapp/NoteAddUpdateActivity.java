@@ -1,4 +1,4 @@
-package com.dicoding.mynotesapp;
+package com.dicoding.picodiploma.mynotesapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.dicoding.mynotesapp.db.NoteHelper;
-import com.dicoding.mynotesapp.entity.Note;
+import com.dicoding.picodiploma.mynotesapp.db.NoteHelper;
+import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package com.dicoding.mynotesapp.db;
+package com.dicoding.picodiploma.mynotesapp.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,15 +6,15 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.dicoding.mynotesapp.entity.Note;
+import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
 import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
-import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.DATE;
-import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.DESCRIPTION;
-import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.TABLE_NAME;
-import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.TITLE;
+import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.DATE;
+import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.DESCRIPTION;
+import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.TABLE_NAME;
+import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.TITLE;
 
 
 /**

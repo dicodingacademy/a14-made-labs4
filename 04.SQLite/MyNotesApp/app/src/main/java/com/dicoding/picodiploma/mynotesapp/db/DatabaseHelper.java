@@ -1,12 +1,12 @@
-package com.dicoding.mynotesapp.db;
+package com.dicoding.picodiploma.mynotesapp.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns;
+import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns;
 
-import static com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.TABLE_NAME;
+import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.TABLE_NAME;
 
 /**
  * Created by sidiqpermana on 11/23/16.

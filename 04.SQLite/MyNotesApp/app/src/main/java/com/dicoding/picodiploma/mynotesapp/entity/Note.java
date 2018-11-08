@@ -1,4 +1,4 @@
-package com.dicoding.mynotesapp.entity;
+package com.dicoding.picodiploma.mynotesapp.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;

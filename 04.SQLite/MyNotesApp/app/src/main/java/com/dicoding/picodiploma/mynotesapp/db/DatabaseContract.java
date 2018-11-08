@@ -1,4 +1,4 @@
-package com.dicoding.mynotesapp.db;
+package com.dicoding.picodiploma.mynotesapp.db;
 
 import android.provider.BaseColumns;
 

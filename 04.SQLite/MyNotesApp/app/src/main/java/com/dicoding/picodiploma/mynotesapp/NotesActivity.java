@@ -1,4 +1,4 @@
-package com.dicoding.mynotesapp;
+package com.dicoding.picodiploma.mynotesapp;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,14 +11,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.dicoding.mynotesapp.adapter.NoteAdapter;
-import com.dicoding.mynotesapp.db.NoteHelper;
-import com.dicoding.mynotesapp.entity.Note;
+import com.dicoding.picodiploma.mynotesapp.adapter.NoteAdapter;
+import com.dicoding.picodiploma.mynotesapp.db.NoteHelper;
+import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import static com.dicoding.mynotesapp.NoteAddUpdateActivity.REQUEST_UPDATE;
+import static com.dicoding.picodiploma.mynotesapp.NoteAddUpdateActivity.REQUEST_UPDATE;
 
 public class NotesActivity extends AppCompatActivity
         implements View.OnClickListener {

@@ -1,8 +1,8 @@
-package com.dicoding.mynotesapp;
+package com.dicoding.picodiploma.mynotesapp;
 
 import android.app.Application;
 
-import com.dicoding.mynotesapp.db.NoteHelper;
+import com.dicoding.picodiploma.mynotesapp.db.NoteHelper;
 
 public class NoteApp extends Application {
     @Override

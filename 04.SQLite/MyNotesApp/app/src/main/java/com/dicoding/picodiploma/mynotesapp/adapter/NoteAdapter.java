@@ -1,4 +1,4 @@
-package com.dicoding.mynotesapp.adapter;
+package com.dicoding.picodiploma.mynotesapp.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.dicoding.mynotesapp.CustomOnItemClickListener;
-import com.dicoding.mynotesapp.NoteAddUpdateActivity;
-import com.dicoding.mynotesapp.R;
-import com.dicoding.mynotesapp.entity.Note;
+import com.dicoding.picodiploma.mynotesapp.R;
+import com.dicoding.picodiploma.mynotesapp.CustomOnItemClickListener;
+import com.dicoding.picodiploma.mynotesapp.NoteAddUpdateActivity;
+import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
 import java.util.ArrayList;
 
