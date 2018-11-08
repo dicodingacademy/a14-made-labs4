@@ -1,4 +1,4 @@
-package com.example.dicoding.mysound;
+package com.dicoding.picodiploma.mysound;
 
 import android.content.Intent;
 import android.media.SoundPool;
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {

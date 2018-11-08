@@ -1,4 +1,4 @@
-package com.example.dicoding.mysound;
+package com.dicoding.picodiploma.mysound;
 
 import org.junit.Test;
 
