@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dicoding.mynotesapp">
-    <permission android:name="com.dicoding.mynotesapp.READ_DATABASE" android:protectionLevel="normal" />
-    <permission android:name="com.dicoding.mynotesapp.WRITE_DATABASE" android:protectionLevel="normal" />
+    package="com.dicoding.picodiploma.mynotesapp">
+    <permission android:name="com.dicoding.picodiploma.mynotesapp.READ_DATABASE" android:protectionLevel="normal" />
+    <permission android:name="com.dicoding.picodiploma.mynotesapp.WRITE_DATABASE" android:protectionLevel="normal" />
 
     <application
         android:allowBackup="true"
@@ -19,10 +19,10 @@
         </activity>
         <activity android:name=".FormAddUpdateActivity"/>
         <provider
-            android:authorities="com.dicoding.mynotesapp"
+            android:authorities="com.dicoding.picodiploma.mynotesapp"
             android:name=".provider.NoteProvider"
             android:exported="true"
-            android:readPermission="com.dicoding.mynotesapp.READ_DATABASE"
-            android:writePermission="com.dicoding.mynotesapp.WRITE_DATABASE" />
+            android:readPermission="com.dicoding.picodiploma.mynotesapp.READ_DATABASE"
+            android:writePermission="com.dicoding.picodiploma.mynotesapp.WRITE_DATABASE" />
     </application>
 </manifest>
