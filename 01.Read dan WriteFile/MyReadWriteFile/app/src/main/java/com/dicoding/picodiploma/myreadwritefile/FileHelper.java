@@ -14,21 +14,20 @@ import java.io.OutputStreamWriter;
  * Created by dicoding on 11/23/2016.
  */
 
-public class FileHelper {
+class FileHelper {
 
     private static final String TAG = FileHelper.class.getName();
 
     /**
      * Method yang digunakan untuk menuliskan data berupa string menjadi file
      *
-     * @param filename nama file
-     * @param data     data dalam bentuk file
+     * @param fileModel get data file model
      * @param context  context aplikasi
      */
-    static void writeToFile(String filename, String data, Context context) {
+    static void writeToFile(FileModel fileModel, Context context) {
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(filename, Context.MODE_PRIVATE));
-            outputStreamWriter.write(data);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(fileModel.getFilename(), Context.MODE_PRIVATE));
+            outputStreamWriter.write(fileModel.getData());
             outputStreamWriter.close();
         } catch (IOException e) {
             Log.e(TAG, "File write failed :", e);
@@ -42,9 +41,9 @@ public class FileHelper {
      * @param filename nama file
      * @return data berupa string
      */
-    static String readFromFile(Context context, String filename) {
+    static FileModel readFromFile(Context context, String filename) {
 
-        String ret = "";
+        FileModel fileModel = new FileModel();
 
         try {
             InputStream inputStream = context.openFileInput(filename);
@@ -60,7 +59,8 @@ public class FileHelper {
                 }
 
                 inputStream.close();
-                ret = stringBuilder.toString();
+                fileModel.setData(stringBuilder.toString());
+                fileModel.setFilename(filename);
             }
         } catch (FileNotFoundException e) {
             Log.e(TAG, "File not found :", e);
@@ -68,6 +68,6 @@ public class FileHelper {
             Log.e(TAG, "Can not read file :", e);
         }
 
-        return ret;
+        return fileModel;
     }
 }
