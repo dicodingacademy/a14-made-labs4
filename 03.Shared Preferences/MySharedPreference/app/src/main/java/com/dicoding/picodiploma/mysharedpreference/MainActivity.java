@@ -10,8 +10,12 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener {
 
-    TextView tvName, tvAge, tvPhoneNo, tvEmail, tvIsLoveMU;
-    Button btnSave;
+    private TextView tvName;
+    private TextView tvAge;
+    private TextView tvPhoneNo;
+    private TextView tvEmail;
+    private TextView tvIsLoveMU;
+    private Button btnSave;
     private UserPreference mUserPreference;
 
     private boolean isPreferenceEmpty = false;
@@ -90,7 +94,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public UserModel readPref(){
+    private UserModel readPref(){
         UserModel userModel = new UserModel();
         userModel.setName(mUserPreference.getString(UserPreference.NAME));
         userModel.setEmail(mUserPreference.getString(UserPreference.EMAIL));

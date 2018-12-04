@@ -18,16 +18,16 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     private RadioButton rbYes, rbNo;
     private Button btnSave;
 
-    public static String EXTRA_TYPE_FORM = "extra_type_form";
+    public static final String EXTRA_TYPE_FORM = "extra_type_form";
     public static int REQUEST_CODE = 100;
 
-    public static int TYPE_ADD = 1;
+    public static final int TYPE_ADD = 1;
     public static int TYPE_EDIT = 2;
-    int formType;
+    private int formType;
 
-    final String FIELD_REQUIRED = "Field tidak boleh kosong";
-    final String FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik";
-    final String FIELD_IS_NOT_VALID = "Email tidak valid";
+    private final static String FIELD_REQUIRED = "Field tidak boleh kosong";
+    private final static String FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik";
+    private final static String FIELD_IS_NOT_VALID = "Email tidak valid";
 
     private UserPreference mUserPreference;
 

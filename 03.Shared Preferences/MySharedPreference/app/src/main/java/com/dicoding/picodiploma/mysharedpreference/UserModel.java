@@ -2,11 +2,11 @@ package com.dicoding.picodiploma.mysharedpreference;
 
 public class UserModel {
 
-    String name;
-    String email;
-    int age;
-    String phoneNumber;
-    boolean isLove;
+    private String name;
+    private String email;
+    private int age;
+    private String phoneNumber;
+    private boolean isLove;
 
     public void setName(String name) {
         this.name = name;
