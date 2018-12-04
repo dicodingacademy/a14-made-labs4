@@ -7,7 +7,7 @@
         android:summary="@string/nothing"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="Name" />
+        android:title="@string/name" />
 
     <EditTextPreference
         android:defaultValue="Alamat Email"
@@ -16,7 +16,7 @@
         android:selectAllOnFocus="true"
         android:inputType="textEmailAddress"
         android:singleLine="true"
-        android:title="Email" />
+        android:title="@string/email" />
 
     <EditTextPreference
         android:defaultValue="Umur"
@@ -25,7 +25,7 @@
         android:summary="@string/nothing"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="Age" />
+        android:title="@string/age" />
 
     <EditTextPreference
         android:defaultValue="Nomor Telfon"
@@ -33,10 +33,10 @@
         android:summary="@string/nothing"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="PhoneNumber" />
+        android:title="@string/phone_number" />
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="isLove"
-        android:title="Suka Manchester United" />
+        android:title="@string/isLoveMu" />
 
 </PreferenceScreen>

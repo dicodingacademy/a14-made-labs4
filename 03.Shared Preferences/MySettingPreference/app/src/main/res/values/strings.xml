@@ -3,4 +3,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="nothing">Tidak Ada</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="age">Age</string>
+    <string name="phone_number">PhoneNumber</string>
+    <string name="isLoveMu">Suka Manchester United</string>
 </resources>
