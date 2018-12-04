@@ -8,11 +8,11 @@ import android.content.SharedPreferences;
  */
 
 public class UserPreference {
-    private String KEY_NAME = "name";
-    private String KEY_EMAIL = "email";
-    private String KEY_LOVE_MU = "love_mu";
-    private String KEY_PHONE_NUMBER = "phone_number";
-    private String KEY_AGE = "age";
+    public static final String NAME = "name";
+    public static final String EMAIL = "email";
+    public static final String AGE = "age";
+    public static final String PHONE_NUMBER = "phone";
+    public static final String LOVE_MU = "islove";
 
     private SharedPreferences preferences;
 
@@ -21,53 +21,33 @@ public class UserPreference {
         preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
-    public void setName(String name) {
+    public void setString(String value, String key) {
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(KEY_NAME, name);
+        editor.putString(key, value);
         editor.apply();
     }
 
-    public String getName() {
-        return preferences.getString(KEY_NAME, null);
+    public String getString(String key) {
+        return preferences.getString(key, "");
     }
 
-    void setEmail(String email) {
+    void setBool(boolean status, String key) {
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(KEY_EMAIL, email);
+        editor.putBoolean(key, status);
         editor.apply();
     }
 
-    String getEmail() {
-        return preferences.getString(KEY_EMAIL, null);
+    boolean getBool(String key) {
+        return preferences.getBoolean(key, false);
     }
 
-    void setLoveMU(boolean status) {
+    void setInt(int value, String key) {
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(KEY_LOVE_MU, status);
+        editor.putInt(key, value);
         editor.apply();
     }
 
-    boolean isLoveMU() {
-        return preferences.getBoolean(KEY_LOVE_MU, false);
-    }
-
-    void setPhoneNumber(String phoneNumber) {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(KEY_PHONE_NUMBER, phoneNumber);
-        editor.apply();
-    }
-
-    String getPhoneNumber() {
-        return preferences.getString(KEY_PHONE_NUMBER, null);
-    }
-
-    void setAge(int age) {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(KEY_AGE, age);
-        editor.apply();
-    }
-
-    int getAge() {
-        return preferences.getInt(KEY_AGE, 0);
+    int getInt(String key) {
+        return preferences.getInt(key, 0);
     }
 }

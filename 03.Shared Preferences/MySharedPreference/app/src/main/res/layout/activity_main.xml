@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/phone_no" />
+        android:text="@string/phone_number" />
 
     <TextView
         android:id="@+id/tv_phone"

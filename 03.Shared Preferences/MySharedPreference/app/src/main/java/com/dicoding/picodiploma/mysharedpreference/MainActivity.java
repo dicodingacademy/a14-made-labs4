@@ -3,7 +3,6 @@ package com.dicoding.picodiploma.mysharedpreference;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -43,12 +42,13 @@ public class MainActivity extends AppCompatActivity
     Set tampilan menggunakan preferences
      */
     private void showExistingPreference() {
-        if (!TextUtils.isEmpty(mUserPreference.getName())) {
-            tvName.setText(mUserPreference.getName());
-            tvAge.setText(String.valueOf(mUserPreference.getAge()));
-            tvIsLoveMU.setText(mUserPreference.isLoveMU() ? "Ya" : "Tidak");
-            tvEmail.setText(mUserPreference.getEmail());
-            tvPhoneNo.setText(mUserPreference.getPhoneNumber());
+        UserModel userModel = readPref();
+        if (!userModel.getName().isEmpty()) {
+            tvName.setText(userModel.getName());
+            tvAge.setText(String.valueOf(userModel.getAge()));
+            tvIsLoveMU.setText(userModel.isLove() ? "Ya" : "Tidak");
+            tvEmail.setText(userModel.getEmail());
+            tvPhoneNo.setText(userModel.getPhoneNumber());
 
             btnSave.setText(getString(R.string.change));
         } else {
@@ -89,4 +89,16 @@ public class MainActivity extends AppCompatActivity
             showExistingPreference();
         }
     }
+
+    public UserModel readPref(){
+        UserModel userModel = new UserModel();
+        userModel.setName(mUserPreference.getString(UserPreference.NAME));
+        userModel.setEmail(mUserPreference.getString(UserPreference.EMAIL));
+        userModel.setAge(mUserPreference.getInt(UserPreference.AGE));
+        userModel.setPhoneNumber(mUserPreference.getString(UserPreference.PHONE_NUMBER));
+        userModel.setLove(mUserPreference.getBool(UserPreference.LOVE_MU));
+
+        return userModel;
+    }
+
 }

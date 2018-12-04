@@ -2,14 +2,11 @@
     <string name="app_name">MySharedPreference</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
-    <string name="no_handphone">No Handphone</string>
+    <string name="phone_number">No Handphone</string>
     <string name="age">Age</string>
-    <string name="ya">Ya</string>
-    <string name="tidak">Tidak</string>
-    <string name="suka_manchester_united">Suka Manchester United</string>
-    <string name="simpan">Simpan</string>
-    <string name="phone_no">Phone No</string>
-    <string name="love_manchester_united">Love manchester united?</string>
-    <string name="save">Save</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="save">Simpan</string>
+    <string name="love_manchester_united">Suka manchester united?</string>
     <string name="change">Ubah</string>
 </resources>

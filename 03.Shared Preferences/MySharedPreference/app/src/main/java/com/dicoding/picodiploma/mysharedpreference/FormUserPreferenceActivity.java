@@ -13,10 +13,10 @@ import android.widget.Toast;
 
 public class FormUserPreferenceActivity extends AppCompatActivity
         implements View.OnClickListener {
-    EditText edtName, edtEmail, edtPhone, edtAge;
-    RadioGroup rgLoveMu;
-    RadioButton rbYes, rbNo;
-    Button btnSave;
+    private EditText edtName, edtEmail, edtPhone, edtAge;
+    private RadioGroup rgLoveMu;
+    private RadioButton rbYes, rbNo;
+    private Button btnSave;
 
     public static String EXTRA_TYPE_FORM = "extra_type_form";
     public static int REQUEST_CODE = 100;
@@ -79,12 +79,12 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     }
 
     private void showPreferenceInForm() {
-        edtName.setText(mUserPreference.getName());
-        edtEmail.setText(mUserPreference.getEmail());
-        edtAge.setText(String.valueOf(mUserPreference.getAge()));
-        edtPhone.setText(mUserPreference.getPhoneNumber());
+        edtName.setText(mUserPreference.getString(UserPreference.NAME));
+        edtEmail.setText(mUserPreference.getString(UserPreference.EMAIL));
+        edtAge.setText(String.valueOf(mUserPreference.getInt(UserPreference.AGE)));
+        edtPhone.setText(mUserPreference.getString(UserPreference.PHONE_NUMBER));
 
-        if (mUserPreference.isLoveMU()) {
+        if (mUserPreference.getBool(UserPreference.LOVE_MU)) {
             rbYes.setChecked(true);
         } else {
             rbNo.setChecked(false);
@@ -130,16 +130,29 @@ public class FormUserPreferenceActivity extends AppCompatActivity
                 return;
             }
 
-            mUserPreference.setName(name);
-            mUserPreference.setAge(Integer.parseInt(age));
-            mUserPreference.setEmail(email);
-            mUserPreference.setPhoneNumber(phoneNo);
-            mUserPreference.setLoveMU(isLoveMU);
+            UserModel userModel = new UserModel();
+            userModel.setName(name);
+            userModel.setEmail(email);
+            userModel.setAge(Integer.parseInt(age));
+            userModel.setPhoneNumber(phoneNo);
+            userModel.setLove(isLoveMU);
+            writePref(userModel);
 
-            Toast.makeText(this, "Data tersimpan", Toast.LENGTH_SHORT).show();
-
-            finish();
         }
+    }
+
+    private void writePref(UserModel userModel) {
+
+        mUserPreference.setString(userModel.getName(), UserPreference.NAME);
+        mUserPreference.setString(userModel.getEmail(), UserPreference.EMAIL);
+        mUserPreference.setInt(userModel.getAge(), UserPreference.AGE);
+        mUserPreference.setString(userModel.getPhoneNumber(), UserPreference.PHONE_NUMBER);
+        mUserPreference.setBool(userModel.isLove(), UserPreference.LOVE_MU);
+
+        Toast.makeText(this, "Data tersimpan", Toast.LENGTH_SHORT).show();
+
+        finish();
+
     }
 
     /**
