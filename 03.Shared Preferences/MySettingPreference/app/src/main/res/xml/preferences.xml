@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:defaultValue="Nama Lengkap"
+        android:key="name"
+        android:summary="@string/nothing"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Name" />
+
+    <EditTextPreference
+        android:defaultValue="Alamat Email"
+        android:key="email"
+        android:summary="@string/nothing"
+        android:selectAllOnFocus="true"
+        android:inputType="textEmailAddress"
+        android:singleLine="true"
+        android:title="Email" />
+
+    <EditTextPreference
+        android:defaultValue="Umur"
+        android:key="age"
+        android:inputType="number"
+        android:summary="@string/nothing"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Age" />
+
+    <EditTextPreference
+        android:defaultValue="Nomor Telfon"
+        android:key="phone_number"
+        android:summary="@string/nothing"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="PhoneNumber" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="isLove"
+        android:title="Suka Manchester United" />
+
+</PreferenceScreen>
