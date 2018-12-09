@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
@@ -27,14 +28,27 @@ public class NoteHelper {
     private static NoteHelper helper;
 
     private static SQLiteDatabase database;
+    private static SQLiteOpenHelper INSTANCE;
 
-    private NoteHelper(Context context) {
+    public NoteHelper(Context context) {
         dataBaseHelper = new DatabaseHelper(context);
     }
 
     public synchronized static void noteInstances(Context context) {
         helper = new NoteHelper(context);
     }
+
+
+//   public static void noteInstances(Context context) {
+//        if (INSTANCE == null){
+//            synchronized (SQLiteOpenHelper.class){
+//                if (INSTANCE == null){
+//                    helper = new NoteHelper(context);
+//                }
+//            }
+//        }
+//   }
+
 
     public static NoteHelper open() throws SQLException {
         database = dataBaseHelper.getWritableDatabase();

@@ -1,5 +1,6 @@
 package com.dicoding.picodiploma.mysharedpreference;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -13,23 +14,21 @@ import android.widget.Toast;
 
 public class FormUserPreferenceActivity extends AppCompatActivity
         implements View.OnClickListener {
+
     private EditText edtName, edtEmail, edtPhone, edtAge;
     private RadioGroup rgLoveMu;
     private RadioButton rbYes, rbNo;
-    private Button btnSave;
 
     public static final String EXTRA_TYPE_FORM = "extra_type_form";
-    public static int REQUEST_CODE = 100;
+    public static final int REQUEST_CODE = 100;
 
     public static final int TYPE_ADD = 1;
-    public static int TYPE_EDIT = 2;
+    public static final int TYPE_EDIT = 2;
     private int formType;
 
-    private final static String FIELD_REQUIRED = "Field tidak boleh kosong";
-    private final static String FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik";
-    private final static String FIELD_IS_NOT_VALID = "Email tidak valid";
-
-    private UserPreference mUserPreference;
+    final String FIELD_REQUIRED = "Field tidak boleh kosong";
+    final String FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik";
+    final String FIELD_IS_NOT_VALID = "Email tidak valid";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +42,10 @@ public class FormUserPreferenceActivity extends AppCompatActivity
         rgLoveMu = findViewById(R.id.rg_love_mu);
         rbYes = findViewById(R.id.rb_yes);
         rbNo = findViewById(R.id.rb_no);
-        btnSave = findViewById(R.id.btn_save);
+        Button btnSave = findViewById(R.id.btn_save);
         btnSave.setOnClickListener(this);
 
         formType = getIntent().getIntExtra(EXTRA_TYPE_FORM, 0);
-
-        mUserPreference = new UserPreference(this);
 
         String actionBarTitle;
         String btnTitle;
@@ -79,15 +76,17 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     }
 
     private void showPreferenceInForm() {
-        edtName.setText(mUserPreference.getString(UserPreference.NAME));
-        edtEmail.setText(mUserPreference.getString(UserPreference.EMAIL));
-        edtAge.setText(String.valueOf(mUserPreference.getInt(UserPreference.AGE)));
-        edtPhone.setText(mUserPreference.getString(UserPreference.PHONE_NUMBER));
+        Intent i = getIntent();
+        UserModel userModel = i.getParcelableExtra("USER");
 
-        if (mUserPreference.getBool(UserPreference.LOVE_MU)) {
+        edtName.setText(userModel.getName());
+        edtEmail.setText(userModel.getEmail());
+        edtAge.setText(String.valueOf(userModel.getAge()));
+        edtPhone.setText(userModel.getPhoneNumber());
+        if (userModel.isLove()) {
             rbYes.setChecked(true);
         } else {
-            rbNo.setChecked(false);
+            rbNo.setChecked(true);
         }
     }
 
@@ -130,30 +129,21 @@ public class FormUserPreferenceActivity extends AppCompatActivity
                 return;
             }
 
+            UserPreference userPreference = new UserPreference(this);
             UserModel userModel = new UserModel();
             userModel.setName(name);
             userModel.setEmail(email);
             userModel.setAge(Integer.parseInt(age));
             userModel.setPhoneNumber(phoneNo);
             userModel.setLove(isLoveMU);
-            writePref(userModel);
+            userPreference.setUser(userModel);
+            Toast.makeText(this, "Data tersimpan", Toast.LENGTH_SHORT).show();
+
+            finish();
 
         }
     }
 
-    private void writePref(UserModel userModel) {
-
-        mUserPreference.setString(userModel.getName(), UserPreference.NAME);
-        mUserPreference.setString(userModel.getEmail(), UserPreference.EMAIL);
-        mUserPreference.setInt(userModel.getAge(), UserPreference.AGE);
-        mUserPreference.setString(userModel.getPhoneNumber(), UserPreference.PHONE_NUMBER);
-        mUserPreference.setBool(userModel.isLove(), UserPreference.LOVE_MU);
-
-        Toast.makeText(this, "Data tersimpan", Toast.LENGTH_SHORT).show();
-
-        finish();
-
-    }
 
     /**
      * Cek apakah emailnya valid

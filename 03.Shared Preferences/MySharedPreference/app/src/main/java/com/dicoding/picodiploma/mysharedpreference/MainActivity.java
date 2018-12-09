@@ -10,15 +10,13 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener {
 
-    private TextView tvName;
-    private TextView tvAge;
-    private TextView tvPhoneNo;
-    private TextView tvEmail;
-    private TextView tvIsLoveMU;
+    private TextView tvName, tvAge, tvPhoneNo, tvEmail, tvIsLoveMU;
     private Button btnSave;
     private UserPreference mUserPreference;
 
     private boolean isPreferenceEmpty = false;
+    private UserModel userModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +30,8 @@ public class MainActivity extends AppCompatActivity
         tvIsLoveMU = findViewById(R.id.tv_is_love_mu);
         btnSave = findViewById(R.id.btn_save);
         btnSave.setOnClickListener(this);
+        userModel = new UserModel();
+
 
         mUserPreference = new UserPreference(this);
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
     Set tampilan menggunakan preferences
      */
     private void showExistingPreference() {
-        UserModel userModel = readPref();
+        mUserPreference.getUser(userModel);
         if (!userModel.getName().isEmpty()) {
             tvName.setText(userModel.getName());
             tvAge.setText(String.valueOf(userModel.getAge()));
@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity
             tvPhoneNo.setText(userModel.getPhoneNumber());
 
             btnSave.setText(getString(R.string.change));
+            isPreferenceEmpty = false;
+
         } else {
             final String TEXT_EMPTY = "Tidak Ada";
 
@@ -65,7 +67,6 @@ public class MainActivity extends AppCompatActivity
             tvPhoneNo.setText(TEXT_EMPTY);
 
             btnSave.setText(getString(R.string.save));
-
             isPreferenceEmpty = true;
         }
     }
@@ -77,7 +78,14 @@ public class MainActivity extends AppCompatActivity
             if (isPreferenceEmpty) {
                 intent.putExtra(FormUserPreferenceActivity.EXTRA_TYPE_FORM, FormUserPreferenceActivity.TYPE_ADD);
             } else {
+                String name = userModel.getName();
+                String email = userModel.getEmail();
+                int age = userModel.getAge();
+                String phoneNumber = userModel.getPhoneNumber();
+                boolean isLove = userModel.isLove();
+                UserModel userModel = new UserModel(name, email, age, phoneNumber, isLove);
                 intent.putExtra(FormUserPreferenceActivity.EXTRA_TYPE_FORM, FormUserPreferenceActivity.TYPE_EDIT);
+                intent.putExtra("USER", userModel);
             }
             startActivityForResult(intent, FormUserPreferenceActivity.REQUEST_CODE);
         }
@@ -93,16 +101,4 @@ public class MainActivity extends AppCompatActivity
             showExistingPreference();
         }
     }
-
-    private UserModel readPref(){
-        UserModel userModel = new UserModel();
-        userModel.setName(mUserPreference.getString(UserPreference.NAME));
-        userModel.setEmail(mUserPreference.getString(UserPreference.EMAIL));
-        userModel.setAge(mUserPreference.getInt(UserPreference.AGE));
-        userModel.setPhoneNumber(mUserPreference.getString(UserPreference.PHONE_NUMBER));
-        userModel.setLove(mUserPreference.getBool(UserPreference.LOVE_MU));
-
-        return userModel;
-    }
-
 }

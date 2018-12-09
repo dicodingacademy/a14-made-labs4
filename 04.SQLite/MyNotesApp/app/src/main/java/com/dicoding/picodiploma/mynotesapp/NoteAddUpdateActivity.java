@@ -127,6 +127,7 @@ public class NoteAddUpdateActivity extends AppCompatActivity
                 long result = NoteHelper.open().insertNote(note);
 
                 if (result > 0) {
+                    Toast.makeText(this, "result"+result, Toast.LENGTH_SHORT).show();
                     setResult(RESULT_ADD, intent);
                     finish();
                 } else {
@@ -194,14 +195,16 @@ public class NoteAddUpdateActivity extends AppCompatActivity
                         if (isDialogClose) {
                             finish();
                         } else {
-                            long result = NoteHelper.open().deleteNote(note.getId());
+                            NoteHelper db = NoteApp.db;
+                            long result = db.deleteNote(note.getId());
                             if (result > 0) {
                                 Intent intent = new Intent();
                                 intent.putExtra(EXTRA_POSITION, position);
                                 setResult(RESULT_DELETE, intent);
                                 finish();
                             } else {
-                                Toast.makeText(NoteAddUpdateActivity.this, "Gagal menghapus data", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(NoteAddUpdateActivity.this, "Result "+result, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(NoteAddUpdateActivity.this, "Gagal menghapus data", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
