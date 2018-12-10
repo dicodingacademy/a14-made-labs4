@@ -51,29 +51,28 @@ public class MainActivity extends AppCompatActivity
     Set tampilan menggunakan preferences
      */
     private void showExistingPreference() {
-        mUserPreference.getUser(userModel);
-        if (!userModel.getName().isEmpty()) {
-            tvName.setText(userModel.getName());
-            tvAge.setText(String.valueOf(userModel.getAge()));
-            tvIsLoveMU.setText(userModel.isLove() ? "Ya" : "Tidak");
-            tvEmail.setText(userModel.getEmail());
-            tvPhoneNo.setText(userModel.getPhoneNumber());
+        userModel = mUserPreference.getUser();
+        populateView(userModel);
+        checkForm(userModel);
+    }
 
+    private void checkForm(UserModel userModel) {
+        if (!userModel.getName().isEmpty()) {
             btnSave.setText(getString(R.string.change));
             isPreferenceEmpty = false;
-
         } else {
-            final String TEXT_EMPTY = "Tidak Ada";
-
-            tvName.setText(TEXT_EMPTY);
-            tvAge.setText(TEXT_EMPTY);
-            tvIsLoveMU.setText(TEXT_EMPTY);
-            tvEmail.setText(TEXT_EMPTY);
-            tvPhoneNo.setText(TEXT_EMPTY);
-
             btnSave.setText(getString(R.string.save));
             isPreferenceEmpty = true;
         }
+    }
+
+
+    private void populateView(UserModel userModel) {
+        tvName.setText(userModel.getName());
+        tvAge.setText(String.valueOf(userModel.getAge()));
+        tvIsLoveMU.setText(userModel.isLove() ? "Ya" : "Tidak");
+        tvEmail.setText(userModel.getEmail());
+        tvPhoneNo.setText(userModel.getPhoneNumber());
     }
 
     @Override
@@ -100,14 +99,8 @@ public class MainActivity extends AppCompatActivity
         if (requestCode == REQUEST_CODE) {
             if (resultCode == FormUserPreferenceActivity.RESULT_CODE){
                 userModel = data.getParcelableExtra(FormUserPreferenceActivity.KEY_VALUE);
-                tvName.setText(userModel.getName());
-                tvAge.setText(String.valueOf(userModel.getAge()));
-                tvIsLoveMU.setText(userModel.isLove() ? "Ya" : "Tidak");
-                tvEmail.setText(userModel.getEmail());
-                tvPhoneNo.setText(userModel.getPhoneNumber());
-
-                btnSave.setText(getString(R.string.change));
-                isPreferenceEmpty = false;
+                populateView(userModel);
+                checkForm(userModel);
             }
         }
     }

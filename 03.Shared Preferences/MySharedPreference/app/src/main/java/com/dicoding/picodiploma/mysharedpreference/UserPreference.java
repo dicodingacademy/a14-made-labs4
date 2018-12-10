@@ -32,11 +32,14 @@ class UserPreference {
         editor.apply();
     }
 
-    void getUser(UserModel value) {
-        value.setName(preferences.getString(NAME, ""));
-        value.setEmail(preferences.getString(EMAIL, ""));
-        value.setAge(preferences.getInt(AGE, 0));
-        value.setPhoneNumber(preferences.getString(PHONE_NUMBER, ""));
-        value.setLove(preferences.getBoolean(LOVE_MU, true));
+    UserModel getUser() {
+        UserModel model = new UserModel();
+        model.setName(preferences.getString(NAME, ""));
+        model.setEmail(preferences.getString(EMAIL, ""));
+        model.setAge(preferences.getInt(AGE, 0));
+        model.setPhoneNumber(preferences.getString(PHONE_NUMBER, ""));
+        model.setLove(preferences.getBoolean(LOVE_MU, false));
+
+        return model;
     }
 }

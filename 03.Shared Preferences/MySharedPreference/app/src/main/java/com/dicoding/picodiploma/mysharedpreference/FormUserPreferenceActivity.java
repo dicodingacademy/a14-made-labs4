@@ -20,7 +20,7 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     private RadioButton rbYes, rbNo;
 
     public static final String EXTRA_TYPE_FORM = "extra_type_form";
-    public static final int RESULT_CODE = 100;
+    public static final int RESULT_CODE = 101;
 
     public static final int TYPE_ADD = 1;
     public static final int TYPE_EDIT = 2;
@@ -83,7 +83,6 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     }
 
     private void showPreferenceInForm() {
-
         edtName.setText(userModel.getName());
         edtEmail.setText(userModel.getEmail());
         edtAge.setText(String.valueOf(userModel.getAge()));
