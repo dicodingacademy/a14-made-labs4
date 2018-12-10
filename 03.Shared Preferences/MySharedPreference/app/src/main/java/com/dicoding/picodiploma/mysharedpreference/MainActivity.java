@@ -35,8 +35,9 @@ public class MainActivity extends AppCompatActivity
 
         mUserPreference = new UserPreference(this);
 
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setTitle("My User Preference");
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setTitle("My User Preference");
+        }
 
         showExistingPreference();
 
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, FormUserPreferenceActivity.class);
             if (isPreferenceEmpty) {
                 intent.putExtra(FormUserPreferenceActivity.EXTRA_TYPE_FORM, FormUserPreferenceActivity.TYPE_ADD);
+                intent.putExtra("USER", userModel);
             } else {
                 String name = userModel.getName();
                 String email = userModel.getEmail();

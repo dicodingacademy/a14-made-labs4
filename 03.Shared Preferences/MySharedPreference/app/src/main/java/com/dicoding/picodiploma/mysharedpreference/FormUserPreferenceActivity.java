@@ -25,6 +25,7 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     public static final int TYPE_ADD = 1;
     public static final int TYPE_EDIT = 2;
     private int formType;
+    UserModel userModel;
 
     final String FIELD_REQUIRED = "Field tidak boleh kosong";
     final String FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik";
@@ -42,26 +43,31 @@ public class FormUserPreferenceActivity extends AppCompatActivity
         rgLoveMu = findViewById(R.id.rg_love_mu);
         rbYes = findViewById(R.id.rb_yes);
         rbNo = findViewById(R.id.rb_no);
+        Intent i = getIntent();
+        userModel = i.getParcelableExtra("USER");
         Button btnSave = findViewById(R.id.btn_save);
         btnSave.setOnClickListener(this);
 
         formType = getIntent().getIntExtra(EXTRA_TYPE_FORM, 0);
 
-        String actionBarTitle;
-        String btnTitle;
+        String actionBarTitle = "";
+        String btnTitle = "";
 
-        if (formType == 1) {
-            actionBarTitle = "Tambah Baru";
-            btnTitle = "Simpan";
-        } else {
-            actionBarTitle = "Ubah";
-            btnTitle = "Update";
-            showPreferenceInForm();
+        switch (formType){
+            case TYPE_ADD:
+                actionBarTitle = "Tambah Baru";
+                btnTitle = "Simpan";
+                break;
+            case TYPE_EDIT:
+                actionBarTitle = "Ubah";
+                btnTitle = "Update";
+                showPreferenceInForm();
         }
 
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setTitle(actionBarTitle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(actionBarTitle);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         btnSave.setText(btnTitle);
 
@@ -76,8 +82,6 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     }
 
     private void showPreferenceInForm() {
-        Intent i = getIntent();
-        UserModel userModel = i.getParcelableExtra("USER");
 
         edtName.setText(userModel.getName());
         edtEmail.setText(userModel.getEmail());
@@ -130,7 +134,6 @@ public class FormUserPreferenceActivity extends AppCompatActivity
             }
 
             UserPreference userPreference = new UserPreference(this);
-            UserModel userModel = new UserModel();
             userModel.setName(name);
             userModel.setEmail(email);
             userModel.setAge(Integer.parseInt(age));
