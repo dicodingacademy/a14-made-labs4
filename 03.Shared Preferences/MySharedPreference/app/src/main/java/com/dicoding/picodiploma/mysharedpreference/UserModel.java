@@ -11,14 +11,6 @@ public class UserModel implements Parcelable {
     String phoneNumber;
     boolean isLove;
 
-    public UserModel(String name, String email, int age, String phoneNumber, boolean isLove) {
-        this.name = name;
-        this.email = email;
-        this.age = age;
-        this.phoneNumber = phoneNumber;
-        this.isLove = isLove;
-    }
-
     public void setName(String name) {
         this.name = name;
     }

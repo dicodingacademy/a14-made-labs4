@@ -30,7 +30,7 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     final String FIELD_REQUIRED = "Field tidak boleh kosong";
     final String FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik";
     final String FIELD_IS_NOT_VALID = "Email tidak valid";
-    public static String KEY_VALUE = "KEY_VALUE";
+    public final static String KEY_VALUE = "KEY_VALUE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class FormUserPreferenceActivity extends AppCompatActivity
         String actionBarTitle = "";
         String btnTitle = "";
 
-        switch (formType){
+        switch (formType) {
             case TYPE_ADD:
                 actionBarTitle = "Tambah Baru";
                 btnTitle = "Simpan";

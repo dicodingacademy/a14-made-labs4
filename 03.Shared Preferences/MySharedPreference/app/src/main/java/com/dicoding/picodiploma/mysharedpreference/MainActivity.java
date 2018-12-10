@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import static com.dicoding.picodiploma.mysharedpreference.FormUserPreferenceActivity.KEY_VALUE;
-
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener {
 
@@ -19,7 +17,7 @@ public class MainActivity extends AppCompatActivity
     private boolean isPreferenceEmpty = false;
     private UserModel userModel;
 
-    private int REQUEST_CODE = 100;
+    private final int REQUEST_CODE = 100;
 
 
     @Override
@@ -39,7 +37,7 @@ public class MainActivity extends AppCompatActivity
 
         mUserPreference = new UserPreference(this);
 
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("My User Preference");
         }
 
@@ -68,11 +66,11 @@ public class MainActivity extends AppCompatActivity
 
 
     private void populateView(UserModel userModel) {
-        tvName.setText(userModel.getName());
-        tvAge.setText(String.valueOf(userModel.getAge()));
+        tvName.setText(userModel.getName().isEmpty() ? "Tidak Ada" : userModel.getName());
+        tvAge.setText(String.valueOf(userModel.getAge()).isEmpty() ? "Tidak Ada" : String.valueOf(userModel.getAge()));
         tvIsLoveMU.setText(userModel.isLove() ? "Ya" : "Tidak");
-        tvEmail.setText(userModel.getEmail());
-        tvPhoneNo.setText(userModel.getPhoneNumber());
+        tvEmail.setText(userModel.getEmail().isEmpty() ? "Tidak Ada" : userModel.getEmail());
+        tvPhoneNo.setText(userModel.getPhoneNumber().isEmpty() ? "Tidak Ada" : userModel.getPhoneNumber());
     }
 
     @Override
@@ -97,7 +95,7 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
-            if (resultCode == FormUserPreferenceActivity.RESULT_CODE){
+            if (resultCode == FormUserPreferenceActivity.RESULT_CODE) {
                 userModel = data.getParcelableExtra(FormUserPreferenceActivity.KEY_VALUE);
                 populateView(userModel);
                 checkForm(userModel);
