@@ -20,7 +20,7 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     private RadioButton rbYes, rbNo;
 
     public static final String EXTRA_TYPE_FORM = "extra_type_form";
-    public static final int REQUEST_CODE = 100;
+    public static final int RESULT_CODE = 100;
 
     public static final int TYPE_ADD = 1;
     public static final int TYPE_EDIT = 2;
@@ -30,6 +30,7 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     final String FIELD_REQUIRED = "Field tidak boleh kosong";
     final String FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik";
     final String FIELD_IS_NOT_VALID = "Email tidak valid";
+    public static String KEY_VALUE = "KEY_VALUE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,9 +142,10 @@ public class FormUserPreferenceActivity extends AppCompatActivity
             userModel.setLove(isLoveMU);
             userPreference.setUser(userModel);
             Toast.makeText(this, "Data tersimpan", Toast.LENGTH_SHORT).show();
-
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(KEY_VALUE, userModel);
+            setResult(RESULT_CODE, resultIntent);
             finish();
-
         }
     }
 

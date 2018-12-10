@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import static com.dicoding.picodiploma.mysharedpreference.FormUserPreferenceActivity.KEY_VALUE;
+
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener {
 
@@ -16,6 +18,8 @@ public class MainActivity extends AppCompatActivity
 
     private boolean isPreferenceEmpty = false;
     private UserModel userModel;
+
+    private int REQUEST_CODE = 100;
 
 
     @Override
@@ -80,16 +84,10 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra(FormUserPreferenceActivity.EXTRA_TYPE_FORM, FormUserPreferenceActivity.TYPE_ADD);
                 intent.putExtra("USER", userModel);
             } else {
-                String name = userModel.getName();
-                String email = userModel.getEmail();
-                int age = userModel.getAge();
-                String phoneNumber = userModel.getPhoneNumber();
-                boolean isLove = userModel.isLove();
-                UserModel userModel = new UserModel(name, email, age, phoneNumber, isLove);
                 intent.putExtra(FormUserPreferenceActivity.EXTRA_TYPE_FORM, FormUserPreferenceActivity.TYPE_EDIT);
                 intent.putExtra("USER", userModel);
             }
-            startActivityForResult(intent, FormUserPreferenceActivity.REQUEST_CODE);
+            startActivityForResult(intent, REQUEST_CODE);
         }
     }
 
@@ -99,8 +97,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == FormUserPreferenceActivity.REQUEST_CODE) {
-            showExistingPreference();
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == FormUserPreferenceActivity.RESULT_CODE){
+                userModel = data.getParcelableExtra(FormUserPreferenceActivity.KEY_VALUE);
+                tvName.setText(userModel.getName());
+                tvAge.setText(String.valueOf(userModel.getAge()));
+                tvIsLoveMU.setText(userModel.isLove() ? "Ya" : "Tidak");
+                tvEmail.setText(userModel.getEmail());
+                tvPhoneNo.setText(userModel.getPhoneNumber());
+
+                btnSave.setText(getString(R.string.change));
+                isPreferenceEmpty = false;
+            }
         }
     }
 }
