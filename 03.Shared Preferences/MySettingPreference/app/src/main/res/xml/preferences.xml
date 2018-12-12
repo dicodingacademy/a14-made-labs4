@@ -4,7 +4,7 @@
     app:iconSpaceReserved="false">
 
     <EditTextPreference
-        android:key="name"
+        android:key="NAME"
         android:summary="@string/nothing"
         app:iconSpaceReserved="false"
         android:selectAllOnFocus="true"
@@ -12,7 +12,7 @@
         android:title="@string/name" />
 
     <EditTextPreference
-        android:key="email"
+        android:key="EMAIL"
         app:iconSpaceReserved="false"
         android:summary="@string/nothing"
         android:selectAllOnFocus="true"
@@ -21,7 +21,7 @@
         android:title="@string/email" />
 
     <EditTextPreference
-        android:key="age"
+        android:key="AGE"
         app:iconSpaceReserved="false"
         android:inputType="number"
         android:summary="@string/nothing"
@@ -30,7 +30,7 @@
         android:title="@string/age" />
 
     <EditTextPreference
-        android:key="phone_number"
+        android:key="PHONE"
         app:iconSpaceReserved="false"
         android:summary="@string/nothing"
         android:selectAllOnFocus="true"
@@ -39,7 +39,7 @@
     <CheckBoxPreference
         android:defaultValue="false"
         app:iconSpaceReserved="false"
-        android:key="isLove"
+        android:key="ISLOVE"
         android:title="@string/isLoveMu" />
 
 </PreferenceScreen>

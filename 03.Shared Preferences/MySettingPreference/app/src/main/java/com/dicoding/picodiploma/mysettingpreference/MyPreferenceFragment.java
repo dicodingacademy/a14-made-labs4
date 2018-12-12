@@ -25,11 +25,11 @@ public class MyPreferenceFragment extends PreferenceFragmentCompat implements Sh
 
     private void setSummaries() {
         SharedPreferences sh = getPreferenceManager().getSharedPreferences();
-        namePreference.setSummary(sh.getString("name", DEFAULT_VALUE));
-        emailPreference.setSummary(sh.getString("email", DEFAULT_VALUE));
-        agePreference.setSummary(sh.getString("age", DEFAULT_VALUE));
-        phonePreference.setSummary(sh.getString("phone_number", DEFAULT_VALUE));
-        isLoveMuPreference.setChecked(sh.getBoolean("isLove", false));
+        namePreference.setSummary(sh.getString("NAME", DEFAULT_VALUE));
+        emailPreference.setSummary(sh.getString("EMAIL", DEFAULT_VALUE));
+        agePreference.setSummary(sh.getString("AGE", DEFAULT_VALUE));
+        phonePreference.setSummary(sh.getString("PHONE", DEFAULT_VALUE));
+        isLoveMuPreference.setChecked(sh.getBoolean("ISLOVE", false));
     }
 
     @Override
@@ -48,33 +48,33 @@ public class MyPreferenceFragment extends PreferenceFragmentCompat implements Sh
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("name")) {
-            namePreference.setSummary(sharedPreferences.getString("name", DEFAULT_VALUE));
+        if (key.equals("NAME")) {
+            namePreference.setSummary(sharedPreferences.getString("NAME", DEFAULT_VALUE));
         }
 
-        if (key.equals("email")) {
-            emailPreference.setSummary(sharedPreferences.getString("email", DEFAULT_VALUE));
+        if (key.equals("EMAIL")) {
+            emailPreference.setSummary(sharedPreferences.getString("EMAIL", DEFAULT_VALUE));
         }
 
-        if (key.equals("age")) {
-            agePreference.setSummary(sharedPreferences.getString("age", DEFAULT_VALUE));
+        if (key.equals("AGE")) {
+            agePreference.setSummary(sharedPreferences.getString("AGE", DEFAULT_VALUE));
         }
 
-        if (key.equals("phone_number")) {
-            phonePreference.setSummary(sharedPreferences.getString("phone_number", DEFAULT_VALUE));
+        if (key.equals("PHONE")) {
+            phonePreference.setSummary(sharedPreferences.getString("PHONE", DEFAULT_VALUE));
         }
 
-        if (key.equals("isLove")) {
-            isLoveMuPreference.setChecked(sharedPreferences.getBoolean("isLove", false));
+        if (key.equals("ISLOVE")) {
+            isLoveMuPreference.setChecked(sharedPreferences.getBoolean("ISLOVE", false));
         }
     }
 
     private void init() {
-        namePreference = (EditTextPreference) findPreference("name");
-        emailPreference = (EditTextPreference) findPreference("email");
-        agePreference = (EditTextPreference) findPreference("age");
-        phonePreference = (EditTextPreference) findPreference("phone_number");
-        isLoveMuPreference = (CheckBoxPreference) findPreference("isLove");
+        namePreference = (EditTextPreference) findPreference("NAME");
+        emailPreference = (EditTextPreference) findPreference("EMAIL");
+        agePreference = (EditTextPreference) findPreference("AGE");
+        phonePreference = (EditTextPreference) findPreference("PHONE");
+        isLoveMuPreference = (CheckBoxPreference) findPreference("ISLOVE");
     }
 
 }
