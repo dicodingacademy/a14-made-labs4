@@ -8,11 +8,11 @@ import android.content.SharedPreferences;
  */
 
 class UserPreference {
-    private static final String NAME = "name";
-    private static final String EMAIL = "email";
-    private static final String AGE = "age";
-    private static final String PHONE_NUMBER = "phone";
-    private static final String LOVE_MU = "islove";
+    private static final String NAME = "NAME";
+    private static final String EMAIL = "EMAIL";
+    private static final String AGE = "AGE";
+    private static final String PHONE_NUMBER = "PHONE";
+    private static final String LOVE_MU = "ISLOVE";
 
     private final SharedPreferences preferences;
 
