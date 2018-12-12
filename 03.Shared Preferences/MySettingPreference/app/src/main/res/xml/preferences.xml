@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:iconSpaceReserved="false">
 
     <EditTextPreference
-        android:defaultValue="Nama Lengkap"
         android:key="name"
         android:summary="@string/nothing"
+        app:iconSpaceReserved="false"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/name" />
 
     <EditTextPreference
-        android:defaultValue="Alamat Email"
         android:key="email"
+        app:iconSpaceReserved="false"
         android:summary="@string/nothing"
         android:selectAllOnFocus="true"
         android:inputType="textEmailAddress"
@@ -19,8 +21,8 @@
         android:title="@string/email" />
 
     <EditTextPreference
-        android:defaultValue="Umur"
         android:key="age"
+        app:iconSpaceReserved="false"
         android:inputType="number"
         android:summary="@string/nothing"
         android:selectAllOnFocus="true"
@@ -28,14 +30,15 @@
         android:title="@string/age" />
 
     <EditTextPreference
-        android:defaultValue="Nomor Telfon"
         android:key="phone_number"
+        app:iconSpaceReserved="false"
         android:summary="@string/nothing"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/phone_number" />
     <CheckBoxPreference
         android:defaultValue="false"
+        app:iconSpaceReserved="false"
         android:key="isLove"
         android:title="@string/isLoveMu" />
 
