@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     /*
-    Set tampilan menggunakan preferences
+    menampilkan preference yang ada
      */
     private void showExistingPreference() {
         userModel = mUserPreference.getUser();
@@ -65,6 +65,9 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    /*
+    Set tampilan menggunakan preferences
+     */
     private void populateView(UserModel userModel) {
         tvName.setText(userModel.getName().isEmpty() ? "Tidak Ada" : userModel.getName());
         tvAge.setText(String.valueOf(userModel.getAge()).isEmpty() ? "Tidak Ada" : String.valueOf(userModel.getAge()));

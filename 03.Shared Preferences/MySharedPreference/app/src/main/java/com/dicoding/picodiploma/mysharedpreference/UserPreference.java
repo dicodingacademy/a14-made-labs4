@@ -21,7 +21,6 @@ class UserPreference {
         preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
-
     public void setUser(UserModel value) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(NAME, value.name);

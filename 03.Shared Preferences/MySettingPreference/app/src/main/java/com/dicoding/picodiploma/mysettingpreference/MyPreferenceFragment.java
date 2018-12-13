@@ -23,6 +23,9 @@ public class MyPreferenceFragment extends PreferenceFragmentCompat implements Sh
         setSummaries();
     }
 
+    /*
+    Set summary menggunakan preference
+     */
     private void setSummaries() {
         SharedPreferences sh = getPreferenceManager().getSharedPreferences();
         namePreference.setSummary(sh.getString("NAME", DEFAULT_VALUE));
@@ -32,6 +35,10 @@ public class MyPreferenceFragment extends PreferenceFragmentCompat implements Sh
         isLoveMuPreference.setChecked(sh.getBoolean("ISLOVE", false));
     }
 
+    /*
+    Untuk manajemen lifecycle yang tepat dalam Kegiatan atau Fragment ,
+    kita wajib register dan unregister listener nya di onResume () dan onPause ()
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -46,6 +53,9 @@ public class MyPreferenceFragment extends PreferenceFragmentCompat implements Sh
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
 
+    /*
+    listener untuk set summary ketika ada sharedpreference yang berubah
+     */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("NAME")) {
