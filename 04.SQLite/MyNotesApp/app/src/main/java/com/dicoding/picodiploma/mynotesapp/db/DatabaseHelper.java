@@ -12,9 +12,9 @@ import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumn
  * Created by sidiqpermana on 11/23/16.
  */
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static String DATABASE_NAME = "dbnoteapp";
+    private static final String DATABASE_NAME = "dbnoteapp";
 
     private static final int DATABASE_VERSION = 1;
 

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
     private ArrayList<Note> listNotes = new ArrayList<>();
-    private Activity activity;
+    private final Activity activity;
 
     public NoteAdapter(Activity activity) {
         this.activity = activity;
@@ -51,13 +51,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     }
 
     public void addItem(Note note) {
-
         if (listNotes.size() == 0) {
             this.listNotes.add(listNotes.size(), note);
         } else {
             this.listNotes.add(listNotes.size() - 1, note);
         }
-        notifyDataSetChanged();
+        notifyItemInserted(note.getId());
     }
 
     @NonNull
@@ -89,8 +88,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     }
 
     class NoteViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitle, tvDescription, tvDate;
-        CardView cvNote;
+        final TextView tvTitle, tvDescription, tvDate;
+        final CardView cvNote;
 
         NoteViewHolder(View itemView) {
             super(itemView);

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
@@ -23,36 +24,35 @@ import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumn
  */
 
 public class NoteHelper {
-    private static String DATABASE_TABLE = TABLE_NAME;
+    private static final String DATABASE_TABLE = TABLE_NAME;
     private static DatabaseHelper dataBaseHelper;
-    private static NoteHelper helper;
+    private static NoteHelper INSTANCE;
 
     private static SQLiteDatabase database;
-    private static SQLiteOpenHelper INSTANCE;
 
     public NoteHelper(Context context) {
         dataBaseHelper = new DatabaseHelper(context);
     }
 
-    public synchronized static void noteInstances(Context context) {
-        helper = new NoteHelper(context);
-    }
+//    public synchronized static void noteInstances(Context context) {
+//        INSTANCE = new NoteHelper(context);
+//    }
+
+   public static NoteHelper noteInstances(Context context) {
+        open();
+        if (INSTANCE == null){
+            synchronized (SQLiteOpenHelper.class){
+                if (INSTANCE == null){
+                    INSTANCE = new NoteHelper(context);
+                }
+            }
+        }
+        return INSTANCE;
+   }
 
 
-//   public static void noteInstances(Context context) {
-//        if (INSTANCE == null){
-//            synchronized (SQLiteOpenHelper.class){
-//                if (INSTANCE == null){
-//                    helper = new NoteHelper(context);
-//                }
-//            }
-//        }
-//   }
-
-
-    public static NoteHelper open() throws SQLException {
+    private static void open() throws SQLException {
         database = dataBaseHelper.getWritableDatabase();
-        return helper;
     }
 
     public static void close() {
@@ -116,6 +116,9 @@ public class NoteHelper {
         args.put(TITLE, note.getTitle());
         args.put(DESCRIPTION, note.getDescription());
         args.put(DATE, note.getDate());
+        Log.d("IDNYA","idnya "+note.getId());
+//        return database.update(DATABASE_TABLE, args, _ID + "=?",
+//                new String[]{note.getId()+""});
         return database.update(DATABASE_TABLE, args, _ID + "= '" + note.getId() + "'", null);
     }
 

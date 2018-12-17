@@ -23,18 +23,18 @@ import java.util.Locale;
 
 public class NoteAddUpdateActivity extends AppCompatActivity
         implements View.OnClickListener {
-    EditText edtTitle, edtDescription;
-    Button btnSubmit;
+    private EditText edtTitle, edtDescription;
+    private Button btnSubmit;
 
-    public static String EXTRA_NOTE = "extra_note";
-    public static String EXTRA_POSITION = "extra_position";
+    public static final String EXTRA_NOTE = "extra_note";
+    public static final String EXTRA_POSITION = "extra_position";
 
     private boolean isEdit = false;
-    public static int REQUEST_ADD = 100;
-    public static int RESULT_ADD = 101;
-    public static int REQUEST_UPDATE = 200;
-    public static int RESULT_UPDATE = 201;
-    public static int RESULT_DELETE = 301;
+    public static final int REQUEST_ADD = 100;
+    public static final int RESULT_ADD = 101;
+    public static final int REQUEST_UPDATE = 200;
+    public static final int RESULT_UPDATE = 201;
+    public static final int RESULT_DELETE = 301;
 
     private Note note;
     private int position;
@@ -50,7 +50,6 @@ public class NoteAddUpdateActivity extends AppCompatActivity
         btnSubmit.setOnClickListener(this);
 
         note = getIntent().getParcelableExtra(EXTRA_NOTE);
-
         if (note != null) {
             position = getIntent().getIntExtra(EXTRA_POSITION, 0);
             isEdit = true;
@@ -101,6 +100,7 @@ public class NoteAddUpdateActivity extends AppCompatActivity
                 return;
             }
 
+
             note.setTitle(title);
             note.setDescription(description);
 
@@ -113,8 +113,7 @@ public class NoteAddUpdateActivity extends AppCompatActivity
                  */
 
             if (isEdit) {
-                long result = NoteHelper.open().updateNote(note);
-
+                long result = NoteHelper.noteInstances(NoteAddUpdateActivity.this).updateNote(note);
                 if (result > 0) {
                     setResult(RESULT_UPDATE, intent);
                     finish();
@@ -124,10 +123,9 @@ public class NoteAddUpdateActivity extends AppCompatActivity
 
             } else {
                 note.setDate(getCurrentDate());
-                long result = NoteHelper.open().insertNote(note);
+                long result = NoteHelper.noteInstances(NoteAddUpdateActivity.this).insertNote(note);
 
                 if (result > 0) {
-                    Toast.makeText(this, "result"+result, Toast.LENGTH_SHORT).show();
                     setResult(RESULT_ADD, intent);
                     finish();
                 } else {
@@ -164,8 +162,8 @@ public class NoteAddUpdateActivity extends AppCompatActivity
         showAlertDialog(ALERT_DIALOG_CLOSE);
     }
 
-    final int ALERT_DIALOG_CLOSE = 10;
-    final int ALERT_DIALOG_DELETE = 20;
+    private final int ALERT_DIALOG_CLOSE = 10;
+    private final int ALERT_DIALOG_DELETE = 20;
 
     /*
     Konfirmasi dialog sebelum proses batal atau hapus
@@ -195,16 +193,14 @@ public class NoteAddUpdateActivity extends AppCompatActivity
                         if (isDialogClose) {
                             finish();
                         } else {
-                            NoteHelper db = NoteApp.db;
-                            long result = db.deleteNote(note.getId());
+                            long result = NoteHelper.noteInstances(NoteAddUpdateActivity.this).deleteNote(note.getId());
                             if (result > 0) {
                                 Intent intent = new Intent();
                                 intent.putExtra(EXTRA_POSITION, position);
                                 setResult(RESULT_DELETE, intent);
                                 finish();
                             } else {
-                                Toast.makeText(NoteAddUpdateActivity.this, "Result "+result, Toast.LENGTH_SHORT).show();
-//                                Toast.makeText(NoteAddUpdateActivity.this, "Gagal menghapus data", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(NoteAddUpdateActivity.this, "Gagal menghapus data", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

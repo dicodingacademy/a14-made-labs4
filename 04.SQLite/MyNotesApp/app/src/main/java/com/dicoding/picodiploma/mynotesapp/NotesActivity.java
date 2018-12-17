@@ -22,12 +22,14 @@ import static com.dicoding.picodiploma.mynotesapp.NoteAddUpdateActivity.REQUEST_
 
 public class NotesActivity extends AppCompatActivity
         implements View.OnClickListener {
-    RecyclerView rvNotes;
-    ProgressBar progressBar;
-    FloatingActionButton fabAdd;
+    private RecyclerView rvNotes;
+    private ProgressBar progressBar;
+    private FloatingActionButton fabAdd;
 
     private ArrayList<Note> list;
     private NoteAdapter adapter;
+
+    private NoteHelper noteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +42,10 @@ public class NotesActivity extends AppCompatActivity
         rvNotes = findViewById(R.id.rv_notes);
         rvNotes.setLayoutManager(new LinearLayoutManager(this));
         rvNotes.setHasFixedSize(true);
-
+        noteHelper = new NoteHelper(this);
         progressBar = findViewById(R.id.progressbar);
         fabAdd = findViewById(R.id.fab_add);
         fabAdd.setOnClickListener(this);
-
         list = new ArrayList<>();
 
         adapter = new NoteAdapter(this);
@@ -63,9 +64,9 @@ public class NotesActivity extends AppCompatActivity
         }
     }
 
-    private static class LoadNoteAsync extends AsyncTask<Void, Void, ArrayList<Note>> {
+    private class LoadNoteAsync extends AsyncTask<Void, Void, ArrayList<Note>> {
 
-        private WeakReference<NotesActivity> activityWeakReference;
+        private final WeakReference<NotesActivity> activityWeakReference;
 
         private LoadNoteAsync(NotesActivity context) {
             activityWeakReference = new WeakReference<>(context);
@@ -95,7 +96,7 @@ public class NotesActivity extends AppCompatActivity
             if (activity.isFinishing()) {
                 return new ArrayList<>();
             }
-            return NoteHelper.open().getAllNotes();
+            return NoteHelper.noteInstances(NotesActivity.this).getAllNotes();
         }
 
         @Override
@@ -107,7 +108,6 @@ public class NotesActivity extends AppCompatActivity
             if (activity.isFinishing()) {
                 return;
             }
-
             activity.progressBar.setVisibility(View.GONE);
             activity.list.addAll(notes);
             activity.adapter.setListNotes(activity.list);
@@ -126,12 +126,11 @@ public class NotesActivity extends AppCompatActivity
             // Akan dipanggil jika request codenya ADD
             if (requestCode == NoteAddUpdateActivity.REQUEST_ADD) {
                 if (resultCode == NoteAddUpdateActivity.RESULT_ADD) {
-
-                    Note note = data.getParcelableExtra(NoteAddUpdateActivity.EXTRA_NOTE);
-
-                    adapter.addItem(note);
-                    rvNotes.smoothScrollToPosition(0);
-
+                    new LoadNoteAsync(this).execute();
+//                    Note note = data.getParcelableExtra(NoteAddUpdateActivity.EXTRA_NOTE);
+//
+//                    adapter.addItem(note);
+//                    rvNotes.smoothScrollToPosition(0);
                     showSnackbarMessage("Satu item berhasil ditambahkan");
                 }
             }

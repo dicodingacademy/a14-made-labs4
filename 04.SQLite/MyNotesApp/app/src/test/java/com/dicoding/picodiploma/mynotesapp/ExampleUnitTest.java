@@ -1,4 +1,4 @@
-package com.dicoding.mynotesapp;
+package com.dicoding.picodiploma.mynotesapp;
 
 import org.junit.Test;
 

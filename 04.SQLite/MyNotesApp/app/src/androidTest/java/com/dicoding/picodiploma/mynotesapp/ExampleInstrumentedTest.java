@@ -1,4 +1,4 @@
-package com.dicoding.mynotesapp;
+package com.dicoding.picodiploma.mynotesapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
