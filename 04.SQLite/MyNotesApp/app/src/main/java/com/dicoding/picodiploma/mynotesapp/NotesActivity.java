@@ -16,12 +16,13 @@ import com.dicoding.picodiploma.mynotesapp.db.NoteHelper;
 import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static com.dicoding.picodiploma.mynotesapp.NoteAddUpdateActivity.REQUEST_UPDATE;
 
 public class NotesActivity extends AppCompatActivity
-        implements View.OnClickListener {
+        implements View.OnClickListener,LoadNotesCallback {
     private RecyclerView rvNotes;
     private ProgressBar progressBar;
     private FloatingActionButton fabAdd;
@@ -52,7 +53,7 @@ public class NotesActivity extends AppCompatActivity
         adapter.setListNotes(list);
         rvNotes.setAdapter(adapter);
 
-        new LoadNoteAsync(this).execute();
+        //new LoadNotesAsync(this).execute();
     }
 
 
@@ -64,57 +65,46 @@ public class NotesActivity extends AppCompatActivity
         }
     }
 
-    private class LoadNoteAsync extends AsyncTask<Void, Void, ArrayList<Note>> {
+    @Override
+    public void preExecute() {
+        // TODO
+    }
 
-        private final WeakReference<NotesActivity> activityWeakReference;
+    @Override
+    public void postExecute(ArrayList<Note> notes) {
+        // TODO
+    }
 
-        private LoadNoteAsync(NotesActivity context) {
-            activityWeakReference = new WeakReference<>(context);
+    private static class LoadNotesAsync extends AsyncTask<Void, Void, ArrayList<Note>> {
+
+        private final WeakReference<NoteHelper> weakNoteHelper;
+        private final WeakReference<LoadNotesCallback> weakCallback;
+
+        private LoadNotesAsync(NoteHelper noteHelper, LoadNotesCallback callback) {
+            weakNoteHelper = new WeakReference<>(noteHelper);
+            weakCallback = new WeakReference<>(callback);
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
-            NotesActivity activity = activityWeakReference.get();
+            weakCallback.get().preExecute();
 
-            if (activity.isFinishing()) {
-                return;
-            }
-
-            activity.progressBar.setVisibility(View.VISIBLE);
-
-            if (activity.list.size() > 0) {
-                activity.list.clear();
-            }
         }
 
         @Override
         protected ArrayList<Note> doInBackground(Void... voids) {
-            NotesActivity activity = activityWeakReference.get();
 
-            if (activity.isFinishing()) {
-                return new ArrayList<>();
-            }
-            return NoteHelper.noteInstances(NotesActivity.this).getAllNotes();
+            return weakNoteHelper.get().getAllNotes();
         }
 
         @Override
         protected void onPostExecute(ArrayList<Note> notes) {
             super.onPostExecute(notes);
 
-            NotesActivity activity = activityWeakReference.get();
+            weakCallback.get().postExecute(notes);
 
-            if (activity.isFinishing()) {
-                return;
-            }
-            activity.progressBar.setVisibility(View.GONE);
-            activity.list.addAll(notes);
-            activity.adapter.setListNotes(activity.list);
-
-            if (activity.list.size() == 0) {
-                activity.showSnackbarMessage("Tidak ada data saat ini");
-            }
         }
     }
 
@@ -126,7 +116,7 @@ public class NotesActivity extends AppCompatActivity
             // Akan dipanggil jika request codenya ADD
             if (requestCode == NoteAddUpdateActivity.REQUEST_ADD) {
                 if (resultCode == NoteAddUpdateActivity.RESULT_ADD) {
-                    new LoadNoteAsync(this).execute();
+//                    new LoadNotesAsync(this).execute();
 //                    Note note = data.getParcelableExtra(NoteAddUpdateActivity.EXTRA_NOTE);
 //
 //                    adapter.addItem(note);
