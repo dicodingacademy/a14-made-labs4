@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dicoding.picodiploma.mynotesapp.R;
 import com.dicoding.picodiploma.mynotesapp.CustomOnItemClickListener;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
  */
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
-    private ArrayList<Note> listNotes = new ArrayList<>();
+    private final ArrayList<Note> listNotes = new ArrayList<>();
     private final Activity activity;
 
     public NoteAdapter(Activity activity) {
@@ -34,7 +35,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     }
 
     public void setListNotes(ArrayList<Note> listNotes) {
-        this.listNotes = new ArrayList<>();
+
+        if (listNotes.size() > 0){
+            this.listNotes.clear();
+        }
         this.listNotes.addAll(listNotes);
 
         notifyDataSetChanged();
@@ -51,12 +55,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     }
 
     public void addItem(Note note) {
-        if (listNotes.size() == 0) {
-            this.listNotes.add(listNotes.size(), note);
-        } else {
-            this.listNotes.add(listNotes.size() - 1, note);
-        }
-        notifyItemInserted(note.getId());
+        this.listNotes.add(note);
+        notifyItemInserted(note.getId()-1);
     }
 
     @NonNull
@@ -78,6 +78,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                 intent.putExtra(NoteAddUpdateActivity.EXTRA_POSITION, position);
                 intent.putExtra(NoteAddUpdateActivity.EXTRA_NOTE, getListNotes().get(position));
                 activity.startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_UPDATE);
+                Toast.makeText(activity, "idnya"+getListNotes().get(position).getId(), Toast.LENGTH_SHORT).show();
             }
         }));
     }

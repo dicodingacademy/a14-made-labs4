@@ -43,7 +43,11 @@ public class NotesActivity extends AppCompatActivity
         rvNotes = findViewById(R.id.rv_notes);
         rvNotes.setLayoutManager(new LinearLayoutManager(this));
         rvNotes.setHasFixedSize(true);
-        noteHelper = new NoteHelper(this);
+        noteHelper = NoteHelper.getInstance(getApplicationContext());
+
+
+        noteHelper.open();
+
         progressBar = findViewById(R.id.progressbar);
         fabAdd = findViewById(R.id.fab_add);
         fabAdd.setOnClickListener(this);
@@ -53,7 +57,7 @@ public class NotesActivity extends AppCompatActivity
         adapter.setListNotes(list);
         rvNotes.setAdapter(adapter);
 
-        //new LoadNotesAsync(this).execute();
+        new LoadNotesAsync(noteHelper,this).execute();
     }
 
 
@@ -68,11 +72,16 @@ public class NotesActivity extends AppCompatActivity
     @Override
     public void preExecute() {
         // TODO
+
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void postExecute(ArrayList<Note> notes) {
         // TODO
+
+        progressBar.setVisibility(View.INVISIBLE);
+        adapter.setListNotes(notes);
     }
 
     private static class LoadNotesAsync extends AsyncTask<Void, Void, ArrayList<Note>> {
@@ -116,18 +125,16 @@ public class NotesActivity extends AppCompatActivity
             // Akan dipanggil jika request codenya ADD
             if (requestCode == NoteAddUpdateActivity.REQUEST_ADD) {
                 if (resultCode == NoteAddUpdateActivity.RESULT_ADD) {
-//                    new LoadNotesAsync(this).execute();
-//                    Note note = data.getParcelableExtra(NoteAddUpdateActivity.EXTRA_NOTE);
-//
-//                    adapter.addItem(note);
-//                    rvNotes.smoothScrollToPosition(0);
+                    Note note = data.getParcelableExtra(NoteAddUpdateActivity.EXTRA_NOTE);
+                    adapter.addItem(note);
+                    rvNotes.smoothScrollToPosition(adapter.getItemCount()-1);
                     showSnackbarMessage("Satu item berhasil ditambahkan");
                 }
             }
             // Update dan Delete memiliki request code sama akan tetapi result codenya berbeda
             else if (requestCode == REQUEST_UPDATE) {
             /*
-            Akan dipanggil jika result codenya UPDATE
+            Akan dipanggil jika result codenya  UPDATE
             Semua data di load kembali dari awal
             */
                 if (resultCode == NoteAddUpdateActivity.RESULT_UPDATE) {
@@ -158,7 +165,7 @@ public class NotesActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        NoteHelper.close();
+        noteHelper.close();
     }
 
     /**

@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/setting_holder"
     tools:context=".MainActivity"
-    android:orientation="horizontal">
-
+    android:orientation="vertical">
 
 
 </LinearLayout>

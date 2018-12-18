@@ -39,6 +39,8 @@ public class NoteAddUpdateActivity extends AppCompatActivity
     private Note note;
     private int position;
 
+    private NoteHelper noteHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,8 @@ public class NoteAddUpdateActivity extends AppCompatActivity
         edtDescription = findViewById(R.id.edt_description);
         btnSubmit = findViewById(R.id.btn_submit);
         btnSubmit.setOnClickListener(this);
+
+        noteHelper = NoteHelper.getInstance(getApplicationContext());
 
         note = getIntent().getParcelableExtra(EXTRA_NOTE);
         if (note != null) {
@@ -83,7 +87,6 @@ public class NoteAddUpdateActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        NoteHelper.close();
     }
 
     @Override
@@ -113,7 +116,7 @@ public class NoteAddUpdateActivity extends AppCompatActivity
                  */
 
             if (isEdit) {
-                long result = NoteHelper.noteInstances(NoteAddUpdateActivity.this).updateNote(note);
+                long result = noteHelper.updateNote(note);
                 if (result > 0) {
                     setResult(RESULT_UPDATE, intent);
                     finish();
@@ -123,16 +126,16 @@ public class NoteAddUpdateActivity extends AppCompatActivity
 
             } else {
                 note.setDate(getCurrentDate());
-                long result = NoteHelper.noteInstances(NoteAddUpdateActivity.this).insertNote(note);
+                long result = noteHelper.insertNote(note);
 
                 if (result > 0) {
+                    note.setId((int) result);
                     setResult(RESULT_ADD, intent);
                     finish();
                 } else {
                     Toast.makeText(NoteAddUpdateActivity.this, "Gagal menambah data", Toast.LENGTH_SHORT).show();
                 }
             }
-
         }
     }
 
@@ -193,7 +196,7 @@ public class NoteAddUpdateActivity extends AppCompatActivity
                         if (isDialogClose) {
                             finish();
                         } else {
-                            long result = NoteHelper.noteInstances(NoteAddUpdateActivity.this).deleteNote(note.getId());
+                            long result = noteHelper.deleteNote(note.getId());
                             if (result > 0) {
                                 Intent intent = new Intent();
                                 intent.putExtra(EXTRA_POSITION, position);

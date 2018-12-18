@@ -30,7 +30,7 @@ public class NoteHelper {
 
     private static SQLiteDatabase database;
 
-    public NoteHelper(Context context) {
+    private NoteHelper(Context context) {
         dataBaseHelper = new DatabaseHelper(context);
     }
 
@@ -38,8 +38,7 @@ public class NoteHelper {
 //        INSTANCE = new NoteHelper(context);
 //    }
 
-   public static NoteHelper noteInstances(Context context) {
-        open();
+   public static NoteHelper getInstance(Context context) {
         if (INSTANCE == null){
             synchronized (SQLiteOpenHelper.class){
                 if (INSTANCE == null){
@@ -51,11 +50,11 @@ public class NoteHelper {
    }
 
 
-    private static void open() throws SQLException {
+    public void open() throws SQLException {
         database = dataBaseHelper.getWritableDatabase();
     }
 
-    public static void close() {
+    public void close() {
         dataBaseHelper.close();
 
         if (database.isOpen())
@@ -70,12 +69,11 @@ public class NoteHelper {
      */
     public ArrayList<Note> getAllNotes() {
         ArrayList<Note> arrayList = new ArrayList<Note>();
-        Cursor cursor = database.query(DATABASE_TABLE, null, null, null, null, null, _ID + " DESC", null);
+        Cursor cursor = database.query(DATABASE_TABLE, null, null, null, null, null, _ID + " ASC", null);
         cursor.moveToFirst();
         Note note;
         if (cursor.getCount() > 0) {
             do {
-
                 note = new Note();
                 note.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
                 note.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));
@@ -117,8 +115,6 @@ public class NoteHelper {
         args.put(DESCRIPTION, note.getDescription());
         args.put(DATE, note.getDate());
         Log.d("IDNYA","idnya "+note.getId());
-//        return database.update(DATABASE_TABLE, args, _ID + "=?",
-//                new String[]{note.getId()+""});
         return database.update(DATABASE_TABLE, args, _ID + "= '" + note.getId() + "'", null);
     }
 

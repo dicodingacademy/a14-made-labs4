@@ -4,7 +4,6 @@
 
     <application
         android:allowBackup="true"
-        android:name=".NoteApp"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
