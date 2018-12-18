@@ -56,7 +56,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     public void addItem(Note note) {
         this.listNotes.add(note);
-        notifyItemInserted(note.getId()-1);
+        notifyItemInserted(listNotes.size()-1);
     }
 
     @NonNull
@@ -78,7 +78,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                 intent.putExtra(NoteAddUpdateActivity.EXTRA_POSITION, position);
                 intent.putExtra(NoteAddUpdateActivity.EXTRA_NOTE, getListNotes().get(position));
                 activity.startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_UPDATE);
-                Toast.makeText(activity, "idnya"+getListNotes().get(position).getId(), Toast.LENGTH_SHORT).show();
             }
         }));
     }
