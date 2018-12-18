@@ -30,7 +30,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         this.activity = activity;
     }
 
-    private ArrayList<Note> getListNotes() {
+    public ArrayList<Note> getListNotes() {
         return listNotes;
     }
 
@@ -68,15 +68,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
-        holder.tvTitle.setText(getListNotes().get(position).getTitle());
-        holder.tvDate.setText(getListNotes().get(position).getDate());
-        holder.tvDescription.setText(getListNotes().get(position).getDescription());
+        holder.tvTitle.setText(listNotes.get(position).getTitle());
+        holder.tvDate.setText(listNotes.get(position).getDate());
+        holder.tvDescription.setText(listNotes.get(position).getDescription());
         holder.cvNote.setOnClickListener(new CustomOnItemClickListener(position, new CustomOnItemClickListener.OnItemClickCallback() {
             @Override
             public void onItemClicked(View view, int position) {
                 Intent intent = new Intent(activity, NoteAddUpdateActivity.class);
                 intent.putExtra(NoteAddUpdateActivity.EXTRA_POSITION, position);
-                intent.putExtra(NoteAddUpdateActivity.EXTRA_NOTE, getListNotes().get(position));
+                intent.putExtra(NoteAddUpdateActivity.EXTRA_NOTE, listNotes.get(position));
                 activity.startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_UPDATE);
             }
         }));
@@ -84,7 +84,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     @Override
     public int getItemCount() {
-        return getListNotes().size();
+        return listNotes.size();
     }
 
     class NoteViewHolder extends RecyclerView.ViewHolder {

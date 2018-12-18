@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.dicoding.mynotesapp.NotesActivity">
+    tools:context="com.dicoding.picodiploma.mynotesapp.NotesActivity">
 
     <ProgressBar
         android:id="@+id/progressbar"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:visibility="invisible"
         app:layout_anchor="@id/rv_notes"
         app:layout_anchorGravity="center" />
 

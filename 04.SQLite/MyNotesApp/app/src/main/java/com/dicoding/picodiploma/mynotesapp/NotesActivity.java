@@ -2,6 +2,7 @@ package com.dicoding.picodiploma.mynotesapp;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,12 +23,11 @@ import java.util.ArrayList;
 import static com.dicoding.picodiploma.mynotesapp.NoteAddUpdateActivity.REQUEST_UPDATE;
 
 public class NotesActivity extends AppCompatActivity
-        implements View.OnClickListener,LoadNotesCallback {
+        implements View.OnClickListener, LoadNotesCallback {
     private RecyclerView rvNotes;
     private ProgressBar progressBar;
     private FloatingActionButton fabAdd;
 
-    private ArrayList<Note> list;
     private NoteAdapter adapter;
 
     private NoteHelper noteHelper;
@@ -45,21 +45,39 @@ public class NotesActivity extends AppCompatActivity
         rvNotes.setHasFixedSize(true);
         noteHelper = NoteHelper.getInstance(getApplicationContext());
 
-
         noteHelper.open();
 
         progressBar = findViewById(R.id.progressbar);
         fabAdd = findViewById(R.id.fab_add);
         fabAdd.setOnClickListener(this);
-        list = new ArrayList<>();
 
         adapter = new NoteAdapter(this);
-        adapter.setListNotes(list);
         rvNotes.setAdapter(adapter);
 
-        new LoadNotesAsync(noteHelper,this).execute();
+        if (savedInstanceState == null) {
+
+            new LoadNotesAsync(noteHelper, this).execute();
+
+
+        } else {
+
+            ArrayList<Note> list = savedInstanceState.getParcelableArrayList(EXTRA_STATE);
+
+            if (list != null) {
+                adapter.setListNotes(list);
+            }
+
+        }
     }
 
+    private static final String EXTRA_STATE = "extra_state";
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelableArrayList(EXTRA_STATE,adapter.getListNotes());
+    }
 
     @Override
     public void onClick(View view) {
@@ -126,9 +144,14 @@ public class NotesActivity extends AppCompatActivity
             if (requestCode == NoteAddUpdateActivity.REQUEST_ADD) {
                 if (resultCode == NoteAddUpdateActivity.RESULT_ADD) {
                     Note note = data.getParcelableExtra(NoteAddUpdateActivity.EXTRA_NOTE);
-                    adapter.addItem(note);
-                    rvNotes.smoothScrollToPosition(adapter.getItemCount()-1);
-                    showSnackbarMessage("Satu item berhasil ditambahkan");
+                    if (note != null) {
+                        adapter.addItem(note);
+                        rvNotes.smoothScrollToPosition(adapter.getItemCount() - 1);
+                        showSnackbarMessage("Satu item berhasil ditambahkan");
+
+                    } else {
+                        showSnackbarMessage("Something wrong");
+                    }
                 }
             }
             // Update dan Delete memiliki request code sama akan tetapi result codenya berbeda
