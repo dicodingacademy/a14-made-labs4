@@ -48,8 +48,8 @@ public class NoteProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        noteHelper = new NoteHelper(getContext());
-        noteHelper.open();
+        noteHelper = NoteHelper.getInstance(getContext());
+
         return true;
     }
 

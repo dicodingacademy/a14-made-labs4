@@ -81,10 +81,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
 
         NoteViewholder(View itemView) {
             super(itemView);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_item_title);
-            tvDescription = (TextView) itemView.findViewById(R.id.tv_item_description);
-            tvDate = (TextView) itemView.findViewById(R.id.tv_item_date);
-            cvNote = (CardView) itemView.findViewById(R.id.cv_item_note);
+            tvTitle = itemView.findViewById(R.id.tv_item_title);
+            tvDescription = itemView.findViewById(R.id.tv_item_description);
+            tvDate = itemView.findViewById(R.id.tv_item_date);
+            cvNote =  itemView.findViewById(R.id.cv_item_note);
         }
     }
 }

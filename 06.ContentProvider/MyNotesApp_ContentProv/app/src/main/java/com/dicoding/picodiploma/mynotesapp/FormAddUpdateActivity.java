@@ -32,9 +32,6 @@ public class FormAddUpdateActivity extends AppCompatActivity
     EditText edtTitle, edtDescription;
     Button btnSubmit;
 
-    public static String EXTRA_NOTE = "extra_note";
-    public static String EXTRA_POSITION = "extra_position";
-
     private boolean isEdit = false;
 
     public static int REQUEST_ADD = 100;
@@ -52,13 +49,12 @@ public class FormAddUpdateActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_add_update);
 
-        edtTitle = (EditText) findViewById(R.id.edt_title);
-        edtDescription = (EditText) findViewById(R.id.edt_description);
-        btnSubmit = (Button) findViewById(R.id.btn_submit);
+        edtTitle = findViewById(R.id.edt_title);
+        edtDescription = findViewById(R.id.edt_description);
+        btnSubmit = findViewById(R.id.btn_submit);
         btnSubmit.setOnClickListener(this);
 
-        noteHelper = new NoteHelper(this);
-        noteHelper.open();
+        noteHelper = NoteHelper.getInstance(getApplicationContext());
 
         // Uri yang di dapatkan disini akan digunakan untuk ambil data dari provider
         // content://com.dicoding.picodiploma.mynotesapp/note/id
@@ -75,8 +71,8 @@ public class FormAddUpdateActivity extends AppCompatActivity
             }
         }
 
-        String actionBarTitle = null;
-        String btnTitle = null;
+        String actionBarTitle;
+        String btnTitle;
 
         if (note != null) {
             isEdit = true;
@@ -91,8 +87,8 @@ public class FormAddUpdateActivity extends AppCompatActivity
             btnTitle = "Simpan";
         }
 
-        getSupportActionBar().setTitle(actionBarTitle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(actionBarTitle);
 
         btnSubmit.setText(btnTitle);
     }
@@ -100,9 +96,6 @@ public class FormAddUpdateActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (noteHelper != null) {
-            noteHelper.close();
-        }
     }
 
     @Override
@@ -192,7 +185,7 @@ public class FormAddUpdateActivity extends AppCompatActivity
 
     private void showAlertDialog(int type) {
         final boolean isDialogClose = type == ALERT_DIALOG_CLOSE;
-        String dialogTitle = null, dialogMessage = null;
+        String dialogTitle, dialogMessage;
 
         if (isDialogClose) {
             dialogTitle = "Batal";
