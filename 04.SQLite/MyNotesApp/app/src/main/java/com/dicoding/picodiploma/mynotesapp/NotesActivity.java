@@ -27,9 +27,8 @@ public class NotesActivity extends AppCompatActivity
     private RecyclerView rvNotes;
     private ProgressBar progressBar;
     private FloatingActionButton fabAdd;
-
+    private static final String EXTRA_STATE = "EXTRA_STATE";
     private NoteAdapter adapter;
-
     private NoteHelper noteHelper;
 
     @Override
@@ -54,15 +53,14 @@ public class NotesActivity extends AppCompatActivity
         adapter = new NoteAdapter(this);
         rvNotes.setAdapter(adapter);
 
+        /*
+        Cek jika savedInstaceState null makan akan melakukan proses asynctask nya
+        jika tidak,akan mengambil arraylist nya dari yang sudah di simpan
+         */
         if (savedInstanceState == null) {
-
             new LoadNotesAsync(noteHelper, this).execute();
-
-
         } else {
-
             ArrayList<Note> list = savedInstanceState.getParcelableArrayList(EXTRA_STATE);
-
             if (list != null) {
                 adapter.setListNotes(list);
             }
@@ -70,12 +68,9 @@ public class NotesActivity extends AppCompatActivity
         }
     }
 
-    private static final String EXTRA_STATE = "extra_state";
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         outState.putParcelableArrayList(EXTRA_STATE,adapter.getListNotes());
     }
 
@@ -89,15 +84,19 @@ public class NotesActivity extends AppCompatActivity
 
     @Override
     public void preExecute() {
-        // TODO
-
+        /*
+        Callback yang akan dipanggil di onPreExecute Asyntask
+        memunculkan progressbar
+        */
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void postExecute(ArrayList<Note> notes) {
-        // TODO
-
+        /*
+        callback yang akan dipanggil di onPostExture Asynctask
+        menyembunyikan progressbar dan setlistnote yang ada di adapter
+         */
         progressBar.setVisibility(View.INVISIBLE);
         adapter.setListNotes(notes);
     }
@@ -115,9 +114,7 @@ public class NotesActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
             weakCallback.get().preExecute();
-
         }
 
         @Override
