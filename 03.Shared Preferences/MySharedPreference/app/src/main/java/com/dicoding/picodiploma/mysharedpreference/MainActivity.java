@@ -32,26 +32,35 @@ public class MainActivity extends AppCompatActivity
         tvIsLoveMU = findViewById(R.id.tv_is_love_mu);
         btnSave = findViewById(R.id.btn_save);
         btnSave.setOnClickListener(this);
-        userModel = new UserModel();
-
-
-        mUserPreference = new UserPreference(this);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("My User Preference");
         }
+
+        mUserPreference = new UserPreference(this);
 
         showExistingPreference();
 
     }
 
     /*
-    menampilkan preference yang ada
+    Menampilkan preference yang ada
      */
     private void showExistingPreference() {
         userModel = mUserPreference.getUser();
         populateView(userModel);
         checkForm(userModel);
+    }
+
+    /*
+    Set tampilan menggunakan preferences
+    */
+    private void populateView(UserModel userModel) {
+        tvName.setText(userModel.getName().isEmpty() ? "Tidak Ada" : userModel.getName());
+        tvAge.setText(String.valueOf(userModel.getAge()).isEmpty() ? "Tidak Ada" : String.valueOf(userModel.getAge()));
+        tvIsLoveMU.setText(userModel.isLove() ? "Ya" : "Tidak");
+        tvEmail.setText(userModel.getEmail().isEmpty() ? "Tidak Ada" : userModel.getEmail());
+        tvPhoneNo.setText(userModel.getPhoneNumber().isEmpty() ? "Tidak Ada" : userModel.getPhoneNumber());
     }
 
     private void checkForm(UserModel userModel) {
@@ -62,18 +71,6 @@ public class MainActivity extends AppCompatActivity
             btnSave.setText(getString(R.string.save));
             isPreferenceEmpty = true;
         }
-    }
-
-
-    /*
-    Set tampilan menggunakan preferences
-     */
-    private void populateView(UserModel userModel) {
-        tvName.setText(userModel.getName().isEmpty() ? "Tidak Ada" : userModel.getName());
-        tvAge.setText(String.valueOf(userModel.getAge()).isEmpty() ? "Tidak Ada" : String.valueOf(userModel.getAge()));
-        tvIsLoveMU.setText(userModel.isLove() ? "Ya" : "Tidak");
-        tvEmail.setText(userModel.getEmail().isEmpty() ? "Tidak Ada" : userModel.getEmail());
-        tvPhoneNo.setText(userModel.getPhoneNumber().isEmpty() ? "Tidak Ada" : userModel.getPhoneNumber());
     }
 
     @Override
@@ -99,7 +96,7 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
             if (resultCode == FormUserPreferenceActivity.RESULT_CODE) {
-                userModel = data.getParcelableExtra(FormUserPreferenceActivity.KEY_VALUE);
+                userModel = data.getParcelableExtra(FormUserPreferenceActivity.EXTRA_RESULT);
                 populateView(userModel);
                 checkForm(userModel);
             }
