@@ -8,16 +8,17 @@ import android.content.SharedPreferences;
  */
 
 class UserPreference {
-    private static final String NAME = "NAME";
-    private static final String EMAIL = "EMAIL";
-    private static final String AGE = "AGE";
-    private static final String PHONE_NUMBER = "PHONE";
-    private static final String LOVE_MU = "ISLOVE";
+    private static final String PREFS_NAME = "user_pref";
+
+    private static final String NAME = "name";
+    private static final String EMAIL = "email";
+    private static final String AGE = "age";
+    private static final String PHONE_NUMBER = "phone";
+    private static final String LOVE_MU = "islove";
 
     private final SharedPreferences preferences;
 
     UserPreference(Context context) {
-        String PREFS_NAME = "UserPref";
         preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
