@@ -13,18 +13,18 @@ import static com.dicoding.picodiploma.mypreloaddata.database.DatabaseContract.T
  * Created by dicoding on 12/1/2016.
  */
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+class DatabaseHelper extends SQLiteOpenHelper {
 
     private static String DATABASE_NAME = "dbmahasiswa";
 
     private static final int DATABASE_VERSION = 1;
 
-    public static String CREATE_TABLE_MAHASISWA = "create table " + TABLE_NAME +
+    private static String CREATE_TABLE_MAHASISWA = "create table " + TABLE_NAME +
             " (" + _ID + " integer primary key autoincrement, " +
             NAMA + " text not null, " +
             NIM + " text not null);";
 
-    public DatabaseHelper(Context context) {
+    DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

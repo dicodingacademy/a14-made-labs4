@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
 import com.dicoding.picodiploma.mypreloaddata.model.MahasiswaModel;
@@ -22,23 +23,35 @@ import static com.dicoding.picodiploma.mypreloaddata.database.DatabaseContract.T
 
 public class MahasiswaHelper {
 
-    private Context context;
     private DatabaseHelper dataBaseHelper;
+    private static MahasiswaHelper INSTANCE;
 
     private SQLiteDatabase database;
 
-    public MahasiswaHelper(Context context) {
-        this.context = context;
+    private MahasiswaHelper(Context context) {
+        dataBaseHelper = new DatabaseHelper(context);
     }
 
-    public MahasiswaHelper open() throws SQLException {
-        dataBaseHelper = new DatabaseHelper(context);
+    public static MahasiswaHelper getInstance(Context context) {
+        if (INSTANCE == null) {
+            synchronized (SQLiteOpenHelper.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new MahasiswaHelper(context);
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
+    public void open() throws SQLException {
         database = dataBaseHelper.getWritableDatabase();
-        return this;
     }
 
     public void close() {
         dataBaseHelper.close();
+
+        if (database.isOpen())
+            database.close();
     }
 
     /**
@@ -158,7 +171,6 @@ public class MahasiswaHelper {
         args.put(NIM, mahasiswaModel.getNim());
         return database.update(TABLE_NAME, args, _ID + "= '" + mahasiswaModel.getId() + "'", null);
     }
-
 
     /**
      * Gunakan method ini untuk menghapus data mahasiswa yang ada di dalam database

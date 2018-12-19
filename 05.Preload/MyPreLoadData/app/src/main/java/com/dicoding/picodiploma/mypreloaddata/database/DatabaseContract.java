@@ -6,7 +6,7 @@ import android.provider.BaseColumns;
  * Created by dicoding on 10/18/2017.
  */
 
-public class DatabaseContract {
+class DatabaseContract {
 
     static String TABLE_NAME = "table_mahasiswa";
 

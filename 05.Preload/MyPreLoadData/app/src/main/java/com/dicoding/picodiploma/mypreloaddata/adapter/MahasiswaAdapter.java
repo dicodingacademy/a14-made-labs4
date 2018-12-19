@@ -1,5 +1,6 @@
 package com.dicoding.picodiploma.mypreloaddata.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,27 +16,34 @@ import java.util.ArrayList;
  * Created by dicoding on 12/6/2016.
  */
 public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.MahasiswaHolder> {
-    private ArrayList<MahasiswaModel> mData = new ArrayList<>();
+    private ArrayList<MahasiswaModel> listMahasiswa = new ArrayList<>();
 
     public MahasiswaAdapter() {
     }
 
+    public void setData(ArrayList<MahasiswaModel> listMahasiswa) {
+
+        if (listMahasiswa.size() > 0) {
+            this.listMahasiswa.clear();
+        }
+
+        this.listMahasiswa.addAll(listMahasiswa);
+
+        notifyDataSetChanged();
+    }
+
+    @NonNull
     @Override
-    public MahasiswaHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MahasiswaHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mahasiswa_row, parent, false);
         return new MahasiswaHolder(view);
     }
 
-    public void addItem(ArrayList<MahasiswaModel> mData) {
-
-        this.mData = mData;
-        notifyDataSetChanged();
-    }
 
     @Override
-    public void onBindViewHolder(MahasiswaHolder holder, int position) {
-        holder.textViewNim.setText(mData.get(position).getNim());
-        holder.textViewNama.setText(mData.get(position).getName());
+    public void onBindViewHolder(@NonNull MahasiswaHolder holder, int position) {
+        holder.textViewNim.setText(listMahasiswa.get(position).getNim());
+        holder.textViewNama.setText(listMahasiswa.get(position).getName());
 
     }
 
@@ -51,18 +59,18 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return listMahasiswa.size();
     }
 
-    public static class MahasiswaHolder extends RecyclerView.ViewHolder {
+    static class MahasiswaHolder extends RecyclerView.ViewHolder {
         private TextView textViewNim;
         private TextView textViewNama;
 
-        public MahasiswaHolder(View itemView) {
+        MahasiswaHolder(View itemView) {
             super(itemView);
 
-            textViewNim = (TextView) itemView.findViewById(R.id.txt_nim);
-            textViewNama = (TextView) itemView.findViewById(R.id.txt_nama);
+            textViewNim = itemView.findViewById(R.id.txt_nim);
+            textViewNama = itemView.findViewById(R.id.txt_nama);
         }
 
     }

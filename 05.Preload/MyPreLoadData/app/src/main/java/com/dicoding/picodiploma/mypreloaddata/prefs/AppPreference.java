@@ -12,24 +12,21 @@ import com.dicoding.picodiploma.mypreloaddata.R;
 
 public class AppPreference {
 
+    private static final String PREFS_NAME = "MahasiswaPref";
+    private static final String APP_FIRST_RUN = "app_first_run";
     private SharedPreferences prefs;
-    private Context context;
 
     public AppPreference(Context context) {
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        this.context = context;
+        prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
     public void setFirstRun(Boolean input) {
-
         SharedPreferences.Editor editor = prefs.edit();
-        String key = context.getResources().getString(R.string.app_first_run);
-        editor.putBoolean(key, input);
+        editor.putBoolean(APP_FIRST_RUN, input);
         editor.apply();
     }
 
     public Boolean getFirstRun() {
-        String key = context.getResources().getString(R.string.app_first_run);
-        return prefs.getBoolean(key, true);
+        return prefs.getBoolean(APP_FIRST_RUN, true);
     }
 }
