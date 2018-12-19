@@ -24,6 +24,17 @@ public class MyPreferenceFragment extends PreferenceFragmentCompat implements Sh
     }
 
     /*
+    Inisiasi preferences
+     */
+    private void init() {
+        namePreference = (EditTextPreference) findPreference("NAME");
+        emailPreference = (EditTextPreference) findPreference("EMAIL");
+        agePreference = (EditTextPreference) findPreference("AGE");
+        phonePreference = (EditTextPreference) findPreference("PHONE");
+        isLoveMuPreference = (CheckBoxPreference) findPreference("ISLOVE");
+    }
+
+    /*
     Set summary menggunakan preference
      */
     private void setSummaries() {
@@ -77,14 +88,6 @@ public class MyPreferenceFragment extends PreferenceFragmentCompat implements Sh
         if (key.equals("ISLOVE")) {
             isLoveMuPreference.setChecked(sharedPreferences.getBoolean("ISLOVE", false));
         }
-    }
-
-    private void init() {
-        namePreference = (EditTextPreference) findPreference("NAME");
-        emailPreference = (EditTextPreference) findPreference("EMAIL");
-        agePreference = (EditTextPreference) findPreference("AGE");
-        phonePreference = (EditTextPreference) findPreference("PHONE");
-        isLoveMuPreference = (CheckBoxPreference) findPreference("ISLOVE");
     }
 
 }
