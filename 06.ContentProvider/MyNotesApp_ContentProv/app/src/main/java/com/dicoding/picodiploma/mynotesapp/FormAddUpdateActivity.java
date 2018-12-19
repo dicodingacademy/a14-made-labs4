@@ -2,6 +2,7 @@ package com.dicoding.picodiploma.mynotesapp;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.dicoding.picodiploma.mynotesapp.db.NoteHelper;
 import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
 import java.text.DateFormat;
@@ -29,20 +29,21 @@ import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumn
 
 public class FormAddUpdateActivity extends AppCompatActivity
         implements View.OnClickListener {
-    EditText edtTitle, edtDescription;
-    Button btnSubmit;
+    private EditText edtTitle, edtDescription;
+
+    public static final String EXTRA_NOTE = "extra_note";
+    public static final String EXTRA_POSITION = "extra_position";
 
     private boolean isEdit = false;
 
-    public static int REQUEST_ADD = 100;
-    public static int RESULT_ADD = 101;
-    public static int REQUEST_UPDATE = 200;
-    public static int RESULT_UPDATE = 201;
-    public static int RESULT_DELETE = 301;
+    public static final int REQUEST_ADD = 100;
+    public static final int RESULT_ADD = 101;
+    public static final int REQUEST_UPDATE = 200;
+    public static final int RESULT_UPDATE = 201;
+    public static final int RESULT_DELETE = 301;
 
     private Note note;
-    //private int position;
-    private NoteHelper noteHelper;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +52,16 @@ public class FormAddUpdateActivity extends AppCompatActivity
 
         edtTitle = findViewById(R.id.edt_title);
         edtDescription = findViewById(R.id.edt_description);
-        btnSubmit = findViewById(R.id.btn_submit);
+        Button btnSubmit = findViewById(R.id.btn_submit);
         btnSubmit.setOnClickListener(this);
 
-        noteHelper = NoteHelper.getInstance(getApplicationContext());
-
+        note = getIntent().getParcelableExtra(EXTRA_NOTE);
+        if (note != null) {
+            position = getIntent().getIntExtra(EXTRA_POSITION, 0);
+            isEdit = true;
+        } else {
+            note = new Note();
+        }
         // Uri yang di dapatkan disini akan digunakan untuk ambil data dari provider
         // content://com.dicoding.picodiploma.mynotesapp/note/id
         // Jika uri nya kosong berarti modenya adalah insert
@@ -74,8 +80,7 @@ public class FormAddUpdateActivity extends AppCompatActivity
         String actionBarTitle;
         String btnTitle;
 
-        if (note != null) {
-            isEdit = true;
+        if (isEdit) {
 
             actionBarTitle = "Ubah";
             btnTitle = "Update";
@@ -94,17 +99,13 @@ public class FormAddUpdateActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_submit) {
             String title = edtTitle.getText().toString().trim();
             String description = edtDescription.getText().toString().trim();
 
             boolean isEmpty = false;
+
 
              /*
             Jika fieldnya masih kosong maka tampilkan error
@@ -115,12 +116,20 @@ public class FormAddUpdateActivity extends AppCompatActivity
                 edtTitle.setError("Field can not be blank");
             }
 
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_NOTE, note);
+            intent.putExtra(EXTRA_POSITION, position);
+
+            note.setTitle(title);
+            note.setDescription(description);
+
             if (!isEmpty) {
 
                 // Gunakan contentvalues untuk menampung data
                 ContentValues values = new ContentValues();
                 values.put(TITLE, title);
                 values.put(DESCRIPTION, description);
+
 
                 /*
                 Jika merupakan edit setresultnya UPDATE, dan jika bukan maka setresultnya ADD
@@ -131,16 +140,16 @@ public class FormAddUpdateActivity extends AppCompatActivity
                     // content://com.dicoding.picodiploma.mynotesapp/note/id
                     getContentResolver().update(getIntent().getData(), values, null, null);
 
-                    setResult(RESULT_UPDATE);
+                    setResult(RESULT_UPDATE,intent);
                     finish();
                 } else {
                     values.put(DATE, getCurrentDate());
-
+                    note.setDate(getCurrentDate());
                     // Gunakan content uri untuk insert
                     // content://com.dicoding.picodiploma.mynotesapp/note/
                     getContentResolver().insert(CONTENT_URI, values);
 
-                    setResult(RESULT_ADD);
+                    setResult(RESULT_ADD,intent);
                     finish();
                 }
             }
@@ -174,8 +183,8 @@ public class FormAddUpdateActivity extends AppCompatActivity
         showAlertDialog(ALERT_DIALOG_CLOSE);
     }
 
-    final int ALERT_DIALOG_CLOSE = 10;
-    final int ALERT_DIALOG_DELETE = 20;
+    private final int ALERT_DIALOG_CLOSE = 10;
+    private final int ALERT_DIALOG_DELETE = 20;
 
     /*
     Konfirmasi dialog sebelum proses batal atau hapus
@@ -206,11 +215,12 @@ public class FormAddUpdateActivity extends AppCompatActivity
                         if (isDialogClose) {
                             finish();
                         } else {
-
+                            Intent intent = new Intent();
+                            intent.putExtra(EXTRA_POSITION, position);
                             // Gunakan uri dari intent activity ini
                             // content://com.dicoding.picodiploma.mynotesapp/note/id
                             getContentResolver().delete(getIntent().getData(), null, null);
-                            setResult(RESULT_DELETE, null);
+                            setResult(RESULT_DELETE, intent);
                             finish();
                         }
                     }

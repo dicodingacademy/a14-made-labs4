@@ -3,15 +3,14 @@ package com.dicoding.picodiploma.mynotesapp.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.ContactsContract;
 
 /**
  * Created by sidiqpermana on 11/23/16.
  */
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static String DATABASE_NAME = "dbnoteapp";
+    private static final String DATABASE_NAME = "dbnoteapp";
 
     private static final int DATABASE_VERSION = 1;
 

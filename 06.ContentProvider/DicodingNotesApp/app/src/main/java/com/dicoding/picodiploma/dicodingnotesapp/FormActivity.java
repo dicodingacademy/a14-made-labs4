@@ -30,8 +30,8 @@ import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.Note
 
 
 public class FormActivity extends AppCompatActivity implements View.OnClickListener {
-    EditText edtTitle, edtDescription;
-    Button btnSubmit;
+    private EditText edtTitle, edtDescription;
+    private Button btnSubmit;
 
     public static String EXTRA_NOTE_ITEM = "extra_note_item";
     private NoteItem noteItem = null;

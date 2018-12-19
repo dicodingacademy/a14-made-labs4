@@ -37,8 +37,6 @@ public class DicodingNotesAdapter extends CursorAdapter {
         return super.getCursor();
     }
 
-
-
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         if (cursor != null){
