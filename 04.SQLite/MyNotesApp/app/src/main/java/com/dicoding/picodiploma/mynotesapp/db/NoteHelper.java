@@ -34,21 +34,16 @@ public class NoteHelper {
         dataBaseHelper = new DatabaseHelper(context);
     }
 
-//    public synchronized static void noteInstances(Context context) {
-//        INSTANCE = new NoteHelper(context);
-//    }
-
-   public static NoteHelper getInstance(Context context) {
-        if (INSTANCE == null){
-            synchronized (SQLiteOpenHelper.class){
-                if (INSTANCE == null){
+    public static NoteHelper getInstance(Context context) {
+        if (INSTANCE == null) {
+            synchronized (SQLiteOpenHelper.class) {
+                if (INSTANCE == null) {
                     INSTANCE = new NoteHelper(context);
                 }
             }
         }
         return INSTANCE;
-   }
-
+    }
 
     public void open() throws SQLException {
         database = dataBaseHelper.getWritableDatabase();
@@ -68,8 +63,14 @@ public class NoteHelper {
      * @return hasil getAllNotes berbentuk array model note
      */
     public ArrayList<Note> getAllNotes() {
-        ArrayList<Note> arrayList = new ArrayList<Note>();
-        Cursor cursor = database.query(DATABASE_TABLE, null, null, null, null, null, _ID + " ASC", null);
+        ArrayList<Note> arrayList = new ArrayList<>();
+        Cursor cursor = database.query(DATABASE_TABLE, null,
+                null,
+                null,
+                null,
+                null,
+                _ID + " ASC",
+                null);
         cursor.moveToFirst();
         Note note;
         if (cursor.getCount() > 0) {
@@ -114,7 +115,6 @@ public class NoteHelper {
         args.put(TITLE, note.getTitle());
         args.put(DESCRIPTION, note.getDescription());
         args.put(DATE, note.getDate());
-        Log.d("IDNYA","idnya "+note.getId());
         return database.update(DATABASE_TABLE, args, _ID + "= '" + note.getId() + "'", null);
     }
 

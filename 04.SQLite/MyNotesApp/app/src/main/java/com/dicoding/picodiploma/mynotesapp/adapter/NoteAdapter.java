@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dicoding.picodiploma.mynotesapp.R;
 import com.dicoding.picodiploma.mynotesapp.CustomOnItemClickListener;
@@ -36,12 +35,17 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     public void setListNotes(ArrayList<Note> listNotes) {
 
-        if (listNotes.size() > 0){
+        if (listNotes.size() > 0) {
             this.listNotes.clear();
         }
         this.listNotes.addAll(listNotes);
 
         notifyDataSetChanged();
+    }
+
+    public void addItem(Note note) {
+        this.listNotes.add(0, note);
+        notifyItemInserted(listNotes.size() - 1);
     }
 
     public void updateItem(int position, Note note) {
@@ -52,11 +56,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     public void removeItem(int position) {
         this.listNotes.remove(position);
         notifyItemRemoved(position);
-    }
-
-    public void addItem(Note note) {
-        this.listNotes.add(0,note);
-        notifyItemInserted(listNotes.size()-1);
     }
 
     @NonNull
