@@ -5,5 +5,4 @@ public interface MediaPlayerCallback {
 
     void onStop();
 
-
 }
