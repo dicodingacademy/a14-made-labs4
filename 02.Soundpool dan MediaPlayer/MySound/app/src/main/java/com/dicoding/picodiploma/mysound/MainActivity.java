@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     Button btnSound;
 
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnSound = findViewById(R.id.btn_soundpool);
-        btnSound.setOnClickListener(this);
+        btnSound.setOnClickListener(myListener);
 
         sp = new SoundPool.Builder()
                 .setMaxStreams(10)
@@ -48,18 +48,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    @Override
-    public void onClick(View view) {
-        int id = view.getId();
-        switch (id) {
-            case R.id.btn_soundpool:
-                if (spLoaded) {
-                    sp.play(soundId, 1, 1, 0, 0, 1);
-                }
-                break;
-
+    View.OnClickListener myListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (spLoaded) {
+                sp.play(soundId, 1, 1, 0, 0, 1);
+            }
         }
-    }
-
+    };
 
 }

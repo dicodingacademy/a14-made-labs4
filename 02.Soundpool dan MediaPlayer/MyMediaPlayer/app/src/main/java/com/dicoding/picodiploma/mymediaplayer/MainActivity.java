@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnPlay.setOnClickListener(this);
         btnStop.setOnClickListener(this);
 
-         /*
-         Start service untuk media player
+        /*
+        Start service untuk media player
         */
         mBoundServiceIntent = new Intent(MainActivity.this, MediaService.class);
         mBoundServiceIntent.setAction(MediaService.ACTION_CREATE);

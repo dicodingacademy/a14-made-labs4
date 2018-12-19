@@ -1,14 +1,21 @@
 package com.dicoding.picodiploma.mymediaplayer;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import java.io.IOException;
@@ -37,8 +44,8 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
     }
 
     /*
-   Method yang akan dipanggil ketika service dimulai
-   */
+    Method yang akan dipanggil ketika service dimulai
+    */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent.getAction();
@@ -51,7 +58,7 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
                 }
                 break;
             case ACTION_DESTROY:
-                if (!mMediaPlayer.isPlaying()){
+                if (!mMediaPlayer.isPlaying()) {
                     stopSelf();
                 }
                 break;
@@ -63,8 +70,8 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
     }
 
     /*
-        Method yang akan dipanggil ketika service di ikatkan ke activity
-        */
+    Method yang akan dipanggil ketika service di ikatkan ke activity
+    */
     @Override
     public IBinder onBind(Intent intent) {
         Log.d(TAG, "onBind: ");
@@ -72,8 +79,8 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
     }
 
     /*
-        Method yang akan dipanggil ketika service di lepas dari activity
-        */
+    Method yang akan dipanggil ketika service di lepas dari activity
+    */
     @Override
     public boolean onUnbind(Intent intent) {
         Log.d(TAG, "onUnbind: ");
@@ -117,6 +124,7 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
     public void onPrepared(MediaPlayer player) {
         isReady = true;
         mMediaPlayer.start();
+        showNotif();
     }
 
     /**
@@ -139,6 +147,7 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
                 mMediaPlayer.pause();
             } else {
                 mMediaPlayer.start();
+                showNotif();
             }
         }
     }
@@ -151,7 +160,50 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
         if (mMediaPlayer.isPlaying() || isReady) {
             mMediaPlayer.stop();
             isReady = false;
+            stopNotif();
         }
+    }
+
+    void showNotif() {
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+
+        String CHANNEL_DEFAULT_IMPORTANCE = "Channel_Test";
+        int ONGOING_NOTIFICATION_ID = 1;
+
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_DEFAULT_IMPORTANCE)
+                .setContentTitle("TES1")
+                .setContentText("TES2")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentIntent(pendingIntent)
+                .setTicker("TES3")
+                .build();
+
+        createChannel(CHANNEL_DEFAULT_IMPORTANCE);
+
+        startForeground(ONGOING_NOTIFICATION_ID, notification);
+    }
+
+    void createChannel(String CHANNEL_ID) {
+
+        NotificationManager mNotificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Battery",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setShowBadge(false);
+            channel.setSound(null, null);
+            mNotificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    void stopNotif() {
+
+        stopForeground(false);
     }
 
     /**

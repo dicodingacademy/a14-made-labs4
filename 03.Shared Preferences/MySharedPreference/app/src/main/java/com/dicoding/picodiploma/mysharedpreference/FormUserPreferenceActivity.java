@@ -20,6 +20,7 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     private RadioButton rbYes, rbNo;
 
     public static final String EXTRA_TYPE_FORM = "extra_type_form";
+    public final static String EXTRA_RESULT = "extra_result";
     public static final int RESULT_CODE = 101;
 
     public static final int TYPE_ADD = 1;
@@ -30,7 +31,7 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     final String FIELD_REQUIRED = "Field tidak boleh kosong";
     final String FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik";
     final String FIELD_IS_NOT_VALID = "Email tidak valid";
-    public final static String KEY_VALUE = "KEY_VALUE";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,8 @@ public class FormUserPreferenceActivity extends AppCompatActivity
         rgLoveMu = findViewById(R.id.rg_love_mu);
         rbYes = findViewById(R.id.rb_yes);
         rbNo = findViewById(R.id.rb_no);
-        Intent i = getIntent();
-        userModel = i.getParcelableExtra("USER");
+        Intent intent = getIntent();
+        userModel = intent.getParcelableExtra("USER");
         Button btnSave = findViewById(R.id.btn_save);
         btnSave.setOnClickListener(this);
 
@@ -133,21 +134,31 @@ public class FormUserPreferenceActivity extends AppCompatActivity
                 return;
             }
 
-            UserPreference userPreference = new UserPreference(this);
-            userModel.setName(name);
-            userModel.setEmail(email);
-            userModel.setAge(Integer.parseInt(age));
-            userModel.setPhoneNumber(phoneNo);
-            userModel.setLove(isLoveMU);
-            userPreference.setUser(userModel);
-            Toast.makeText(this, "Data tersimpan", Toast.LENGTH_SHORT).show();
+            saveUser(name, email, age, phoneNo, isLoveMU);
+
             Intent resultIntent = new Intent();
-            resultIntent.putExtra(KEY_VALUE, userModel);
+            resultIntent.putExtra(EXTRA_RESULT, userModel);
             setResult(RESULT_CODE, resultIntent);
+
             finish();
         }
     }
 
+    /*
+    Save data ke dalam preferences
+     */
+    void saveUser(String name, String email, String age, String phoneNo, boolean isLoveMU) {
+        UserPreference userPreference = new UserPreference(this);
+
+        userModel.setName(name);
+        userModel.setEmail(email);
+        userModel.setAge(Integer.parseInt(age));
+        userModel.setPhoneNumber(phoneNo);
+        userModel.setLove(isLoveMU);
+
+        userPreference.setUser(userModel);
+        Toast.makeText(this, "Data tersimpan", Toast.LENGTH_SHORT).show();
+    }
 
     /**
      * Cek apakah emailnya valid

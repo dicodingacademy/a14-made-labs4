@@ -76,9 +76,10 @@ public class NoteAddUpdateActivity extends AppCompatActivity
             btnTitle = "Simpan";
         }
 
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setTitle(actionBarTitle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(actionBarTitle);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         btnSubmit.setText(btnTitle);
     }
@@ -103,7 +104,6 @@ public class NoteAddUpdateActivity extends AppCompatActivity
                 return;
             }
 
-
             note.setTitle(title);
             note.setDescription(description);
 
@@ -111,10 +111,9 @@ public class NoteAddUpdateActivity extends AppCompatActivity
             intent.putExtra(EXTRA_NOTE, note);
             intent.putExtra(EXTRA_POSITION, position);
 
-                /*
-                Jika merupakan edit setresultnya UPDATE, dan jika bukan maka setresultnya ADD
-                 */
-
+            /*
+            Jika merupakan edit maka setresultnya UPDATE, dan jika bukan maka setresultnya ADD
+            */
             if (isEdit) {
                 long result = noteHelper.updateNote(note);
                 if (result > 0) {
@@ -123,7 +122,6 @@ public class NoteAddUpdateActivity extends AppCompatActivity
                 } else {
                     Toast.makeText(NoteAddUpdateActivity.this, "Gagal mengupdate data", Toast.LENGTH_SHORT).show();
                 }
-
             } else {
                 note.setDate(getCurrentDate());
                 long result = noteHelper.insertNote(note);

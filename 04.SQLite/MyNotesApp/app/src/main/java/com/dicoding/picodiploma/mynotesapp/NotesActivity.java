@@ -71,7 +71,7 @@ public class NotesActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(EXTRA_STATE,adapter.getListNotes());
+        outState.putParcelableArrayList(EXTRA_STATE, adapter.getListNotes());
     }
 
     @Override
@@ -86,7 +86,7 @@ public class NotesActivity extends AppCompatActivity
     public void preExecute() {
         /*
         Callback yang akan dipanggil di onPreExecute Asyntask
-        memunculkan progressbar
+        Memunculkan progressbar
         */
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -94,8 +94,8 @@ public class NotesActivity extends AppCompatActivity
     @Override
     public void postExecute(ArrayList<Note> notes) {
         /*
-        callback yang akan dipanggil di onPostExture Asynctask
-        menyembunyikan progressbar dan setlistnote yang ada di adapter
+        Callback yang akan dipanggil di onPostExture Asynctask
+        Menyembunyikan progressbar, kemudian isi adapter dengan data yang ada
          */
         progressBar.setVisibility(View.INVISIBLE);
         adapter.setListNotes(notes);
@@ -153,10 +153,10 @@ public class NotesActivity extends AppCompatActivity
             }
             // Update dan Delete memiliki request code sama akan tetapi result codenya berbeda
             else if (requestCode == REQUEST_UPDATE) {
-            /*
-            Akan dipanggil jika result codenya  UPDATE
-            Semua data di load kembali dari awal
-            */
+                /*
+                Akan dipanggil jika result codenya  UPDATE
+                Semua data di load kembali dari awal
+                */
                 if (resultCode == NoteAddUpdateActivity.RESULT_UPDATE) {
 
                     Note note = data.getParcelableExtra(NoteAddUpdateActivity.EXTRA_NOTE);
@@ -167,10 +167,10 @@ public class NotesActivity extends AppCompatActivity
 
                     showSnackbarMessage("Satu item berhasil diubah");
                 }
-            /*
-            Akan dipanggil jika result codenya DELETE
-            Delete akan menghapus data dari list berdasarkan dari position
-            */
+                /*
+                Akan dipanggil jika result codenya DELETE
+                Delete akan menghapus data dari list berdasarkan dari position
+                */
                 else if (resultCode == NoteAddUpdateActivity.RESULT_DELETE) {
                     int position = data.getIntExtra(NoteAddUpdateActivity.EXTRA_POSITION, 0);
 
