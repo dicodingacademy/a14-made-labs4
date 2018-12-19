@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v25/values-v25.xml",
+            "map": [
+                {
+                    "source": "/Users/ahmad/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/e8554112b5d371456446ac3a92c4356a/res/values-v25/values-v25.xml",
+                    "from": {
+                        "startLines": "2,3,4,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,126,209,308",
+                        "endLines": "2,3,5,7",
+                        "endColumns": "70,82,12,12",
+                        "endOffsets": "121,204,303,414"
+                    }
+                }
+            ]
+        }
+    ]
+}

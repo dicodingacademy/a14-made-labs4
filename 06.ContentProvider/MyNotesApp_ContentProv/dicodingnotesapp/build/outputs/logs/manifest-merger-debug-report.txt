@@ -1,0 +1,159 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:2:1-24:12
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/e8554112b5d371456446ac3a92c4356a/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/bcc23d02d340ae02a14f994e82b79671/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/1041ae7f107521550ad7a0a4827129bb/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/5225f6ffb6ed8274b08935012bc33e7e/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/eb6cc18bbd1e132c6f55188656cbfb2d/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/3b0a8ff554ee0d07e4f737a98e5b5f99/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:loader:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/817eaeddfb8354c4619d5089677387e4/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:viewpager:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/31bd746a91c26267e96d87a0e41ba0db/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/7969d8a8c98e8e04f9e15c28e4fd5c39/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/3dde9e8e291c401224d3942fedf59f0e/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/16f7a69053f06813197e45b0bcab7831/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:customview:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/cab1e9ea8d508f8a607cd28a2cd99280/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/4d155ee9dbad1b4bed481924931b16d8/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/8ab71ace40a7facd41663be99d0c068b/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/7c8cd4396d1497d9b1177c0ac06966c1/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/81612d6714b5ec05d36aa039306944c3/AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/5382bdd1e338aa806b023680d0fab31a/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/7870ea55e357372563a2e705cc5d6c3a/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:documentfile:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/16ef801334c134d36751f89d5cce9a71/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/e5aae645e3801ca4301488932de2e429/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:print:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/71dfae3f96f1ba73f2f898f4351dc3f7/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/c3b04a2df29b95a50d50f89bb0dd607c/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/df67ae15febd251b29a0cdaff9e7e46f/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/bc03b5622e405ae8de0c99128341bbaf/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/13d6dab9484eec7aca25ee205baf5927/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:interpolator:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/cc885b6a15bd7b4590156652fe5e56ce/AndroidManifest.xml:17:1-22:12
+INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:2:1-24:12
+	package
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:3:5-56
+		INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+		INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:2:1-24:12
+		INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:2:1-24:12
+		INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:2:11-69
+uses-permission#com.dicoding.picodiploma.mynotesapp.READ_DATABASE
+ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:5:5-89
+	android:name
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:5:22-86
+uses-permission#com.dicoding.picodiploma.mynotesapp.WRITE_DATABASE
+ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:6:5-90
+	android:name
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:6:22-87
+application
+ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:8:5-22:19
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/7c8cd4396d1497d9b1177c0ac06966c1/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/7c8cd4396d1497d9b1177c0ac06966c1/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/81612d6714b5ec05d36aa039306944c3/AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/81612d6714b5ec05d36aa039306944c3/AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [com.android.support:support-compat:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/7c8cd4396d1497d9b1177c0ac06966c1/AndroidManifest.xml:22:18-91
+	android:supportsRtl
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:12:9-35
+	android:label
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:11:9-41
+	android:icon
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:10:9-43
+	android:allowBackup
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:9:9-35
+	android:theme
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:13:9-40
+activity#com.dicoding.picodiploma.dicodingnotesapp.MainActivity
+ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:14:9-20:20
+	android:name
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:14:19-88
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:15:13-19:29
+action#android.intent.action.MAIN
+ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:16:17-69
+	android:name
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:16:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:18:17-77
+	android:name
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:18:27-74
+activity#com.dicoding.picodiploma.dicodingnotesapp.FormActivity
+ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:21:9-90
+	android:name
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml:21:19-88
+uses-sdk
+INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/e8554112b5d371456446ac3a92c4356a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/e8554112b5d371456446ac3a92c4356a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/bcc23d02d340ae02a14f994e82b79671/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/bcc23d02d340ae02a14f994e82b79671/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/1041ae7f107521550ad7a0a4827129bb/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/1041ae7f107521550ad7a0a4827129bb/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/5225f6ffb6ed8274b08935012bc33e7e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/5225f6ffb6ed8274b08935012bc33e7e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/eb6cc18bbd1e132c6f55188656cbfb2d/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/eb6cc18bbd1e132c6f55188656cbfb2d/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/3b0a8ff554ee0d07e4f737a98e5b5f99/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/3b0a8ff554ee0d07e4f737a98e5b5f99/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/817eaeddfb8354c4619d5089677387e4/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/817eaeddfb8354c4619d5089677387e4/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/31bd746a91c26267e96d87a0e41ba0db/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/31bd746a91c26267e96d87a0e41ba0db/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/7969d8a8c98e8e04f9e15c28e4fd5c39/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/7969d8a8c98e8e04f9e15c28e4fd5c39/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/3dde9e8e291c401224d3942fedf59f0e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/3dde9e8e291c401224d3942fedf59f0e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/16f7a69053f06813197e45b0bcab7831/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/16f7a69053f06813197e45b0bcab7831/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/cab1e9ea8d508f8a607cd28a2cd99280/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/cab1e9ea8d508f8a607cd28a2cd99280/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/4d155ee9dbad1b4bed481924931b16d8/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/4d155ee9dbad1b4bed481924931b16d8/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/8ab71ace40a7facd41663be99d0c068b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/8ab71ace40a7facd41663be99d0c068b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/7c8cd4396d1497d9b1177c0ac06966c1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/7c8cd4396d1497d9b1177c0ac06966c1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/81612d6714b5ec05d36aa039306944c3/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/81612d6714b5ec05d36aa039306944c3/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/5382bdd1e338aa806b023680d0fab31a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/5382bdd1e338aa806b023680d0fab31a/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/7870ea55e357372563a2e705cc5d6c3a/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/7870ea55e357372563a2e705cc5d6c3a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/16ef801334c134d36751f89d5cce9a71/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/16ef801334c134d36751f89d5cce9a71/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/e5aae645e3801ca4301488932de2e429/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/e5aae645e3801ca4301488932de2e429/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/71dfae3f96f1ba73f2f898f4351dc3f7/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/71dfae3f96f1ba73f2f898f4351dc3f7/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/c3b04a2df29b95a50d50f89bb0dd607c/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/c3b04a2df29b95a50d50f89bb0dd607c/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/df67ae15febd251b29a0cdaff9e7e46f/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/df67ae15febd251b29a0cdaff9e7e46f/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/bc03b5622e405ae8de0c99128341bbaf/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/bc03b5622e405ae8de0c99128341bbaf/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/13d6dab9484eec7aca25ee205baf5927/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/13d6dab9484eec7aca25ee205baf5927/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/cc885b6a15bd7b4590156652fe5e56ce/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /Users/ahmad/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/cc885b6a15bd7b4590156652fe5e56ce/AndroidManifest.xml:20:5-44
+INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+		INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+		ADDED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml
+		INJECTED from /Users/ahmad/Documents/Android Project/MADE/a14-made-labs3/06.ContentProvider/MyNotesApp_ContentProv/dicodingnotesapp/src/main/AndroidManifest.xml

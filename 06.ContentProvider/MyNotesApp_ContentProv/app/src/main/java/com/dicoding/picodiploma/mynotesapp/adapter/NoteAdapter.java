@@ -3,6 +3,7 @@ package com.dicoding.picodiploma.mynotesapp.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,6 +44,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
         notifyDataSetChanged();
     }
 
+    public void addItem(Note note) {
+        this.listNotes.add(note);
+        notifyItemInserted(listNotes.size());
+    }
+
     public void updateItem(int position, Note note) {
         this.listNotes.set(position, note);
         notifyItemChanged(position, note);
@@ -53,19 +59,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
         notifyItemRemoved(position);
     }
 
-    public void addItem(Note note) {
-        this.listNotes.add(note);
-        notifyItemInserted(listNotes.size());
-    }
-
+    @NonNull
     @Override
-    public NoteViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NoteViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent, false);
         return new NoteViewholder(view);
     }
 
     @Override
-    public void onBindViewHolder(NoteViewholder holder, int position) {
+    public void onBindViewHolder(@NonNull NoteViewholder holder, int position) {
         holder.tvTitle.setText(getListNotes().get(position).getTitle());
         holder.tvDate.setText(getListNotes().get(position).getDate());
         holder.tvDescription.setText(getListNotes().get(position).getDescription());

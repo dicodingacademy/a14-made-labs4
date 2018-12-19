@@ -1,6 +1,6 @@
 package com.dicoding.picodiploma.mynotesapp;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -14,28 +14,23 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.dicoding.picodiploma.mynotesapp.adapter.NoteAdapter;
-import com.dicoding.picodiploma.mynotesapp.db.NoteHelper;
 import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import static android.provider.BaseColumns._ID;
 import static com.dicoding.picodiploma.mynotesapp.FormAddUpdateActivity.REQUEST_UPDATE;
 import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
-import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.DATE;
-import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.DESCRIPTION;
-import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.TITLE;
+import static com.dicoding.picodiploma.mynotesapp.helper.MappingHelper.mapCursorToArrayList;
 
 
 public class MainActivity extends AppCompatActivity
-        implements View.OnClickListener,LoadNotesCallback {
+        implements View.OnClickListener, LoadNotesCallback {
     private RecyclerView rvNotes;
     private ProgressBar progressBar;
 
-    private ArrayList<Note> listnotes = new ArrayList<Note>();
+    //private ArrayList<Note> listnotes = new ArrayList<Note>();
     private NoteAdapter adapter;
-    private NoteHelper noteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,18 +43,17 @@ public class MainActivity extends AppCompatActivity
         rvNotes = findViewById(R.id.rv_notes);
         rvNotes.setLayoutManager(new LinearLayoutManager(this));
         rvNotes.setHasFixedSize(true);
-        noteHelper = NoteHelper.getInstance(getApplicationContext());
-
-        noteHelper.open();
 
         progressBar = findViewById(R.id.progressbar);
+
         FloatingActionButton fabAdd = findViewById(R.id.fab_add);
         fabAdd.setOnClickListener(this);
 
         adapter = new NoteAdapter(this);
         rvNotes.setAdapter(adapter);
-        adapter.setListNotes(listnotes);
-        new LoadNoteAsync(this,this).execute();
+
+        // todo saveinstance
+        new LoadNoteAsync(this, this).execute();
 
     }
 
@@ -70,18 +64,6 @@ public class MainActivity extends AppCompatActivity
             startActivityForResult(intent, FormAddUpdateActivity.REQUEST_ADD);
         }
     }
-    private ArrayList<Note> mapping(Cursor notes){
-        ArrayList<Note> noteList = new ArrayList<Note>();
-        while (notes.moveToNext()){
-            int id = notes.getInt(notes.getColumnIndexOrThrow(_ID));
-            String title = notes.getString(notes.getColumnIndexOrThrow(TITLE));
-            String description = notes.getString(notes.getColumnIndexOrThrow(DESCRIPTION));
-            String date = notes.getString(notes.getColumnIndexOrThrow(DATE));
-            noteList.add(new Note(id,title,description,date));
-        }
-
-        return noteList;
-    }
 
     @Override
     public void preExecute() {
@@ -90,22 +72,24 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void postExecute(Cursor notes) {
-        Cursor list = notes;
-        listnotes = mapping(notes);
+
         progressBar.setVisibility(View.INVISIBLE);
-        adapter.setListNotes(listnotes);
-        if (list.getCount() == 0) {
+
+        ArrayList<Note> listnotes = mapCursorToArrayList(notes);
+        if (listnotes.size() > 0) {
+            adapter.setListNotes(listnotes);
+        } else {
             showSnackbarMessage("Tidak ada data saat ini");
         }
     }
 
     private static class LoadNoteAsync extends AsyncTask<Void, Void, Cursor> {
 
-        private final WeakReference<Activity> activtiy;
+        private final WeakReference<Context> weakContext;
         private final WeakReference<LoadNotesCallback> weakCallback;
 
-        private LoadNoteAsync(Activity activity,LoadNotesCallback callback) {
-            activtiy = new WeakReference<>(activity);
+        private LoadNoteAsync(Context context, LoadNotesCallback callback) {
+            weakContext = new WeakReference<>(context);
             weakCallback = new WeakReference<>(callback);
         }
 
@@ -117,7 +101,8 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected Cursor doInBackground(Void... voids) {
-            return activtiy.get().getContentResolver().query(CONTENT_URI, null, null, null, null);
+            Context context = weakContext.get();
+            return context.getContentResolver().query(CONTENT_URI, null, null, null, null);
         }
 
         @Override
@@ -134,6 +119,8 @@ public class MainActivity extends AppCompatActivity
         // Akan dipanggil jika request codenya ADD
         if (requestCode == FormAddUpdateActivity.REQUEST_ADD) {
             if (resultCode == FormAddUpdateActivity.RESULT_ADD) {
+
+                // todo cek yang sqlite
                 Note note = data.getParcelableExtra(FormAddUpdateActivity.EXTRA_NOTE);
                 adapter.addItem(note);
                 rvNotes.smoothScrollToPosition(adapter.getItemCount() - 1);

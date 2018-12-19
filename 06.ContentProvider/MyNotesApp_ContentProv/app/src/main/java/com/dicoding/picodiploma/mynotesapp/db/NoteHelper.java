@@ -27,7 +27,6 @@ public class NoteHelper {
     private final DatabaseHelper dataBaseHelper;
     private static NoteHelper INSTANCE;
 
-
     private SQLiteDatabase database;
 
     private NoteHelper(Context context) {
@@ -68,7 +67,7 @@ public class NoteHelper {
      * @return hasil query berbentuk array model note
      */
     public ArrayList<Note> query() {
-        ArrayList<Note> arrayList = new ArrayList<Note>();
+        ArrayList<Note> arrayList = new ArrayList<>();
         Cursor cursor = database.query(DATABASE_TABLE
                 , null
                 , null
@@ -80,7 +79,6 @@ public class NoteHelper {
         Note note;
         if (cursor.getCount() > 0) {
             do {
-
                 note = new Note();
                 note.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
                 note.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));

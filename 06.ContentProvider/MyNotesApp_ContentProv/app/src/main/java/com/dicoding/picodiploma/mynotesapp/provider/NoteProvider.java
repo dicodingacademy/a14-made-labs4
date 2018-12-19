@@ -30,8 +30,8 @@ public class NoteProvider extends ContentProvider {
     /*
     Uri matcher untuk mempermudah identifier dengan menggunakan integer
     misal
-    uri com.dicoding.picodiploma.mynotesapp di cocokan dengan integer 1
-    uri com.dicoding.picodiploma.mynotesapp/# dicodokan dengan integer 2
+    uri com.dicoding.picodiploma.mynotesapp dicocokan dengan integer 1
+    uri com.dicoding.picodiploma.mynotesapp/# dicocokan dengan integer 2
      */
     static {
 
@@ -53,13 +53,13 @@ public class NoteProvider extends ContentProvider {
         return true;
     }
 
-
     /*
     Method query digunakan ketika ingin menjalankan query Select
     Return cursor
      */
     @Override
     public Cursor query(@NonNull Uri uri, String[] strings, String s, String[] strings1, String s1) {
+        noteHelper.open();
         Cursor cursor;
         switch (sUriMatcher.match(uri)) {
             case NOTE:
@@ -73,10 +73,6 @@ public class NoteProvider extends ContentProvider {
                 break;
         }
 
-        if (cursor != null) {
-            cursor.setNotificationUri(getContext().getContentResolver(), uri);
-        }
-
         return cursor;
     }
 
@@ -88,9 +84,8 @@ public class NoteProvider extends ContentProvider {
 
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues contentValues) {
-
+        noteHelper.open();
         long added;
-
         switch (sUriMatcher.match(uri)) {
             case NOTE:
                 added = noteHelper.insertProvider(contentValues);
@@ -100,15 +95,13 @@ public class NoteProvider extends ContentProvider {
                 break;
         }
 
-        if (added > 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
-        }
         return Uri.parse(CONTENT_URI + "/" + added);
     }
 
 
     @Override
     public int update(@NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
+        noteHelper.open();
         int updated;
         switch (sUriMatcher.match(uri)) {
             case NOTE_ID:
@@ -119,14 +112,12 @@ public class NoteProvider extends ContentProvider {
                 break;
         }
 
-        if (updated > 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
-        }
         return updated;
     }
 
     @Override
     public int delete(@NonNull Uri uri, String s, String[] strings) {
+        noteHelper.open();
         int deleted;
         switch (sUriMatcher.match(uri)) {
             case NOTE_ID:
@@ -135,10 +126,6 @@ public class NoteProvider extends ContentProvider {
             default:
                 deleted = 0;
                 break;
-        }
-
-        if (deleted > 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
         }
 
         return deleted;
