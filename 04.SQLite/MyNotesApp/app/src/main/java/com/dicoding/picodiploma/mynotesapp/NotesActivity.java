@@ -141,14 +141,11 @@ public class NotesActivity extends AppCompatActivity
             if (requestCode == NoteAddUpdateActivity.REQUEST_ADD) {
                 if (resultCode == NoteAddUpdateActivity.RESULT_ADD) {
                     Note note = data.getParcelableExtra(NoteAddUpdateActivity.EXTRA_NOTE);
-                    if (note != null) {
-                        adapter.addItem(note);
-                        rvNotes.smoothScrollToPosition(adapter.getItemCount() - 1);
-                        showSnackbarMessage("Satu item berhasil ditambahkan");
 
-                    } else {
-                        showSnackbarMessage("Something wrong");
-                    }
+                    adapter.addItem(note);
+                    rvNotes.smoothScrollToPosition(adapter.getItemCount() - 1);
+
+                    showSnackbarMessage("Satu item berhasil ditambahkan");
                 }
             }
             // Update dan Delete memiliki request code sama akan tetapi result codenya berbeda

@@ -68,9 +68,10 @@ public class NoteAddUpdateActivity extends AppCompatActivity
             actionBarTitle = "Ubah";
             btnTitle = "Update";
 
-            assert note != null;
-            edtTitle.setText(note.getTitle());
-            edtDescription.setText(note.getDescription());
+            if (note != null) {
+                edtTitle.setText(note.getTitle());
+                edtDescription.setText(note.getDescription());
+            }
         } else {
             actionBarTitle = "Tambah";
             btnTitle = "Simpan";
