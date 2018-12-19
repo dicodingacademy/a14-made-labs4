@@ -2,7 +2,6 @@ package com.dicoding.picodiploma.mynotesapp.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +15,8 @@ import com.dicoding.picodiploma.mynotesapp.FormAddUpdateActivity;
 import com.dicoding.picodiploma.mynotesapp.R;
 import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
+import java.util.ArrayList;
+
 import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
 
 /**
@@ -23,15 +24,38 @@ import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumn
  */
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder> {
-    private Cursor listNotes;
-    private Activity activity;
+    private final ArrayList<Note> listNotes = new ArrayList<>();
+    private final Activity activity;
 
     public NoteAdapter(Activity activity) {
         this.activity = activity;
     }
 
-    public void setListNotes(Cursor listNotes) {
-        this.listNotes = listNotes;
+    private ArrayList<Note> getListNotes() {
+        return listNotes;
+    }
+
+    public void setListNotes(ArrayList<Note> listNotes) {
+        if (listNotes.size() > 0){
+            this.listNotes.clear();
+        }
+        this.listNotes.addAll(listNotes);
+        notifyDataSetChanged();
+    }
+
+    public void updateItem(int position, Note note) {
+        this.listNotes.set(position, note);
+        notifyItemChanged(position, note);
+    }
+
+    public void removeItem(int position) {
+        this.listNotes.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void addItem(Note note) {
+        this.listNotes.add(note);
+        notifyItemInserted(listNotes.size());
     }
 
     @Override
@@ -42,10 +66,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
 
     @Override
     public void onBindViewHolder(NoteViewholder holder, int position) {
-        final Note note = getItem(position);
-        holder.tvTitle.setText(note.getTitle());
-        holder.tvDate.setText(note.getDate());
-        holder.tvDescription.setText(note.getDescription());
+        holder.tvTitle.setText(getListNotes().get(position).getTitle());
+        holder.tvDate.setText(getListNotes().get(position).getDate());
+        holder.tvDescription.setText(getListNotes().get(position).getDescription());
         holder.cvNote.setOnClickListener(new CustomOnItemClickListener(position, new CustomOnItemClickListener.OnItemClickCallback() {
             @Override
             public void onItemClicked(View view, int position) {
@@ -53,10 +76,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
 
                 // Set intent dengan data uri row note by id
                 // content://com.dicoding.picodiploma.mynotesapp/note/id
-                Uri uri = Uri.parse(CONTENT_URI + "/" + note.getId());
+                Uri uri = Uri.parse(CONTENT_URI + "/" + getListNotes().get(position).getId());
                 intent.setData(uri);
-                //intent.putExtra(FormAddUpdateActivity.EXTRA_POSITION, position);
-                //intent.putExtra(FormAddUpdateActivity.EXTRA_NOTE, note);
+                intent.putExtra(FormAddUpdateActivity.EXTRA_POSITION, position);
+                intent.putExtra(FormAddUpdateActivity.EXTRA_NOTE, listNotes.get(position));
                 activity.startActivityForResult(intent, FormAddUpdateActivity.REQUEST_UPDATE);
             }
         }));
@@ -64,20 +87,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
 
     @Override
     public int getItemCount() {
-        if (listNotes == null) return 0;
-        return listNotes.getCount();
-    }
-
-    private Note getItem(int position) {
-        if (!listNotes.moveToPosition(position)) {
-            throw new IllegalStateException("Position invalid");
-        }
-        return new Note(listNotes);
+        return listNotes.size();
     }
 
     class NoteViewholder extends RecyclerView.ViewHolder {
-        TextView tvTitle, tvDescription, tvDate;
-        CardView cvNote;
+        final TextView tvTitle, tvDescription, tvDate;
+        final CardView cvNote;
 
         NoteViewholder(View itemView) {
             super(itemView);

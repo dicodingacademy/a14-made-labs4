@@ -12,7 +12,7 @@ public final class DatabaseContract {
 
     // Authority yang digunakan
     public static final String AUTHORITY = "com.dicoding.picodiploma.mynotesapp";
-    public static final String SCHEME = "content";
+    private static final String SCHEME = "content";
 
     //
     private DatabaseContract(){}
@@ -23,14 +23,14 @@ public final class DatabaseContract {
      */
     public static final class NoteColumns implements BaseColumns {
         // Note table name
-        public static String TABLE_NAME = "note";
+        public static final String TABLE_NAME = "note";
 
         // Note title
-        public static String TITLE = "title";
+        public static final String TITLE = "title";
         // Note description
-        public static String DESCRIPTION = "description";
+        public static final String DESCRIPTION = "description";
         // Note date
-        public static String DATE = "date";
+        public static final String DATE = "date";
 
         // Base content yang digunakan untuk akses content provider
         public static final Uri CONTENT_URI = new Uri.Builder().scheme(SCHEME)

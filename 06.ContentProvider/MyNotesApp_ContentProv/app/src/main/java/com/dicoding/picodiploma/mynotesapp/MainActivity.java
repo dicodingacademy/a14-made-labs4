@@ -1,8 +1,6 @@
 package com.dicoding.picodiploma.mynotesapp;
 
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -22,19 +20,22 @@ import com.dicoding.picodiploma.mynotesapp.entity.Note;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import static android.provider.BaseColumns._ID;
 import static com.dicoding.picodiploma.mynotesapp.FormAddUpdateActivity.REQUEST_UPDATE;
 import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
+import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.DATE;
+import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.DESCRIPTION;
+import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.TITLE;
 
 
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener,LoadNotesCallback {
-    RecyclerView rvNotes;
-    ProgressBar progressBar;
-    FloatingActionButton fabAdd;
+    private RecyclerView rvNotes;
+    private ProgressBar progressBar;
 
-    private Cursor list;
+    private ArrayList<Note> listnotes = new ArrayList<Note>();
     private NoteAdapter adapter;
-    NoteHelper noteHelper;
+    private NoteHelper noteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,22 +52,15 @@ public class MainActivity extends AppCompatActivity
 
         noteHelper.open();
 
-
         progressBar = findViewById(R.id.progressbar);
-        fabAdd = findViewById(R.id.fab_add);
+        FloatingActionButton fabAdd = findViewById(R.id.fab_add);
         fabAdd.setOnClickListener(this);
 
         adapter = new NoteAdapter(this);
-        adapter.setListNotes(list);
         rvNotes.setAdapter(adapter);
+        adapter.setListNotes(listnotes);
         new LoadNoteAsync(this,this).execute();
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        new LoadNoteAsync(this,this).execute();
     }
 
     @Override
@@ -76,6 +70,18 @@ public class MainActivity extends AppCompatActivity
             startActivityForResult(intent, FormAddUpdateActivity.REQUEST_ADD);
         }
     }
+    private ArrayList<Note> mapping(Cursor notes){
+        ArrayList<Note> noteList = new ArrayList<Note>();
+        while (notes.moveToNext()){
+            int id = notes.getInt(notes.getColumnIndexOrThrow(_ID));
+            String title = notes.getString(notes.getColumnIndexOrThrow(TITLE));
+            String description = notes.getString(notes.getColumnIndexOrThrow(DESCRIPTION));
+            String date = notes.getString(notes.getColumnIndexOrThrow(DATE));
+            noteList.add(new Note(id,title,description,date));
+        }
+
+        return noteList;
+    }
 
     @Override
     public void preExecute() {
@@ -84,11 +90,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void postExecute(Cursor notes) {
-        progressBar.setVisibility(View.GONE);
-        list = notes;
-        adapter.setListNotes(list);
-        adapter.notifyDataSetChanged();
-
+        Cursor list = notes;
+        listnotes = mapping(notes);
+        progressBar.setVisibility(View.INVISIBLE);
+        adapter.setListNotes(listnotes);
         if (list.getCount() == 0) {
             showSnackbarMessage("Tidak ada data saat ini");
         }
@@ -129,7 +134,9 @@ public class MainActivity extends AppCompatActivity
         // Akan dipanggil jika request codenya ADD
         if (requestCode == FormAddUpdateActivity.REQUEST_ADD) {
             if (resultCode == FormAddUpdateActivity.RESULT_ADD) {
-                new LoadNoteAsync(this,this).execute();
+                Note note = data.getParcelableExtra(FormAddUpdateActivity.EXTRA_NOTE);
+                adapter.addItem(note);
+                rvNotes.smoothScrollToPosition(adapter.getItemCount() - 1);
                 showSnackbarMessage("Satu item berhasil ditambahkan");
             }
         }
@@ -140,7 +147,10 @@ public class MainActivity extends AppCompatActivity
             Semua data di load kembali dari awal
             */
             if (resultCode == FormAddUpdateActivity.RESULT_UPDATE) {
-                new LoadNoteAsync(this,this).execute();
+                Note note = data.getParcelableExtra(FormAddUpdateActivity.EXTRA_NOTE);
+                int position = data.getIntExtra(FormAddUpdateActivity.EXTRA_POSITION, 0);
+                adapter.updateItem(position, note);
+                rvNotes.smoothScrollToPosition(position);
                 showSnackbarMessage("Satu item berhasil diubah");
             }
             /*
@@ -149,15 +159,11 @@ public class MainActivity extends AppCompatActivity
             Dikarenakan menggunakan cursor maka data akan di load kembali
             */
             else if (resultCode == FormAddUpdateActivity.RESULT_DELETE) {
-                new LoadNoteAsync(this,this).execute();
+                int position = data.getIntExtra(FormAddUpdateActivity.EXTRA_POSITION, 0);
+                adapter.removeItem(position);
                 showSnackbarMessage("Satu item berhasil dihapus");
             }
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     /**

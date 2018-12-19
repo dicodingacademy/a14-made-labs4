@@ -23,8 +23,8 @@ import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumn
  */
 
 public class NoteHelper {
-    private static String DATABASE_TABLE = TABLE_NAME;
-    private DatabaseHelper dataBaseHelper;
+    private static final String DATABASE_TABLE = TABLE_NAME;
+    private final DatabaseHelper dataBaseHelper;
     private static NoteHelper INSTANCE;
 
 
@@ -169,7 +169,7 @@ public class NoteHelper {
                 , null
                 , null
                 , null
-                , _ID + " DESC");
+                , _ID + " ASC");
     }
 
     /**
