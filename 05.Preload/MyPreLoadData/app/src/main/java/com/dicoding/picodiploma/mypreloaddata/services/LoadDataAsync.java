@@ -168,9 +168,7 @@ public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
     //Update prosesnya
     @Override
     protected void onProgressUpdate(Integer... values) {
-
         weakCallback.get().onProgressUpdate(values[0]);
-
     }
 
     /*
@@ -179,7 +177,6 @@ public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
     */
     @Override
     protected void onPostExecute(Boolean result) {
-
         if (result) {
             weakCallback.get().onLoadSuccess();
         } else {
@@ -193,7 +190,7 @@ public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
      *
      * @return array model dari semua mahasiswa
      */
-    public ArrayList<MahasiswaModel> preLoadRaw() {
+    private ArrayList<MahasiswaModel> preLoadRaw() {
         ArrayList<MahasiswaModel> mahasiswaModels = new ArrayList<>();
         String line;
         BufferedReader reader;
@@ -202,7 +199,6 @@ public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
             InputStream raw_dict = res.openRawResource(R.raw.data_mahasiswa);
 
             reader = new BufferedReader(new InputStreamReader(raw_dict));
-            int count = 0;
             do {
                 line = reader.readLine();
                 String[] splitstr = line.split("\t");
@@ -211,7 +207,6 @@ public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
 
                 mahasiswaModel = new MahasiswaModel(splitstr[0], splitstr[1]);
                 mahasiswaModels.add(mahasiswaModel);
-                count++;
             } while (line != null);
         } catch (Exception e) {
             e.printStackTrace();
