@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -8,16 +10,26 @@
         android:id="@+id/txt_nim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/imageView"
         android:padding="@dimen/activity_horizontal_margin"
+        android:layout_centerVertical="true"
         android:text="@string/nim" />
 
     <TextView
         android:id="@+id/txt_nama"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/txt_nim"
         android:layout_toRightOf="@id/txt_nim"
         android:padding="@dimen/activity_horizontal_margin"
+        android:layout_centerVertical="true"
         android:text="@string/nama" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:padding="8dp"
+        app:srcCompat="@color/colorAccent" />
 
 </RelativeLayout>
