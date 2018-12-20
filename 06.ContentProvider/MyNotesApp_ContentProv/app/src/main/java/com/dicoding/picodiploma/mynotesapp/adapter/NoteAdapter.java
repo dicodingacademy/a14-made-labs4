@@ -32,7 +32,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
         this.activity = activity;
     }
 
-    private ArrayList<Note> getListNotes() {
+    public ArrayList<Note> getListNotes() {
         return listNotes;
     }
 

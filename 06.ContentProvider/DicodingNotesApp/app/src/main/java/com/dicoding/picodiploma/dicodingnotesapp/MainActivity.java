@@ -1,13 +1,12 @@
 package com.dicoding.picodiploma.dicodingnotesapp;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,17 +17,15 @@ import android.widget.ListView;
 import com.dicoding.picodiploma.dicodingnotesapp.adapter.DicodingNotesAdapter;
 import com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract;
 
+import java.lang.ref.WeakReference;
+
 import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
 
 
 public class MainActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<Cursor>,
-        AdapterView.OnItemClickListener {
+        AdapterView.OnItemClickListener, LoadNotesCallback {
 
     private DicodingNotesAdapter dicodingNotesAdapter;
-    private ListView lvNotes;
-
-    private final int LOAD_NOTES_ID = 110;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,53 +34,54 @@ public class MainActivity extends AppCompatActivity implements
 
         getSupportActionBar().setTitle("Dicoding Notes");
 
-        lvNotes = (ListView) findViewById(R.id.lv_notes);
+        ListView lvNotes = findViewById(R.id.lv_notes);
         dicodingNotesAdapter = new DicodingNotesAdapter(this, null, true);
         lvNotes.setAdapter(dicodingNotesAdapter);
         lvNotes.setOnItemClickListener(this);
 
-        getSupportLoaderManager().initLoader(LOAD_NOTES_ID, null, this);
-    }
+        new getData(this, this).execute();
 
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getSupportLoaderManager().restartLoader(LOAD_NOTES_ID, null, this);
+        new getData(this, this).execute();
     }
-
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
-        return new CursorLoader(this, CONTENT_URI, null, null, null, null);
+    public void postExecute(Cursor notes) {
+        dicodingNotesAdapter.swapCursor(notes);
     }
 
+    private static class getData extends AsyncTask<Void, Void, Cursor> {
+        private final WeakReference<Context> weakContext;
+        private final WeakReference<LoadNotesCallback> weakCallback;
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        dicodingNotesAdapter.swapCursor(data);
+
+        private getData(Context context, LoadNotesCallback callback) {
+            weakContext = new WeakReference<>(context);
+            weakCallback = new WeakReference<>(callback);
+        }
+
+        @Override
+        protected Cursor doInBackground(Void... voids) {
+            return weakContext.get().getContentResolver().query(CONTENT_URI, null, null, null, null);
+        }
+
+        @Override
+        protected void onPostExecute(Cursor data) {
+            super.onPostExecute(data);
+            weakCallback.get().postExecute(data);
+        }
+
     }
-
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        dicodingNotesAdapter.swapCursor(null);
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
