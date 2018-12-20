@@ -28,7 +28,7 @@ public class MahasiswaHelper {
 
     private SQLiteDatabase database;
 
-    private MahasiswaHelper(Context context) {
+    public MahasiswaHelper(Context context) {
         dataBaseHelper = new DatabaseHelper(context);
     }
 

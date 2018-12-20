@@ -26,10 +26,6 @@ public class DataManagerService extends Service {
 
     public static final String ACTIVITY_HANDLER = "activity_handler";
 
-    public DataManagerService() {
-
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -102,12 +98,22 @@ public class DataManagerService extends Service {
 
         @Override
         public void onLoadSuccess() {
-
+            Message message = Message.obtain(null, MainActivity.SUCCESS_MESSAGE);
+            try {
+                mActivityMessenger.send(message);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
         public void onLoadFailed() {
-
+            Message message = Message.obtain(null, MainActivity.FAILED_MESSAGE);
+            try {
+                mActivityMessenger.send(message);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
     };
 

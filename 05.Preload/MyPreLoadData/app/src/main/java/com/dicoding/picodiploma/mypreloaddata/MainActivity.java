@@ -3,8 +3,6 @@ package com.dicoding.picodiploma.mypreloaddata;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.res.Resources;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -15,16 +13,9 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.dicoding.picodiploma.mypreloaddata.database.MahasiswaHelper;
-import com.dicoding.picodiploma.mypreloaddata.model.MahasiswaModel;
-import com.dicoding.picodiploma.mypreloaddata.prefs.AppPreference;
 import com.dicoding.picodiploma.mypreloaddata.services.DataManagerService;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements HandlerCallback {
 
@@ -88,11 +79,13 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
     @Override
     public void loadSuccess() {
         Toast.makeText(this, "BERHASIL", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(MainActivity.this, MahasiswaActivity.class));
+        finish();
     }
 
     @Override
     public void loadFailed() {
-
+        Toast.makeText(this, "GAGAL", Toast.LENGTH_LONG).show();
     }
 
     private static class IncomingHandler extends Handler {
