@@ -29,8 +29,9 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView rvNotes;
     private ProgressBar progressBar;
 
-    //private ArrayList<Note> listnotes = new ArrayList<Note>();
     private NoteAdapter adapter;
+    private static final String EXTRA_STATE = "EXTRA_STATE";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +53,28 @@ public class MainActivity extends AppCompatActivity
         adapter = new NoteAdapter(this);
         rvNotes.setAdapter(adapter);
 
-        // todo saveinstance
-        new LoadNoteAsync(this, this).execute();
+        if (savedInstanceState == null) {
+            new LoadNoteAsync(this, this).execute();
+        } else {
+            ArrayList<Note> list = savedInstanceState.getParcelableArrayList(EXTRA_STATE);
+            if (list != null) {
+                adapter.setListNotes(list);
+            }
 
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(EXTRA_STATE, adapter.getListNotes());
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new LoadNoteAsync(this, this).execute();
     }
 
     @Override
