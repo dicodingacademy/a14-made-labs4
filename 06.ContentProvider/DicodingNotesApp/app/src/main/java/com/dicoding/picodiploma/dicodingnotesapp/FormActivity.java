@@ -31,9 +31,7 @@ import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.Note
 
 public class FormActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText edtTitle, edtDescription;
-    private Button btnSubmit;
 
-    public static String EXTRA_NOTE_ITEM = "extra_note_item";
     private NoteItem noteItem = null;
     private boolean isUpdate = false;
 
@@ -42,9 +40,9 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
 
-        edtTitle = (EditText) findViewById(R.id.edt_title);
-        edtDescription = (EditText) findViewById(R.id.edt_description);
-        btnSubmit = (Button) findViewById(R.id.btn_submit);
+        edtTitle =  findViewById(R.id.edt_title);
+        edtDescription =  findViewById(R.id.edt_description);
+        Button btnSubmit =  findViewById(R.id.btn_submit);
         btnSubmit.setOnClickListener(this);
 
         // Uri yang di dapatkan disini akan digunakan untuk ambil data dari provider
