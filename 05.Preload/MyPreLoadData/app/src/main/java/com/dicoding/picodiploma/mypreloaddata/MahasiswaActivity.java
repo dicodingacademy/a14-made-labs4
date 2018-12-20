@@ -23,19 +23,19 @@ public class MahasiswaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mahasiswa);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 
-        mahasiswaHelper = new MahasiswaHelper(this);
-        mahasiswaAdapter = new MahasiswaAdapter();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        recyclerView.setAdapter(mahasiswaAdapter);
-
-        mahasiswaHelper.open();
-
-        // Ambil semua data mahasiswa di database
-        ArrayList<MahasiswaModel> mahasiswaModels = mahasiswaHelper.getAllData();
-
-        mahasiswaHelper.close();
-
-        mahasiswaAdapter.addItem(mahasiswaModels);
+//        mahasiswaHelper = new MahasiswaHelper(this);
+//        mahasiswaAdapter = new MahasiswaAdapter();
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//
+//        recyclerView.setAdapter(mahasiswaAdapter);
+//
+//        mahasiswaHelper.open();
+//
+//        // Ambil semua data mahasiswa di database
+//        ArrayList<MahasiswaModel> mahasiswaModels = mahasiswaHelper.getAllData();
+//
+//        mahasiswaHelper.close();
+//
+//        mahasiswaAdapter.addItem(mahasiswaModels);
     }
 }
