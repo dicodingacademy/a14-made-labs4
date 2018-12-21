@@ -2,9 +2,12 @@ package com.dicoding.picodiploma.mynotesapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +22,6 @@ import com.dicoding.picodiploma.mynotesapp.entity.Note;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import static com.dicoding.picodiploma.mynotesapp.FormAddUpdateActivity.REQUEST_UPDATE;
 import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
 import static com.dicoding.picodiploma.mynotesapp.helper.MappingHelper.mapCursorToArrayList;
 
@@ -31,6 +33,9 @@ public class MainActivity extends AppCompatActivity
 
     private NoteAdapter adapter;
     private static final String EXTRA_STATE = "EXTRA_STATE";
+
+    private static HandlerThread handlerThread;
+    private DataObserver myObserver;
 
 
     @Override
@@ -47,6 +52,12 @@ public class MainActivity extends AppCompatActivity
 
         progressBar = findViewById(R.id.progressbar);
 
+        handlerThread = new HandlerThread("DataObserver");
+        handlerThread.start();
+        Handler handler = new Handler(handlerThread.getLooper());
+        myObserver = new DataObserver(handler, this);
+        getContentResolver().registerContentObserver(CONTENT_URI, true, myObserver);
+
         FloatingActionButton fabAdd = findViewById(R.id.fab_add);
         fabAdd.setOnClickListener(this);
 
@@ -60,8 +71,8 @@ public class MainActivity extends AppCompatActivity
             if (list != null) {
                 adapter.setListNotes(list);
             }
-
         }
+
     }
 
     @Override
@@ -69,12 +80,6 @@ public class MainActivity extends AppCompatActivity
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(EXTRA_STATE, adapter.getListNotes());
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        new LoadNoteAsync(this, this).execute();
     }
 
     @Override
@@ -92,7 +97,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void postExecute(Cursor notes) {
-
         progressBar.setVisibility(View.INVISIBLE);
 
         ArrayList<Note> listnotes = mapCursorToArrayList(notes);
@@ -132,47 +136,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Akan dipanggil jika request codenya ADD
-        if (requestCode == FormAddUpdateActivity.REQUEST_ADD) {
-            if (resultCode == FormAddUpdateActivity.RESULT_ADD) {
-
-                // todo cek yang sqlite
-                Note note = data.getParcelableExtra(FormAddUpdateActivity.EXTRA_NOTE);
-                adapter.addItem(note);
-                rvNotes.smoothScrollToPosition(adapter.getItemCount() - 1);
-                showSnackbarMessage("Satu item berhasil ditambahkan");
-            }
-        }
-        // Update dan Delete memiliki request code sama akan tetapi result codenya berbeda
-        else if (requestCode == REQUEST_UPDATE) {
-            /*
-            Akan dipanggil jika result codenya UPDATE
-            Semua data di load kembali dari awal
-            */
-            if (resultCode == FormAddUpdateActivity.RESULT_UPDATE) {
-                Note note = data.getParcelableExtra(FormAddUpdateActivity.EXTRA_NOTE);
-                int position = data.getIntExtra(FormAddUpdateActivity.EXTRA_POSITION, 0);
-                adapter.updateItem(position, note);
-                rvNotes.smoothScrollToPosition(position);
-                showSnackbarMessage("Satu item berhasil diubah");
-            }
-            /*
-            Akan dipanggil jika result codenya DELETE
-            Delete akan menghapus data dari list berdasarkan dari position
-            Dikarenakan menggunakan cursor maka data akan di load kembali
-            */
-            else if (resultCode == FormAddUpdateActivity.RESULT_DELETE) {
-                int position = data.getIntExtra(FormAddUpdateActivity.EXTRA_POSITION, 0);
-                adapter.removeItem(position);
-                showSnackbarMessage("Satu item berhasil dihapus");
-            }
-        }
-    }
-
     /**
      * Tampilkan snackbar
      *
@@ -180,5 +143,22 @@ public class MainActivity extends AppCompatActivity
      */
     private void showSnackbarMessage(String message) {
         Snackbar.make(rvNotes, message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    public static class DataObserver extends ContentObserver {
+
+        final Context context;
+
+        public DataObserver(Handler handler, Context context) {
+            super(handler);
+            this.context = context;
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            new LoadNoteAsync(context, (LoadNotesCallback) context).execute();
+
+        }
     }
 }

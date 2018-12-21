@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
@@ -37,10 +39,7 @@ public class FormAddUpdateActivity extends AppCompatActivity
     private boolean isEdit = false;
 
     public static final int REQUEST_ADD = 100;
-    public static final int RESULT_ADD = 101;
     public static final int REQUEST_UPDATE = 200;
-    public static final int RESULT_UPDATE = 201;
-    public static final int RESULT_DELETE = 301;
 
     private Note note;
     private int position;
@@ -99,7 +98,6 @@ public class FormAddUpdateActivity extends AppCompatActivity
     }
 
 
-
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_submit) {
@@ -107,7 +105,6 @@ public class FormAddUpdateActivity extends AppCompatActivity
             String description = edtDescription.getText().toString().trim();
 
             boolean isEmpty = false;
-
 
              /*
             Jika fieldnya masih kosong maka tampilkan error
@@ -132,7 +129,6 @@ public class FormAddUpdateActivity extends AppCompatActivity
                 values.put(TITLE, title);
                 values.put(DESCRIPTION, description);
 
-
                 /*
                 Jika merupakan edit setresultnya UPDATE, dan jika bukan maka setresultnya ADD
                  */
@@ -141,17 +137,16 @@ public class FormAddUpdateActivity extends AppCompatActivity
                     // Gunakan uri dari intent activity ini
                     // content://com.dicoding.picodiploma.mynotesapp/note/id
                     getContentResolver().update(getIntent().getData(), values, null, null);
-
-                    setResult(RESULT_UPDATE,intent);
+                    Toast.makeText(FormAddUpdateActivity.this, "Satu item berhasil diedit", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     values.put(DATE, getCurrentDate());
                     note.setDate(getCurrentDate());
                     // Gunakan content uri untuk insert
                     // content://com.dicoding.picodiploma.mynotesapp/note/
+                    Toast.makeText(FormAddUpdateActivity.this, "Satu item berhasil disimpan", Toast.LENGTH_SHORT).show();
                     getContentResolver().insert(CONTENT_URI, values);
 
-                    setResult(RESULT_ADD,intent);
                     finish();
                 }
             }
@@ -168,6 +163,7 @@ public class FormAddUpdateActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        int ALERT_DIALOG_DELETE = 20;
         switch (item.getItemId()) {
             case R.id.action_delete:
                 showAlertDialog(ALERT_DIALOG_DELETE);
@@ -186,7 +182,6 @@ public class FormAddUpdateActivity extends AppCompatActivity
     }
 
     private final int ALERT_DIALOG_CLOSE = 10;
-    private final int ALERT_DIALOG_DELETE = 20;
 
     /*
     Konfirmasi dialog sebelum proses batal atau hapus
@@ -221,8 +216,8 @@ public class FormAddUpdateActivity extends AppCompatActivity
                             intent.putExtra(EXTRA_POSITION, position);
                             // Gunakan uri dari intent activity ini
                             // content://com.dicoding.picodiploma.mynotesapp/note/id
+                            Toast.makeText(FormAddUpdateActivity.this, "Satu item berhasil dihapus", Toast.LENGTH_SHORT).show();
                             getContentResolver().delete(getIntent().getData(), null, null);
-                            setResult(RESULT_DELETE, intent);
                             finish();
                         }
                     }

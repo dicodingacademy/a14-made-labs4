@@ -1,11 +1,13 @@
 package com.dicoding.picodiploma.dicodingnotesapp;
 
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -34,15 +36,17 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
 
     private NoteItem noteItem = null;
     private boolean isUpdate = false;
+    private ContentResolver resolver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
 
-        edtTitle =  findViewById(R.id.edt_title);
-        edtDescription =  findViewById(R.id.edt_description);
-        Button btnSubmit =  findViewById(R.id.btn_submit);
+        edtTitle = findViewById(R.id.edt_title);
+        edtDescription = findViewById(R.id.edt_description);
+        Button btnSubmit = findViewById(R.id.btn_submit);
+        resolver = getContentResolver();
         btnSubmit.setOnClickListener(this);
 
         // Uri yang di dapatkan disini akan digunakan untuk ambil data dari provider
@@ -99,15 +103,13 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (isUpdate) {
                     Uri uri = getIntent().getData();
-                    getContentResolver().update(uri, mContentValues, null, null);
-
+                    resolver.update(uri, mContentValues, null, null);
                     Toast.makeText(this, "Satu catatan berhasil diupdate", Toast.LENGTH_SHORT).show();
                 } else {
-                    getContentResolver().insert(CONTENT_URI, mContentValues);
-
+                    resolver.insert(CONTENT_URI, mContentValues);
                     Toast.makeText(this, "Satu catatan berhasil diinputkan", Toast.LENGTH_SHORT).show();
                 }
-
+                resolver.notifyChange(CONTENT_URI, new MainActivity.DataObserver(new Handler(), this));
                 finish();
 
             }
@@ -144,11 +146,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
     private void showDeleteAlertDialog() {
         String dialogMessage = "Apakah anda yakin ingin menghapus item ini?";
         String dialogTitle = "Hapus Note";
-
-
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-
         alertDialogBuilder.setTitle(dialogTitle);
         alertDialogBuilder
                 .setMessage(dialogMessage)
@@ -156,7 +154,8 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Uri uri = getIntent().getData();
-                        getContentResolver().delete(uri, null, null);
+                        resolver.delete(uri, null, null);
+                        resolver.notifyChange(CONTENT_URI, new MainActivity.DataObserver(new Handler(), FormActivity.this));
                         Toast.makeText(FormActivity.this, "Satu item berhasil dihapus", Toast.LENGTH_SHORT).show();
                         finish();
                     }

@@ -3,10 +3,13 @@ package com.dicoding.picodiploma.dicodingnotesapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements
         AdapterView.OnItemClickListener, LoadNotesCallback {
 
     private DicodingNotesAdapter dicodingNotesAdapter;
+    private DataObserver myObserver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +42,12 @@ public class MainActivity extends AppCompatActivity implements
         dicodingNotesAdapter = new DicodingNotesAdapter(this, null, true);
         lvNotes.setAdapter(dicodingNotesAdapter);
         lvNotes.setOnItemClickListener(this);
-
-        new getData(this, this).execute();
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
+        HandlerThread handlerThread = new HandlerThread("DataObserver");
+        handlerThread.start();
+        //DataObserver observer;
+        Handler handler = new Handler(handlerThread.getLooper());
+        myObserver = new DataObserver(handler, this);
+        getContentResolver().registerContentObserver(CONTENT_URI, true, myObserver);
         new getData(this, this).execute();
     }
 
@@ -92,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Cursor cursor = (Cursor) dicodingNotesAdapter.getItem(i);
@@ -102,5 +103,23 @@ public class MainActivity extends AppCompatActivity implements
         intent.setData(Uri.parse(CONTENT_URI + "/" + id));
         startActivity(intent);
     }
+
+    static class DataObserver extends ContentObserver {
+
+        final Context context;
+
+        DataObserver(Handler handler, Context context) {
+            super(handler);
+            this.context = context;
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            new getData(context, (MainActivity) context).execute();
+        }
+
+    }
+
 }
 

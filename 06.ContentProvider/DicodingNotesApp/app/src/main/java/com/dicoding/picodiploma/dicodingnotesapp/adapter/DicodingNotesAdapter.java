@@ -31,7 +31,6 @@ public class DicodingNotesAdapter extends CursorAdapter {
         return LayoutInflater.from(context).inflate(R.layout.item_dicoding_note, viewGroup, false);
     }
 
-
     @Override
     public Cursor getCursor() {
         return super.getCursor();

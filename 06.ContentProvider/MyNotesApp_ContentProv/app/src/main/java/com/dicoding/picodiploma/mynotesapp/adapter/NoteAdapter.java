@@ -44,21 +44,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
         notifyDataSetChanged();
     }
 
-    public void addItem(Note note) {
-        this.listNotes.add(note);
-        notifyItemInserted(listNotes.size());
-    }
-
-    public void updateItem(int position, Note note) {
-        this.listNotes.set(position, note);
-        notifyItemChanged(position, note);
-    }
-
-    public void removeItem(int position) {
-        this.listNotes.remove(position);
-        notifyItemRemoved(position);
-    }
-
     @NonNull
     @Override
     public NoteViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

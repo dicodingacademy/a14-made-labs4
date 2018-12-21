@@ -5,8 +5,10 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 
+import com.dicoding.picodiploma.mynotesapp.MainActivity;
 import com.dicoding.picodiploma.mynotesapp.db.NoteHelper;
 
 import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.AUTHORITY;
@@ -82,6 +84,7 @@ public class NoteProvider extends ContentProvider {
         return null;
     }
 
+
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues contentValues) {
         noteHelper.open();
@@ -94,6 +97,8 @@ public class NoteProvider extends ContentProvider {
                 added = 0;
                 break;
         }
+
+        getContext().getContentResolver().notifyChange(CONTENT_URI, new MainActivity.DataObserver(new Handler(), getContext()));
 
         return Uri.parse(CONTENT_URI + "/" + added);
     }
@@ -112,6 +117,8 @@ public class NoteProvider extends ContentProvider {
                 break;
         }
 
+        getContext().getContentResolver().notifyChange(CONTENT_URI, new MainActivity.DataObserver(new Handler(), getContext()));
+
         return updated;
     }
 
@@ -127,6 +134,8 @@ public class NoteProvider extends ContentProvider {
                 deleted = 0;
                 break;
         }
+
+        getContext().getContentResolver().notifyChange(CONTENT_URI, new MainActivity.DataObserver(new Handler(), getContext()));
 
         return deleted;
     }
