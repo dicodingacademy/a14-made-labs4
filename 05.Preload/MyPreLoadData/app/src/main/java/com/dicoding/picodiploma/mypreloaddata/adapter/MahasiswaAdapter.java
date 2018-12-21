@@ -49,7 +49,7 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
 
     @Override
     public int getItemViewType(int position) {
-        return 0;
+        return position;
     }
 
     @Override

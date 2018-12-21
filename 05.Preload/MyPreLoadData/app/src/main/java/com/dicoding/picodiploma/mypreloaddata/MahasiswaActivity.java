@@ -21,7 +21,7 @@ public class MahasiswaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mahasiswa);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        recyclerView = findViewById(R.id.recyclerview);
 
         mahasiswaHelper = new MahasiswaHelper(this);
         mahasiswaAdapter = new MahasiswaAdapter();
@@ -36,6 +36,6 @@ public class MahasiswaActivity extends AppCompatActivity {
 
         mahasiswaHelper.close();
 
-        mahasiswaAdapter.addItem(mahasiswaModels);
+        mahasiswaAdapter.setData(mahasiswaModels);
     }
 }
