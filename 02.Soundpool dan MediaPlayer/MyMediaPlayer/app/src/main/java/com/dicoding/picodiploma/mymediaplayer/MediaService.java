@@ -25,7 +25,7 @@ import java.lang.ref.WeakReference;
  * Created by dicoding on 11/21/2016.
  */
 
-public class MediaService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayerCallback {
+public class MediaService extends Service implements MediaPlayerCallback {
     final String TAG = MediaService.class.getSimpleName();
     public final static int PLAY = 0;
     public final static int STOP = 1;
@@ -50,20 +50,21 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent.getAction();
 
-        assert action != null;
-        switch (action) {
-            case ACTION_CREATE:
-                if (mMediaPlayer == null) {
-                    init();
-                }
-                break;
-            case ACTION_DESTROY:
-                if (!mMediaPlayer.isPlaying()) {
-                    stopSelf();
-                }
-                break;
-            default:
-                break;
+        if (action != null) {
+            switch (action) {
+                case ACTION_CREATE:
+                    if (mMediaPlayer == null) {
+                        init();
+                    }
+                    break;
+                case ACTION_DESTROY:
+                    if (!mMediaPlayer.isPlaying()) {
+                        stopSelf();
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
         Log.d(TAG, "onStartCommand: ");
         return flags;
@@ -112,27 +113,27 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
             e.printStackTrace();
         }
 
-        mMediaPlayer.setOnPreparedListener(this);
-        mMediaPlayer.setOnErrorListener(this);
+        mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            /**
+             * Called when MediaPlayer is ready
+             */
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                isReady = true;
+                mMediaPlayer.start();
+                showNotif();
+            }
+        });
 
-    }
-
-    /**
-     * Called when MediaPlayer is ready
-     */
-    @Override
-    public void onPrepared(MediaPlayer player) {
-        isReady = true;
-        mMediaPlayer.start();
-        showNotif();
-    }
-
-    /**
-     * Called when MediaPlayer is error
-     */
-    @Override
-    public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-        return false;
+        mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            /**
+             * Called when MediaPlayer is error
+             */
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                return false;
+            }
+        });
     }
 
     /**
@@ -164,6 +165,9 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
         }
     }
 
+    /**
+     * Digunakan ketika media service berjalan, maka akan muncul notif
+     */
     void showNotif() {
         Intent notificationIntent = new Intent(this, MainActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
@@ -202,7 +206,6 @@ public class MediaService extends Service implements MediaPlayer.OnPreparedListe
     }
 
     void stopNotif() {
-
         stopForeground(false);
     }
 
