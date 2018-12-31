@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     public NoteAdapter(Activity activity) {
         this.activity = activity;
+//        setHasStableIds(true);
+//        Log.e("STABLE", "NoteAdapter: " + hasStableIds() );
     }
 
     public ArrayList<Note> getListNotes() {
@@ -56,6 +59,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     public void removeItem(int position) {
         this.listNotes.remove(position);
         notifyItemRemoved(position);
+        notifyItemRangeChanged(position,listNotes.size());
     }
 
     @NonNull
