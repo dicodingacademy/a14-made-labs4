@@ -42,6 +42,7 @@ public class NotesActivity extends AppCompatActivity
         rvNotes = findViewById(R.id.rv_notes);
         rvNotes.setLayoutManager(new LinearLayoutManager(this));
         rvNotes.setHasFixedSize(true);
+
         noteHelper = NoteHelper.getInstance(getApplicationContext());
 
         noteHelper.open();
