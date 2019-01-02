@@ -62,7 +62,7 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
         return listMahasiswa.size();
     }
 
-    static class MahasiswaHolder extends RecyclerView.ViewHolder {
+    class MahasiswaHolder extends RecyclerView.ViewHolder {
         private TextView textViewNim;
         private TextView textViewNama;
 

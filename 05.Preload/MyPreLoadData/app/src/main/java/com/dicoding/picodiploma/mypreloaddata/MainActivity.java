@@ -17,11 +17,17 @@ import com.dicoding.picodiploma.mypreloaddata.services.DataManagerService;
 
 import java.lang.ref.WeakReference;
 
-public class MainActivity extends AppCompatActivity implements HandlerCallback {
+import static com.dicoding.picodiploma.mypreloaddata.services.DataManagerService.FAILED_MESSAGE;
+import static com.dicoding.picodiploma.mypreloaddata.services.DataManagerService.PREPARATION_MESSAGE;
+import static com.dicoding.picodiploma.mypreloaddata.services.DataManagerService.SUCCESS_MESSAGE;
+import static com.dicoding.picodiploma.mypreloaddata.services.DataManagerService.UPDATE_MESSAGE;
 
+public class MainActivity extends AppCompatActivity implements HandlerCallback {
     ProgressBar progressBar;
     Messenger mActivityMessenger;
 
+    Messenger mBoundService;
+    boolean mServiceBound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +50,6 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
         unbindService(mServiceConnection);
     }
 
-    Messenger mBoundService;
-    boolean mServiceBound;
-
     /*
      Service Connection adalah interface yang digunakan untuk menghubungkan antara boundservice dengan activity
       */
@@ -65,10 +68,6 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
 
     };
 
-    public static final int UPDATE_MESSAGE = 0;
-    public static final int SUCCESS_MESSAGE = 1;
-    public static final int FAILED_MESSAGE = 2;
-
     @Override
     public void updateProgress(long progress) {
 
@@ -85,7 +84,12 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
 
     @Override
     public void loadFailed() {
-        Toast.makeText(this, "GAGAL", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "GAGAL", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onPreparation() {
+        Toast.makeText(this, "MEMULAI MEMUAT DATA", Toast.LENGTH_LONG).show();
     }
 
     private static class IncomingHandler extends Handler {
@@ -99,7 +103,9 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-
+                case PREPARATION_MESSAGE:
+                    weakCallback.get().onPreparation();
+                    break;
                 case UPDATE_MESSAGE:
                     Bundle bundle = msg.getData();
                     long progress = bundle.getLong("KEY_PROGRESS");
@@ -117,6 +123,8 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
 }
 
 interface HandlerCallback {
+    void onPreparation();
+
     void updateProgress(long progress);
 
     void loadSuccess();
