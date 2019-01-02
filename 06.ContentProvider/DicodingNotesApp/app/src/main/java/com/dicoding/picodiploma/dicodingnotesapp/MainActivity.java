@@ -11,22 +11,28 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.dicoding.picodiploma.dicodingnotesapp.adapter.DicodingNotesAdapter;
 import com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract;
+import com.dicoding.picodiploma.dicodingnotesapp.entity.NoteItem;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
+import static com.dicoding.picodiploma.dicodingnotesapp.MappingHelper.mapCursorToArrayList;
 import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
 
 
 public class MainActivity extends AppCompatActivity implements
-        AdapterView.OnItemClickListener, LoadNotesCallback {
+        LoadNotesCallback {
 
     private DicodingNotesAdapter dicodingNotesAdapter;
     private DataObserver myObserver;
@@ -38,13 +44,13 @@ public class MainActivity extends AppCompatActivity implements
 
         getSupportActionBar().setTitle("Dicoding Notes");
 
-        ListView lvNotes = findViewById(R.id.lv_notes);
-        dicodingNotesAdapter = new DicodingNotesAdapter(this, null, true);
-        lvNotes.setAdapter(dicodingNotesAdapter);
-        lvNotes.setOnItemClickListener(this);
+        RecyclerView rvNotes = findViewById(R.id.lv_notes);
+        dicodingNotesAdapter = new DicodingNotesAdapter(this);
+        rvNotes.setLayoutManager(new LinearLayoutManager(this));
+        rvNotes.setHasFixedSize(true);
+        rvNotes.setAdapter(dicodingNotesAdapter);
         HandlerThread handlerThread = new HandlerThread("DataObserver");
         handlerThread.start();
-        //DataObserver observer;
         Handler handler = new Handler(handlerThread.getLooper());
         myObserver = new DataObserver(handler, this);
         getContentResolver().registerContentObserver(CONTENT_URI, true, myObserver);
@@ -53,7 +59,13 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void postExecute(Cursor notes) {
-        dicodingNotesAdapter.swapCursor(notes);
+
+        ArrayList<NoteItem> listnotes = mapCursorToArrayList(notes);
+        if (listnotes.size() > 0) {
+            dicodingNotesAdapter.setListNotes(listnotes);
+        } else {
+            Toast.makeText(this, "Tidak Ada data saat ini", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private static class getData extends AsyncTask<Void, Void, Cursor> {
@@ -94,16 +106,6 @@ public class MainActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Cursor cursor = (Cursor) dicodingNotesAdapter.getItem(i);
-
-        int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns._ID));
-        Intent intent = new Intent(MainActivity.this, FormActivity.class);
-        intent.setData(Uri.parse(CONTENT_URI + "/" + id));
-        startActivity(intent);
-    }
-
     static class DataObserver extends ContentObserver {
 
         final Context context;
@@ -118,8 +120,6 @@ public class MainActivity extends AppCompatActivity implements
             super.onChange(selfChange);
             new getData(context, (MainActivity) context).execute();
         }
-
     }
-
 }
 

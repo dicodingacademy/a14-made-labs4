@@ -65,6 +65,13 @@ public class NoteItem implements Parcelable {
     public NoteItem() {
     }
 
+    public NoteItem(int id, String title, String description, String date) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.date = date;
+    }
+
     public NoteItem(Cursor cursor) {
         this.id = getColumnInt(cursor, DatabaseContract.NoteColumns._ID);
         this.title = getColumnString(cursor, DatabaseContract.NoteColumns.TITLE);
