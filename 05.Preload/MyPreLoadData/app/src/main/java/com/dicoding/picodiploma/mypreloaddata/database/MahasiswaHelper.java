@@ -166,10 +166,10 @@ public class MahasiswaHelper {
      * @return jumlah mahasiswa yang ter-update
      */
     public int update(MahasiswaModel mahasiswaModel) {
-        ContentValues args = new ContentValues();
-        args.put(NAMA, mahasiswaModel.getName());
-        args.put(NIM, mahasiswaModel.getNim());
-        return database.update(TABLE_NAME, args, _ID + "= '" + mahasiswaModel.getId() + "'", null);
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(NAMA, mahasiswaModel.getName());
+        initialValues.put(NIM, mahasiswaModel.getNim());
+        return database.update(TABLE_NAME, initialValues, _ID + "= '" + mahasiswaModel.getId() + "'", null);
     }
 
     /**

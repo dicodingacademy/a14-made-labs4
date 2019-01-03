@@ -2,7 +2,6 @@ package com.dicoding.picodiploma.mypreloaddata.services;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Message;
@@ -10,21 +9,19 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.dicoding.picodiploma.mypreloaddata.MainActivity;
 import com.dicoding.picodiploma.mypreloaddata.database.MahasiswaHelper;
 import com.dicoding.picodiploma.mypreloaddata.prefs.AppPreference;
 
 public class DataManagerService extends Service {
+    public static final int PREPARATION_MESSAGE = 0;
+    public static final int UPDATE_MESSAGE = 1;
+    public static final int SUCCESS_MESSAGE = 2;
+    public static final int FAILED_MESSAGE = 3;
+    public static final String ACTIVITY_HANDLER = "activity_handler";
 
     private String TAG = DataManagerService.class.getSimpleName();
-
-    private DataManagerBinder mBinder = new DataManagerBinder();
-
     private LoadDataAsync loadData;
-
     private Messenger mActivityMessenger;
-
-    public static final String ACTIVITY_HANDLER = "activity_handler";
 
     @Override
     public void onCreate() {
@@ -56,7 +53,7 @@ public class DataManagerService extends Service {
         mActivityMessenger = intent.getParcelableExtra(ACTIVITY_HANDLER);
 
         loadData.execute();
-        return mBinder;
+        return mActivityMessenger.getBinder();
     }
 
     /*
@@ -80,25 +77,30 @@ public class DataManagerService extends Service {
     LoadDataCallback myCallback = new LoadDataCallback() {
         @Override
         public void onPreLoad() {
-
+            Message message = Message.obtain(null, PREPARATION_MESSAGE);
+            try {
+                mActivityMessenger.send(message);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
         public void onProgressUpdate(long progress) {
             try {
-                Message message = Message.obtain(null, MainActivity.UPDATE_MESSAGE);
+                Message message = Message.obtain(null, UPDATE_MESSAGE);
                 Bundle bundle = new Bundle();
                 bundle.putLong("KEY_PROGRESS", progress);
                 message.setData(bundle);
                 mActivityMessenger.send(message);
             } catch (RemoteException e) {
-                //
+                e.printStackTrace();
             }
         }
 
         @Override
         public void onLoadSuccess() {
-            Message message = Message.obtain(null, MainActivity.SUCCESS_MESSAGE);
+            Message message = Message.obtain(null, SUCCESS_MESSAGE);
             try {
                 mActivityMessenger.send(message);
             } catch (RemoteException e) {
@@ -108,7 +110,7 @@ public class DataManagerService extends Service {
 
         @Override
         public void onLoadFailed() {
-            Message message = Message.obtain(null, MainActivity.FAILED_MESSAGE);
+            Message message = Message.obtain(null, FAILED_MESSAGE);
             try {
                 mActivityMessenger.send(message);
             } catch (RemoteException e) {
@@ -116,11 +118,4 @@ public class DataManagerService extends Service {
             }
         }
     };
-
-    public class DataManagerBinder extends Binder {
-        public DataManagerService getService() {
-            return DataManagerService.this;
-        }
-    }
-
 }
