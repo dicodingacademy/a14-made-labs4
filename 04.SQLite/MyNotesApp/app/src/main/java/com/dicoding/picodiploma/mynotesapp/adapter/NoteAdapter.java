@@ -28,8 +28,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     public NoteAdapter(Activity activity) {
         this.activity = activity;
-//        setHasStableIds(true);
-//        Log.e("STABLE", "NoteAdapter: " + hasStableIds() );
     }
 
     public ArrayList<Note> getListNotes() {

@@ -97,11 +97,11 @@ public class NoteHelper {
      * @return id dari data yang baru saja dimasukkan
      */
     public long insertNote(Note note) {
-        ContentValues initialValues = new ContentValues();
-        initialValues.put(TITLE, note.getTitle());
-        initialValues.put(DESCRIPTION, note.getDescription());
-        initialValues.put(DATE, note.getDate());
-        return database.insert(DATABASE_TABLE, null, initialValues);
+        ContentValues args = new ContentValues();
+        args.put(TITLE, note.getTitle());
+        args.put(DESCRIPTION, note.getDescription());
+        args.put(DATE, note.getDate());
+        return database.insert(DATABASE_TABLE, null, args);
     }
 
     /**
