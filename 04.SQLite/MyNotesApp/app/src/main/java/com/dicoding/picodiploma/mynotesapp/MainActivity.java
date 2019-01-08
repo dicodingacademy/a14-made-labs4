@@ -2,11 +2,10 @@ package com.dicoding.picodiploma.mynotesapp;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.PersistableBundle;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,13 +16,11 @@ import com.dicoding.picodiploma.mynotesapp.db.NoteHelper;
 import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static com.dicoding.picodiploma.mynotesapp.NoteAddUpdateActivity.REQUEST_UPDATE;
 
-public class NotesActivity extends AppCompatActivity
-        implements View.OnClickListener, LoadNotesCallback {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, LoadNotesCallback {
     private RecyclerView rvNotes;
     private ProgressBar progressBar;
     private FloatingActionButton fabAdd;
@@ -34,7 +31,7 @@ public class NotesActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notes);
+        setContentView(R.layout.activity_main);
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle("Notes");
@@ -78,7 +75,7 @@ public class NotesActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.fab_add) {
-            Intent intent = new Intent(NotesActivity.this, NoteAddUpdateActivity.class);
+            Intent intent = new Intent(MainActivity.this, NoteAddUpdateActivity.class);
             startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD);
         }
     }

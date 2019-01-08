@@ -44,7 +44,7 @@ public class NoteAddUpdateActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_form_add_update);
+        setContentView(R.layout.activity_note_add_update);
 
         edtTitle = findViewById(R.id.edt_title);
         edtDescription = findViewById(R.id.edt_description);
