@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/judul" />
+        android:text="@string/title" />
 
     <EditText
         android:id="@+id/edt_title"
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/deskripsi" />
+        android:text="@string/description" />
 
     <EditText
         android:id="@+id/edt_description"

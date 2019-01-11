@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:hint="@string/judul"
+            android:hint="@string/title"
             android:inputType="textCapSentences"/>
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:hint="@string/deskripsi"
+            android:hint="@string/description"
             android:inputType="textCapSentences"/>
     </android.support.design.widget.TextInputLayout>
     <Button

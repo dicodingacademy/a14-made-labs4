@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,13 +14,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.dicoding.picodiploma.dicodingnotesapp.adapter.DicodingNotesAdapter;
-import com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract;
 import com.dicoding.picodiploma.dicodingnotesapp.entity.NoteItem;
 
 import java.lang.ref.WeakReference;
@@ -31,8 +26,7 @@ import static com.dicoding.picodiploma.dicodingnotesapp.MappingHelper.mapCursorT
 import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
 
 
-public class MainActivity extends AppCompatActivity implements
-        LoadNotesCallback {
+public class MainActivity extends AppCompatActivity implements LoadNotesCallback {
 
     private DicodingNotesAdapter dicodingNotesAdapter;
     private DataObserver myObserver;
