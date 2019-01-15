@@ -38,7 +38,7 @@ public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
      */
     @Override
     protected void onPreExecute() {
-
+        weakCallback.get().onPreLoad();
     }
 
     /*
@@ -82,22 +82,32 @@ public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
                 mahasiswaHelper.beginTransaction();
 
                 for (MahasiswaModel model : mahasiswaModels) {
-                    mahasiswaHelper.insertTransaction(model);
-                    progress += progressDiff;
-                    publishProgress((int) progress);
+                    //Jika service atau activity dalam keadaan destroy maka akan menghentikan perulangan
+                    if (isCancelled()) {
+                        break;
+                    } else {
+                        mahasiswaHelper.insertTransaction(model);
+                        progress += progressDiff;
+                        publishProgress((int) progress);
+                    }
                 }
 
-                // Jika semua proses telah di set success maka akan di commit ke database
-                mahasiswaHelper.setTransactionSuccess();
-                isInsertSuccess = true;
+                //Jika service atau activity dalam keadaan destroy maka data insert tidak di esekusi
+                if (isCancelled()) {
+                    isInsertSuccess = false;
+                    appPreference.setFirstRun(true);
+                } else {
+                    // Jika semua proses telah di set success maka akan di commit ke database
+                    mahasiswaHelper.setTransactionSuccess();
+                    isInsertSuccess = true;
 
 
                 /*
                  Set preference first run ke false
                  Agar proses preload tidak dijalankan untuk kedua kalinya
                  */
-                appPreference.setFirstRun(false);
-
+                    appPreference.setFirstRun(false);
+                }
             } catch (Exception e) {
                 // Jika gagal maka do nothing
                 Log.e(TAG, "doInBackground: Exception");

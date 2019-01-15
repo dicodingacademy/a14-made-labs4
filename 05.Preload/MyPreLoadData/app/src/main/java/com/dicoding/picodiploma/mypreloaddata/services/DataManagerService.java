@@ -41,6 +41,7 @@ public class DataManagerService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        loadData.cancel(true);
         Log.d(TAG, "onDestroy: ");
     }
 
@@ -62,6 +63,7 @@ public class DataManagerService extends Service {
     @Override
     public boolean onUnbind(Intent intent) {
         Log.d(TAG, "onUnbind: ");
+        loadData.cancel(true);
         return super.onUnbind(intent);
     }
 
