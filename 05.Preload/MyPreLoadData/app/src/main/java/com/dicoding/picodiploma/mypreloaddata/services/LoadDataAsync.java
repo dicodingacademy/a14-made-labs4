@@ -46,20 +46,16 @@ public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
      */
     @Override
     protected Boolean doInBackground(Void... params) {
-
-            /*
-            Panggil preference first run
-             */
+        // Panggil preference first run
         Boolean firstRun = appPreference.getFirstRun();
-
-            /*
-            Jika first run true maka melakukan proses pre load,
-            jika first run false maka akan langsung menuju home
-             */
+        /*
+         * Jika first run true maka melakukan proses pre load,
+         * Jika first run false maka akan langsung menuju home
+         */
         if (firstRun) {
-                /*
-                Load raw data dari file txt ke dalam array model mahasiswa
-                 */
+            /*
+            Load raw data dari file txt ke dalam array model mahasiswa
+            */
             ArrayList<MahasiswaModel> mahasiswaModels = preLoadRaw();
 
             mahasiswaHelper.open();
@@ -72,10 +68,8 @@ public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
             boolean isInsertSuccess;
 
             /*
-             * ==============================================================
              * Gunakan kode ini untuk query insert yang transactional
              * Begin Transaction
-             * ==============================================================
              */
             try {
 
@@ -92,20 +86,20 @@ public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
                     }
                 }
 
-                //Jika service atau activity dalam keadaan destroy maka data insert tidak di esekusi
+                //Jika service atau activity dalam keadaan destroy maka data insert tidak di essekusi
                 if (isCancelled()) {
                     isInsertSuccess = false;
                     appPreference.setFirstRun(true);
+                    weakCallback.get().onLoadCancel();
                 } else {
                     // Jika semua proses telah di set success maka akan di commit ke database
                     mahasiswaHelper.setTransactionSuccess();
                     isInsertSuccess = true;
 
-
-                /*
-                 Set preference first run ke false
-                 Agar proses preload tidak dijalankan untuk kedua kalinya
-                 */
+                    /*
+                     Set preference first run ke false
+                     Agar proses preload tidak dijalankan untuk kedua kalinya
+                     */
                     appPreference.setFirstRun(false);
                 }
             } catch (Exception e) {
@@ -114,7 +108,6 @@ public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
                 isInsertSuccess = false;
 
             } finally {
-
                 // Transaction
                 mahasiswaHelper.endTransaction();
             }

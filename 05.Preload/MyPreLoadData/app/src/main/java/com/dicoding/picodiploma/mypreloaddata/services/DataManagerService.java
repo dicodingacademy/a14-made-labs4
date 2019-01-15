@@ -17,6 +17,7 @@ public class DataManagerService extends Service {
     public static final int UPDATE_MESSAGE = 1;
     public static final int SUCCESS_MESSAGE = 2;
     public static final int FAILED_MESSAGE = 3;
+    public static final int CANCEL_MESSAGE = 4;
     public static final String ACTIVITY_HANDLER = "activity_handler";
 
     private String TAG = DataManagerService.class.getSimpleName();
@@ -80,6 +81,16 @@ public class DataManagerService extends Service {
         @Override
         public void onPreLoad() {
             Message message = Message.obtain(null, PREPARATION_MESSAGE);
+            try {
+                mActivityMessenger.send(message);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onLoadCancel() {
+            Message message = Message.obtain(null, CANCEL_MESSAGE);
             try {
                 mActivityMessenger.send(message);
             } catch (RemoteException e) {

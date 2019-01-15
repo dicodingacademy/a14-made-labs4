@@ -43,7 +43,7 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
     @Override
     public void onBindViewHolder(@NonNull MahasiswaHolder holder, int position) {
         holder.textViewNim.setText(listMahasiswa.get(position).getNim());
-        holder.textViewNama.setText(listMahasiswa.get(position).getName());
+        holder.textViewName.setText(listMahasiswa.get(position).getName());
 
     }
 
@@ -64,13 +64,13 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
 
     class MahasiswaHolder extends RecyclerView.ViewHolder {
         private TextView textViewNim;
-        private TextView textViewNama;
+        private TextView textViewName;
 
         MahasiswaHolder(View itemView) {
             super(itemView);
 
             textViewNim = itemView.findViewById(R.id.txt_nim);
-            textViewNama = itemView.findViewById(R.id.txt_nama);
+            textViewName = itemView.findViewById(R.id.txt_name);
         }
 
     }
