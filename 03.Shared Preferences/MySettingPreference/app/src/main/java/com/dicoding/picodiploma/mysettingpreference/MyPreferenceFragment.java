@@ -7,8 +7,12 @@ import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 public class MyPreferenceFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
-
-    private static final String DEFAULT_VALUE = "Tidak Ada";
+    private String NAME;
+    private String EMAIL;
+    private String AGE;
+    private String PHONE;
+    private String LOVE ;
+    private String DEFAULT_VALUE = "Tidak Ada";
 
     private EditTextPreference namePreference;
     private EditTextPreference emailPreference;
@@ -27,23 +31,19 @@ public class MyPreferenceFragment extends PreferenceFragmentCompat implements Sh
     Inisiasi preferences
      */
     private void init() {
-        namePreference = (EditTextPreference) findPreference("NAME");
-        emailPreference = (EditTextPreference) findPreference("EMAIL");
-        agePreference = (EditTextPreference) findPreference("AGE");
-        phonePreference = (EditTextPreference) findPreference("PHONE");
-        isLoveMuPreference = (CheckBoxPreference) findPreference("ISLOVE");
-    }
+        /* Ini digunakan untuk mendapatkan key dari strings.xml*/
+        NAME = getResources().getString(R.string.key_name);
+        EMAIL = getResources().getString(R.string.key_email);
+        AGE = getResources().getString(R.string.key_age);
+        PHONE = getResources().getString(R.string.key_phone);
+        LOVE = getResources().getString(R.string.key_love);
 
-    /*
-    Set summary menggunakan preference
-     */
-    private void setSummaries() {
-        SharedPreferences sh = getPreferenceManager().getSharedPreferences();
-        namePreference.setSummary(sh.getString("NAME", DEFAULT_VALUE));
-        emailPreference.setSummary(sh.getString("EMAIL", DEFAULT_VALUE));
-        agePreference.setSummary(sh.getString("AGE", DEFAULT_VALUE));
-        phonePreference.setSummary(sh.getString("PHONE", DEFAULT_VALUE));
-        isLoveMuPreference.setChecked(sh.getBoolean("ISLOVE", false));
+        /* Masing masing Preference dicocokan berdasarkan dari KEY preference tersebut*/
+        namePreference = (EditTextPreference) findPreference(NAME);
+        emailPreference = (EditTextPreference) findPreference(EMAIL);
+        agePreference = (EditTextPreference) findPreference(AGE);
+        phonePreference = (EditTextPreference) findPreference(PHONE);
+        isLoveMuPreference = (CheckBoxPreference) findPreference(LOVE);
     }
 
     /*
@@ -53,15 +53,13 @@ public class MyPreferenceFragment extends PreferenceFragmentCompat implements Sh
     @Override
     public void onResume() {
         super.onResume();
-        getPreferenceScreen().getSharedPreferences()
-                .registerOnSharedPreferenceChangeListener(this);
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        getPreferenceScreen().getSharedPreferences()
-                .unregisterOnSharedPreferenceChangeListener(this);
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 
     /*
@@ -69,25 +67,36 @@ public class MyPreferenceFragment extends PreferenceFragmentCompat implements Sh
      */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("NAME")) {
-            namePreference.setSummary(sharedPreferences.getString("NAME", DEFAULT_VALUE));
+        if (key.equals(NAME)) {
+            namePreference.setSummary(sharedPreferences.getString(NAME, DEFAULT_VALUE));
         }
 
-        if (key.equals("EMAIL")) {
-            emailPreference.setSummary(sharedPreferences.getString("EMAIL", DEFAULT_VALUE));
+        if (key.equals(EMAIL)) {
+            emailPreference.setSummary(sharedPreferences.getString(EMAIL, DEFAULT_VALUE));
         }
 
-        if (key.equals("AGE")) {
-            agePreference.setSummary(sharedPreferences.getString("AGE", DEFAULT_VALUE));
+        if (key.equals(AGE)) {
+            agePreference.setSummary(sharedPreferences.getString(AGE, DEFAULT_VALUE));
         }
 
-        if (key.equals("PHONE")) {
-            phonePreference.setSummary(sharedPreferences.getString("PHONE", DEFAULT_VALUE));
+        if (key.equals(PHONE)) {
+            phonePreference.setSummary(sharedPreferences.getString(PHONE, DEFAULT_VALUE));
         }
 
-        if (key.equals("ISLOVE")) {
-            isLoveMuPreference.setChecked(sharedPreferences.getBoolean("ISLOVE", false));
+        if (key.equals(LOVE)) {
+            isLoveMuPreference.setChecked(sharedPreferences.getBoolean(LOVE, false));
         }
     }
 
+    /*
+    Set summary menggunakan preference
+     */
+    private void setSummaries() {
+        SharedPreferences sh = getPreferenceManager().getSharedPreferences();
+        namePreference.setSummary(sh.getString(NAME, DEFAULT_VALUE));
+        emailPreference.setSummary(sh.getString(EMAIL, DEFAULT_VALUE));
+        agePreference.setSummary(sh.getString(AGE, DEFAULT_VALUE));
+        phonePreference.setSummary(sh.getString(PHONE, DEFAULT_VALUE));
+        isLoveMuPreference.setChecked(sh.getBoolean(LOVE, false));
+    }
 }
