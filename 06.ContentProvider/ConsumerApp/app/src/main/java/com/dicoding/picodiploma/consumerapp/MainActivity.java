@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.dicodingnotesapp;
+package com.dicoding.picodiploma.consumerapp;
 
 
 import android.content.Context;
@@ -16,19 +16,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.dicoding.picodiploma.dicodingnotesapp.adapter.DicodingNotesAdapter;
-import com.dicoding.picodiploma.dicodingnotesapp.entity.NoteItem;
+import com.dicoding.picodiploma.consumerapp.adapter.ConsumerAdapter;
+import com.dicoding.picodiploma.consumerapp.entity.NoteItem;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import static com.dicoding.picodiploma.dicodingnotesapp.MappingHelper.mapCursorToArrayList;
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
+import static com.dicoding.picodiploma.consumerapp.MappingHelper.mapCursorToArrayList;
+import static com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
 
 
 public class MainActivity extends AppCompatActivity implements LoadNotesCallback {
 
-    private DicodingNotesAdapter dicodingNotesAdapter;
+    private ConsumerAdapter consumerAdapter;
     private DataObserver myObserver;
 
     @Override
@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().setTitle("Dicoding Notes");
+        getSupportActionBar().setTitle("Consumer App");
 
         RecyclerView rvNotes = findViewById(R.id.lv_notes);
-        dicodingNotesAdapter = new DicodingNotesAdapter(this);
+        consumerAdapter = new ConsumerAdapter(this);
         rvNotes.setLayoutManager(new LinearLayoutManager(this));
         rvNotes.setHasFixedSize(true);
-        rvNotes.setAdapter(dicodingNotesAdapter);
+        rvNotes.setAdapter(consumerAdapter);
         HandlerThread handlerThread = new HandlerThread("DataObserver");
         handlerThread.start();
         Handler handler = new Handler(handlerThread.getLooper());
@@ -54,11 +54,12 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
     @Override
     public void postExecute(Cursor notes) {
 
-        ArrayList<NoteItem> listnotes = mapCursorToArrayList(notes);
-        if (listnotes.size() > 0) {
-            dicodingNotesAdapter.setListNotes(listnotes);
+        ArrayList<NoteItem> listNotes = mapCursorToArrayList(notes);
+        if (listNotes.size() > 0) {
+            consumerAdapter.setListNotes(listNotes);
         } else {
             Toast.makeText(this, "Tidak Ada data saat ini", Toast.LENGTH_SHORT).show();
+            consumerAdapter.setListNotes(new ArrayList<NoteItem>());
         }
     }
 

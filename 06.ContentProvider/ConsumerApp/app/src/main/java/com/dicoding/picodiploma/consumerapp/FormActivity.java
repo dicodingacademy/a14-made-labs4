@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.dicodingnotesapp;
+package com.dicoding.picodiploma.consumerapp;
 
 
 import android.content.ContentResolver;
@@ -18,17 +18,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.dicoding.picodiploma.dicodingnotesapp.entity.NoteItem;
+import com.dicoding.picodiploma.consumerapp.entity.NoteItem;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.DATE;
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.DESCRIPTION;
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.TITLE;
+import static com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
+import static com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.DATE;
+import static com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.DESCRIPTION;
+import static com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.TITLE;
 
 
 public class FormActivity extends AppCompatActivity implements View.OnClickListener {
@@ -134,9 +134,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
-        }
-
-        if (item.getItemId() == R.id.action_delete) {
+        }else if (item.getItemId() == R.id.action_delete) {
             showDeleteAlertDialog();
         }
         return super.onOptionsItemSelected(item);

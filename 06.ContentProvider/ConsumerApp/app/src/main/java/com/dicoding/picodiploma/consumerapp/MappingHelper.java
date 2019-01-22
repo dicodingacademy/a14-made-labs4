@@ -1,15 +1,15 @@
-package com.dicoding.picodiploma.dicodingnotesapp;
+package com.dicoding.picodiploma.consumerapp;
 
 import android.database.Cursor;
 
-import com.dicoding.picodiploma.dicodingnotesapp.entity.NoteItem;
+import com.dicoding.picodiploma.consumerapp.entity.NoteItem;
 
 import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.TITLE;
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.DESCRIPTION;
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.DATE;
+import static com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.TITLE;
+import static com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.DESCRIPTION;
+import static com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.DATE;
 
 public class MappingHelper {
 

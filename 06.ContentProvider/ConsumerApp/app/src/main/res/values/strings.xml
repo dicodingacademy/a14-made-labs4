@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DicodingNotesApp</string>
+    <string name="app_name">ConsumerApp</string>
     <string name="title">Judul</string>
     <string name="description">Deskripsi</string>
     <string name="submit">Submit</string>

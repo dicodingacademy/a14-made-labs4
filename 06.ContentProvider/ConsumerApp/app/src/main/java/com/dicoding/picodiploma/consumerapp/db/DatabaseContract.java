@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.dicodingnotesapp.db;
+package com.dicoding.picodiploma.consumerapp.db;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -35,6 +35,7 @@ public class DatabaseContract {
                 .authority(AUTHORITY)
                 .appendPath(TABLE_NAME)
                 .build();
+
 
     }
 

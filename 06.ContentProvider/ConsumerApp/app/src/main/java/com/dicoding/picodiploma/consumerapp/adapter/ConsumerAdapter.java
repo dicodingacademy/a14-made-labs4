@@ -1,41 +1,34 @@
-package com.dicoding.picodiploma.dicodingnotesapp.adapter;
+package com.dicoding.picodiploma.consumerapp.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.dicoding.picodiploma.dicodingnotesapp.CustomOnItemClickListener;
-import com.dicoding.picodiploma.dicodingnotesapp.FormActivity;
-import com.dicoding.picodiploma.dicodingnotesapp.R;
-import com.dicoding.picodiploma.dicodingnotesapp.entity.NoteItem;
+import com.dicoding.picodiploma.consumerapp.CustomOnItemClickListener;
+import com.dicoding.picodiploma.consumerapp.FormActivity;
+import com.dicoding.picodiploma.consumerapp.R;
+import com.dicoding.picodiploma.consumerapp.entity.NoteItem;
 
 import java.util.ArrayList;
 
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.DATE;
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.DESCRIPTION;
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.NoteColumns.TITLE;
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.getColumnString;
+import static com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
 
 /**
  * Created by dicoding on 12/13/2016.
  */
 
-public class DicodingNotesAdapter extends RecyclerView.Adapter<DicodingNotesAdapter.NoteViewHolder> {
+public class ConsumerAdapter extends RecyclerView.Adapter<ConsumerAdapter.NoteViewHolder> {
 
     private final ArrayList<NoteItem> listNotes = new ArrayList<>();
     private final Activity activity;
 
-    public DicodingNotesAdapter(Activity activity) {
+    public ConsumerAdapter(Activity activity) {
         this.activity = activity;
     }
 
@@ -44,9 +37,7 @@ public class DicodingNotesAdapter extends RecyclerView.Adapter<DicodingNotesAdap
     }
 
     public void setListNotes(ArrayList<NoteItem> listNotes) {
-        if (listNotes.size() > 0){
-            this.listNotes.clear();
-        }
+        this.listNotes.clear();
         this.listNotes.addAll(listNotes);
         notifyDataSetChanged();
     }
@@ -54,7 +45,7 @@ public class DicodingNotesAdapter extends RecyclerView.Adapter<DicodingNotesAdap
     @NonNull
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_dicoding_note, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_consumer_note, parent, false);
         return new NoteViewHolder(view);
     }
 

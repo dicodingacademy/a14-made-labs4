@@ -1,13 +1,13 @@
-package com.dicoding.picodiploma.dicodingnotesapp.entity;
+package com.dicoding.picodiploma.consumerapp.entity;
 
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract;
+import com.dicoding.picodiploma.consumerapp.db.DatabaseContract;
 
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.getColumnInt;
-import static com.dicoding.picodiploma.dicodingnotesapp.db.DatabaseContract.getColumnString;
+import static com.dicoding.picodiploma.consumerapp.db.DatabaseContract.getColumnInt;
+import static com.dicoding.picodiploma.consumerapp.db.DatabaseContract.getColumnString;
 
 /**
  * Created by dicoding on 12/13/2016.

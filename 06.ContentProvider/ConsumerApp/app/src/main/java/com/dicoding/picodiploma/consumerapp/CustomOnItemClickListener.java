@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.dicodingnotesapp;
+package com.dicoding.picodiploma.consumerapp;
 
 import android.view.View;
 
