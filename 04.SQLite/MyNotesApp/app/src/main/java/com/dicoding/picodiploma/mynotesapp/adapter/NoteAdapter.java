@@ -5,15 +5,14 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.dicoding.picodiploma.mynotesapp.R;
 import com.dicoding.picodiploma.mynotesapp.CustomOnItemClickListener;
 import com.dicoding.picodiploma.mynotesapp.NoteAddUpdateActivity;
+import com.dicoding.picodiploma.mynotesapp.R;
 import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     public void removeItem(int position) {
         this.listNotes.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position,listNotes.size());
+        notifyItemRangeChanged(position, listNotes.size());
     }
 
     @NonNull
