@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -215,8 +216,8 @@ public class FormAddUpdateActivity extends AppCompatActivity
                             intent.putExtra(EXTRA_POSITION, position);
                             // Gunakan uri dari intent activity ini
                             // content://com.dicoding.picodiploma.mynotesapp/note/id
-                            Toast.makeText(FormAddUpdateActivity.this, "Satu item berhasil dihapus", Toast.LENGTH_SHORT).show();
                             getContentResolver().delete(getIntent().getData(), null, null);
+                            Toast.makeText(FormAddUpdateActivity.this, "Satu item berhasil dihapus", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }

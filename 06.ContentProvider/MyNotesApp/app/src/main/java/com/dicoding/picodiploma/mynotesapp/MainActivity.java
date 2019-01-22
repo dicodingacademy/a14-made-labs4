@@ -99,10 +99,11 @@ public class MainActivity extends AppCompatActivity
     public void postExecute(Cursor notes) {
         progressBar.setVisibility(View.INVISIBLE);
 
-        ArrayList<Note> listnotes = mapCursorToArrayList(notes);
-        if (listnotes.size() > 0) {
-            adapter.setListNotes(listnotes);
+        ArrayList<Note> listNotes = mapCursorToArrayList(notes);
+        if (listNotes.size() > 0) {
+            adapter.setListNotes(listNotes);
         } else {
+            adapter.setListNotes(new ArrayList<Note>());
             showSnackbarMessage("Tidak ada data saat ini");
         }
     }

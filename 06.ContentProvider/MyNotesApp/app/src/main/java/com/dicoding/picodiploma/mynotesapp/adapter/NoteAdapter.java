@@ -37,9 +37,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
     }
 
     public void setListNotes(ArrayList<Note> listNotes) {
-        if (listNotes.size() > 0){
-            this.listNotes.clear();
-        }
+        this.listNotes.clear();
         this.listNotes.addAll(listNotes);
         notifyDataSetChanged();
     }
@@ -86,7 +84,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
             tvTitle = itemView.findViewById(R.id.tv_item_title);
             tvDescription = itemView.findViewById(R.id.tv_item_description);
             tvDate = itemView.findViewById(R.id.tv_item_date);
-            cvNote =  itemView.findViewById(R.id.cv_item_note);
+            cvNote = itemView.findViewById(R.id.cv_item_note);
         }
     }
 }
