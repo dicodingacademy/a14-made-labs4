@@ -37,6 +37,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnNew.setOnClickListener(this);
         btnOpen.setOnClickListener(this);
         btnSave.setOnClickListener(this);
+
+         /*
+        Path dengan tipe data file digunakan untuk menampung data yang digunakan sebagai penyimpanan write dan read
+        Method getFilesDir() berfungsi untuk mendapatkan pengembalian file dari direktori yang ada di android.
+         */
         path = getFilesDir();
     }
 
@@ -73,10 +78,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param title nama file
      */
     private void loadData(String title) {
-        String text = FileHelper.readFromFile(this, title);
-        editTitle.setText(title);
-        editContent.setText(text);
-        Toast.makeText(this, "Loading " + title + " data", Toast.LENGTH_SHORT).show();
+        FileModel fileModel = FileHelper.readFromFile(this, title);
+        editTitle.setText(fileModel.getFilename());
+        editContent.setText(fileModel.getData());
+        Toast.makeText(this, "Loading " + fileModel.getFilename() + " data", Toast.LENGTH_SHORT).show();
     }
 
     public void openFile() {
@@ -87,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Method untuk menampilkan semua file yang ada
      */
     private void showList() {
-        final ArrayList<String> arrayList = new ArrayList<>();
+        ArrayList<String> arrayList = new ArrayList<>();
         Collections.addAll(arrayList, path.list());
 
         final CharSequence[] items = arrayList.toArray(new CharSequence[arrayList.size()]);
@@ -109,11 +114,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void saveFile() {
         if (editTitle.getText().toString().isEmpty()) {
             Toast.makeText(this, "Title harus diisi terlebih dahulu", Toast.LENGTH_SHORT).show();
-        } else {
+        } else if (editContent.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Kontent harus diisi terlebih dahulu", Toast.LENGTH_SHORT).show();
+        }  else {
             String title = editTitle.getText().toString();
             String text = editContent.getText().toString();
-            FileHelper.writeToFile(title, text, this);
-            Toast.makeText(this, "Saving " + editTitle.getText().toString() + " file", Toast.LENGTH_SHORT).show();
+            FileModel fileModel = new FileModel();
+            fileModel.setFilename(title);
+            fileModel.setData(text);
+            FileHelper.writeToFile(fileModel, this);
+            Toast.makeText(this, "Saving " + fileModel.getFilename()  + " file", Toast.LENGTH_SHORT).show();
         }
     }
 }

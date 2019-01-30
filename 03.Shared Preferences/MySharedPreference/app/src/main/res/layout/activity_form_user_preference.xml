@@ -52,7 +52,7 @@
                 android:id="@+id/edt_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/no_handphone"
+                android:hint="@string/phone_number"
                 android:inputType="phone"
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
@@ -75,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:text="@string/suka_manchester_united" />
+            android:text="@string/love_manchester_united" />
 
         <RadioGroup
             android:id="@+id/rg_love_mu"
@@ -89,14 +89,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/ya" />
+                android:text="@string/yes" />
 
             <RadioButton
                 android:id="@+id/rb_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/tidak" />
+                android:text="@string/no" />
         </RadioGroup>
 
         <Button
@@ -104,6 +104,6 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/simpan" />
+            android:text="@string/save" />
     </LinearLayout>
 </ScrollView>

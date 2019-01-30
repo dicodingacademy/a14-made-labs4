@@ -7,67 +7,39 @@ import android.content.SharedPreferences;
  * Created by sidiqpermana on 11/17/16.
  */
 
-public class UserPreference {
-    private String KEY_NAME = "name";
-    private String KEY_EMAIL = "email";
-    private String KEY_LOVE_MU = "love_mu";
-    private String KEY_PHONE_NUMBER = "phone_number";
-    private String KEY_AGE = "age";
+class UserPreference {
+    private static final String PREFS_NAME = "user_pref";
 
-    private SharedPreferences preferences;
+    private static final String NAME = "name";
+    private static final String EMAIL = "email";
+    private static final String AGE = "age";
+    private static final String PHONE_NUMBER = "phone";
+    private static final String LOVE_MU = "islove";
+
+    private final SharedPreferences preferences;
 
     UserPreference(Context context) {
-        String PREFS_NAME = "UserPref";
         preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
-    public void setName(String name) {
+    public void setUser(UserModel value) {
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(KEY_NAME, name);
+        editor.putString(NAME, value.name);
+        editor.putString(EMAIL, value.email);
+        editor.putInt(AGE, value.age);
+        editor.putString(PHONE_NUMBER, value.phoneNumber);
+        editor.putBoolean(LOVE_MU, value.isLove);
         editor.apply();
     }
 
-    public String getName() {
-        return preferences.getString(KEY_NAME, null);
-    }
+    UserModel getUser() {
+        UserModel model = new UserModel();
+        model.setName(preferences.getString(NAME, ""));
+        model.setEmail(preferences.getString(EMAIL, ""));
+        model.setAge(preferences.getInt(AGE, 0));
+        model.setPhoneNumber(preferences.getString(PHONE_NUMBER, ""));
+        model.setLove(preferences.getBoolean(LOVE_MU, false));
 
-    void setEmail(String email) {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(KEY_EMAIL, email);
-        editor.apply();
-    }
-
-    String getEmail() {
-        return preferences.getString(KEY_EMAIL, null);
-    }
-
-    void setLoveMU(boolean status) {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(KEY_LOVE_MU, status);
-        editor.apply();
-    }
-
-    boolean isLoveMU() {
-        return preferences.getBoolean(KEY_LOVE_MU, false);
-    }
-
-    void setPhoneNumber(String phoneNumber) {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(KEY_PHONE_NUMBER, phoneNumber);
-        editor.apply();
-    }
-
-    String getPhoneNumber() {
-        return preferences.getString(KEY_PHONE_NUMBER, null);
-    }
-
-    void setAge(int age) {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(KEY_AGE, age);
-        editor.apply();
-    }
-
-    int getAge() {
-        return preferences.getInt(KEY_AGE, 0);
+        return model;
     }
 }

@@ -1,5 +1,6 @@
 package com.dicoding.picodiploma.mysharedpreference;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -13,23 +14,24 @@ import android.widget.Toast;
 
 public class FormUserPreferenceActivity extends AppCompatActivity
         implements View.OnClickListener {
-    EditText edtName, edtEmail, edtPhone, edtAge;
-    RadioGroup rgLoveMu;
-    RadioButton rbYes, rbNo;
-    Button btnSave;
 
-    public static String EXTRA_TYPE_FORM = "extra_type_form";
-    public static int REQUEST_CODE = 100;
+    private EditText edtName, edtEmail, edtPhone, edtAge;
+    private RadioGroup rgLoveMu;
+    private RadioButton rbYes, rbNo;
 
-    public static int TYPE_ADD = 1;
-    public static int TYPE_EDIT = 2;
-    int formType;
+    public static final String EXTRA_TYPE_FORM = "extra_type_form";
+    public final static String EXTRA_RESULT = "extra_result";
+    public static final int RESULT_CODE = 101;
+
+    public static final int TYPE_ADD = 1;
+    public static final int TYPE_EDIT = 2;
+    private int formType;
+    UserModel userModel;
 
     final String FIELD_REQUIRED = "Field tidak boleh kosong";
     final String FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik";
     final String FIELD_IS_NOT_VALID = "Email tidak valid";
 
-    private UserPreference mUserPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,28 +45,31 @@ public class FormUserPreferenceActivity extends AppCompatActivity
         rgLoveMu = findViewById(R.id.rg_love_mu);
         rbYes = findViewById(R.id.rb_yes);
         rbNo = findViewById(R.id.rb_no);
-        btnSave = findViewById(R.id.btn_save);
+        Intent intent = getIntent();
+        userModel = intent.getParcelableExtra("USER");
+        Button btnSave = findViewById(R.id.btn_save);
         btnSave.setOnClickListener(this);
 
         formType = getIntent().getIntExtra(EXTRA_TYPE_FORM, 0);
 
-        mUserPreference = new UserPreference(this);
+        String actionBarTitle = "";
+        String btnTitle = "";
 
-        String actionBarTitle;
-        String btnTitle;
-
-        if (formType == 1) {
-            actionBarTitle = "Tambah Baru";
-            btnTitle = "Simpan";
-        } else {
-            actionBarTitle = "Ubah";
-            btnTitle = "Update";
-            showPreferenceInForm();
+        switch (formType) {
+            case TYPE_ADD:
+                actionBarTitle = "Tambah Baru";
+                btnTitle = "Simpan";
+                break;
+            case TYPE_EDIT:
+                actionBarTitle = "Ubah";
+                btnTitle = "Update";
+                showPreferenceInForm();
         }
 
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setTitle(actionBarTitle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(actionBarTitle);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         btnSave.setText(btnTitle);
 
@@ -79,15 +84,14 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     }
 
     private void showPreferenceInForm() {
-        edtName.setText(mUserPreference.getName());
-        edtEmail.setText(mUserPreference.getEmail());
-        edtAge.setText(String.valueOf(mUserPreference.getAge()));
-        edtPhone.setText(mUserPreference.getPhoneNumber());
-
-        if (mUserPreference.isLoveMU()) {
+        edtName.setText(userModel.getName());
+        edtEmail.setText(userModel.getEmail());
+        edtAge.setText(String.valueOf(userModel.getAge()));
+        edtPhone.setText(userModel.getPhoneNumber());
+        if (userModel.isLove()) {
             rbYes.setChecked(true);
         } else {
-            rbNo.setChecked(false);
+            rbNo.setChecked(true);
         }
     }
 
@@ -130,16 +134,30 @@ public class FormUserPreferenceActivity extends AppCompatActivity
                 return;
             }
 
-            mUserPreference.setName(name);
-            mUserPreference.setAge(Integer.parseInt(age));
-            mUserPreference.setEmail(email);
-            mUserPreference.setPhoneNumber(phoneNo);
-            mUserPreference.setLoveMU(isLoveMU);
+            saveUser(name, email, age, phoneNo, isLoveMU);
 
-            Toast.makeText(this, "Data tersimpan", Toast.LENGTH_SHORT).show();
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(EXTRA_RESULT, userModel);
+            setResult(RESULT_CODE, resultIntent);
 
             finish();
         }
+    }
+
+    /*
+    Save data ke dalam preferences
+     */
+    void saveUser(String name, String email, String age, String phoneNo, boolean isLoveMU) {
+        UserPreference userPreference = new UserPreference(this);
+
+        userModel.setName(name);
+        userModel.setEmail(email);
+        userModel.setAge(Integer.parseInt(age));
+        userModel.setPhoneNumber(phoneNo);
+        userModel.setLove(isLoveMU);
+
+        userPreference.setUser(userModel);
+        Toast.makeText(this, "Data tersimpan", Toast.LENGTH_SHORT).show();
     }
 
     /**

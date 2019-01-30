@@ -3,7 +3,6 @@ package com.dicoding.picodiploma.mysharedpreference;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,11 +10,15 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener {
 
-    TextView tvName, tvAge, tvPhoneNo, tvEmail, tvIsLoveMU;
-    Button btnSave;
+    private TextView tvName, tvAge, tvPhoneNo, tvEmail, tvIsLoveMU;
+    private Button btnSave;
     private UserPreference mUserPreference;
 
     private boolean isPreferenceEmpty = false;
+    private UserModel userModel;
+
+    private final int REQUEST_CODE = 100;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,38 +33,42 @@ public class MainActivity extends AppCompatActivity
         btnSave = findViewById(R.id.btn_save);
         btnSave.setOnClickListener(this);
 
-        mUserPreference = new UserPreference(this);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("My User Preference");
+        }
 
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setTitle("My User Preference");
+        mUserPreference = new UserPreference(this);
 
         showExistingPreference();
 
     }
 
     /*
-    Set tampilan menggunakan preferences
+    Menampilkan preference yang ada
      */
     private void showExistingPreference() {
-        if (!TextUtils.isEmpty(mUserPreference.getName())) {
-            tvName.setText(mUserPreference.getName());
-            tvAge.setText(String.valueOf(mUserPreference.getAge()));
-            tvIsLoveMU.setText(mUserPreference.isLoveMU() ? "Ya" : "Tidak");
-            tvEmail.setText(mUserPreference.getEmail());
-            tvPhoneNo.setText(mUserPreference.getPhoneNumber());
+        userModel = mUserPreference.getUser();
+        populateView(userModel);
+        checkForm(userModel);
+    }
 
+    /*
+    Set tampilan menggunakan preferences
+    */
+    private void populateView(UserModel userModel) {
+        tvName.setText(userModel.getName().isEmpty() ? "Tidak Ada" : userModel.getName());
+        tvAge.setText(String.valueOf(userModel.getAge()).isEmpty() ? "Tidak Ada" : String.valueOf(userModel.getAge()));
+        tvIsLoveMU.setText(userModel.isLove() ? "Ya" : "Tidak");
+        tvEmail.setText(userModel.getEmail().isEmpty() ? "Tidak Ada" : userModel.getEmail());
+        tvPhoneNo.setText(userModel.getPhoneNumber().isEmpty() ? "Tidak Ada" : userModel.getPhoneNumber());
+    }
+
+    private void checkForm(UserModel userModel) {
+        if (!userModel.getName().isEmpty()) {
             btnSave.setText(getString(R.string.change));
+            isPreferenceEmpty = false;
         } else {
-            final String TEXT_EMPTY = "Tidak Ada";
-
-            tvName.setText(TEXT_EMPTY);
-            tvAge.setText(TEXT_EMPTY);
-            tvIsLoveMU.setText(TEXT_EMPTY);
-            tvEmail.setText(TEXT_EMPTY);
-            tvPhoneNo.setText(TEXT_EMPTY);
-
             btnSave.setText(getString(R.string.save));
-
             isPreferenceEmpty = true;
         }
     }
@@ -72,10 +79,12 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, FormUserPreferenceActivity.class);
             if (isPreferenceEmpty) {
                 intent.putExtra(FormUserPreferenceActivity.EXTRA_TYPE_FORM, FormUserPreferenceActivity.TYPE_ADD);
+                intent.putExtra("USER", userModel);
             } else {
                 intent.putExtra(FormUserPreferenceActivity.EXTRA_TYPE_FORM, FormUserPreferenceActivity.TYPE_EDIT);
+                intent.putExtra("USER", userModel);
             }
-            startActivityForResult(intent, FormUserPreferenceActivity.REQUEST_CODE);
+            startActivityForResult(intent, REQUEST_CODE);
         }
     }
 
@@ -85,8 +94,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == FormUserPreferenceActivity.REQUEST_CODE) {
-            showExistingPreference();
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == FormUserPreferenceActivity.RESULT_CODE) {
+                userModel = data.getParcelableExtra(FormUserPreferenceActivity.EXTRA_RESULT);
+                populateView(userModel);
+                checkForm(userModel);
+            }
         }
     }
 }
