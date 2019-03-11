@@ -86,7 +86,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Callback yang akan dipanggil di onPreExecute Asyntask
         Memunculkan progressbar
         */
-        progressBar.setVisibility(View.VISIBLE);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
