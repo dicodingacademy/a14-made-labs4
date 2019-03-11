@@ -92,7 +92,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void preExecute() {
-        progressBar.setVisibility(View.VISIBLE);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // Stuff that updates the UI
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
