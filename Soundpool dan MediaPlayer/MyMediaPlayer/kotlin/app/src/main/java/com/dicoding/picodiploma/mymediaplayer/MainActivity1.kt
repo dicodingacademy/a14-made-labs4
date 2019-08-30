@@ -4,20 +4,14 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.os.IBinder
-import android.os.Message
-import android.os.Messenger
-import android.os.RemoteException
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import android.os.*
 import android.util.Log
 import android.view.View
-import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val TAG = MainActivity::class.java.simpleName
-    private lateinit var btnPlay: Button
-    private lateinit var btnStop: Button
     private var mService: Messenger? = null
 
     private lateinit var mBoundServiceIntent: Intent
@@ -42,10 +36,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnPlay = findViewById(R.id.btn_play)
-        btnStop = findViewById(R.id.btn_stop)
-        btnPlay.setOnClickListener(this)
-        btnStop.setOnClickListener(this)
+        btn_play.setOnClickListener(this)
+        btn_stop.setOnClickListener(this)
 
         /*
         Start service untuk media player

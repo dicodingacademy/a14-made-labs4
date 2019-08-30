@@ -15,7 +15,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ import java.lang.ref.WeakReference;
  */
 
 public class MediaService extends Service implements MediaPlayerCallback {
-    final String TAG = MediaService.class.getSimpleName();
+    private final String TAG = MediaService.class.getSimpleName();
     public final static int PLAY = 0;
     public final static int STOP = 1;
     public final static String ACTION_CREATE = "com.dicoding.picodiploma.mysound.mediaservice.create";
@@ -168,7 +168,7 @@ public class MediaService extends Service implements MediaPlayerCallback {
     /**
      * Digunakan ketika media service berjalan, maka akan muncul notif
      */
-    void showNotif() {
+    private void showNotif() {
         Intent notificationIntent = new Intent(this, MainActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
 
@@ -192,7 +192,7 @@ public class MediaService extends Service implements MediaPlayerCallback {
         startForeground(ONGOING_NOTIFICATION_ID, notification);
     }
 
-    void createChannel(String CHANNEL_ID) {
+    private void createChannel(String CHANNEL_ID) {
 
         NotificationManager mNotificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -205,7 +205,7 @@ public class MediaService extends Service implements MediaPlayerCallback {
         }
     }
 
-    void stopNotif() {
+    private void stopNotif() {
         stopForeground(false);
     }
 
@@ -216,7 +216,7 @@ public class MediaService extends Service implements MediaPlayerCallback {
 
     static class IncomingHandler extends Handler {
 
-        private WeakReference<MediaPlayerCallback> mediaPlayerCallbackWeakReference;
+        private final WeakReference<MediaPlayerCallback> mediaPlayerCallbackWeakReference;
 
         IncomingHandler(MediaPlayerCallback playerCallback) {
             this.mediaPlayerCallbackWeakReference = new WeakReference<>(playerCallback);
