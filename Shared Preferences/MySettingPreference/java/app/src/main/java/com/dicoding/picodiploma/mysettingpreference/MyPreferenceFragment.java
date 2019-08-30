@@ -2,9 +2,9 @@ package com.dicoding.picodiploma.mysettingpreference;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.preference.CheckBoxPreference;
-import android.support.v7.preference.EditTextPreference;
-import android.support.v7.preference.PreferenceFragmentCompat;
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.EditTextPreference;
+import androidx.preference.PreferenceFragmentCompat;
 
 public class MyPreferenceFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
     private String NAME;
@@ -12,7 +12,7 @@ public class MyPreferenceFragment extends PreferenceFragmentCompat implements Sh
     private String AGE;
     private String PHONE;
     private String LOVE ;
-    private String DEFAULT_VALUE = "Tidak Ada";
+    private final String DEFAULT_VALUE = "Tidak Ada";
 
     private EditTextPreference namePreference;
     private EditTextPreference emailPreference;
