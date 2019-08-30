@@ -57,7 +57,7 @@ public class MahasiswaModel implements Parcelable {
         dest.writeString(this.nim);
     }
 
-    protected MahasiswaModel(Parcel in) {
+    private MahasiswaModel(Parcel in) {
         this.id = in.readInt();
         this.name = in.readString();
         this.nim = in.readString();

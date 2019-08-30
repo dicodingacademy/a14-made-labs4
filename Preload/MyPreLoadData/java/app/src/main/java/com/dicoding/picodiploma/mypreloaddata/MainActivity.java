@@ -8,7 +8,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -24,8 +24,8 @@ import static com.dicoding.picodiploma.mypreloaddata.services.DataManagerService
 import static com.dicoding.picodiploma.mypreloaddata.services.DataManagerService.UPDATE_MESSAGE;
 
 public class MainActivity extends AppCompatActivity implements HandlerCallback {
-    ProgressBar progressBar;
-    Messenger mActivityMessenger;
+    private ProgressBar progressBar;
+    private Messenger mActivityMessenger;
 
     Messenger mBoundService;
     boolean mServiceBound;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
     /*
      Service Connection adalah interface yang digunakan untuk menghubungkan antara boundservice dengan activity
       */
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
 
     private static class IncomingHandler extends Handler {
 
-        WeakReference<HandlerCallback> weakCallback;
+        final WeakReference<HandlerCallback> weakCallback;
 
         IncomingHandler(HandlerCallback callback) {
             weakCallback = new WeakReference<>(callback);

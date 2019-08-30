@@ -20,7 +20,7 @@ public class DataManagerService extends Service {
     public static final int CANCEL_MESSAGE = 4;
     public static final String ACTIVITY_HANDLER = "activity_handler";
 
-    private String TAG = DataManagerService.class.getSimpleName();
+    private final String TAG = DataManagerService.class.getSimpleName();
     private LoadDataAsync loadData;
     private Messenger mActivityMessenger;
 
@@ -77,7 +77,7 @@ public class DataManagerService extends Service {
         Log.d(TAG, "onRebind: ");
     }
 
-    LoadDataCallback myCallback = new LoadDataCallback() {
+    private final LoadDataCallback myCallback = new LoadDataCallback() {
         @Override
         public void onPreLoad() {
             Message message = Message.obtain(null, PREPARATION_MESSAGE);

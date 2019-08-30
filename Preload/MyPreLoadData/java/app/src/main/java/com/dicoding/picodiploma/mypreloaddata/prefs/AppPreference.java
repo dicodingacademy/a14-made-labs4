@@ -11,7 +11,7 @@ public class AppPreference {
 
     private static final String PREFS_NAME = "MahasiswaPref";
     private static final String APP_FIRST_RUN = "app_first_run";
-    private SharedPreferences prefs;
+    private final SharedPreferences prefs;
 
     public AppPreference(Context context) {
         prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);

@@ -18,12 +18,12 @@ import java.util.ArrayList;
 
 public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
     private final String TAG = LoadDataAsync.class.getSimpleName();
-    private MahasiswaHelper mahasiswaHelper;
-    private AppPreference appPreference;
-    private WeakReference<LoadDataCallback> weakCallback;
-    private WeakReference<Resources> weakResources;
-    double progress;
-    double maxprogress = 100;
+    private final MahasiswaHelper mahasiswaHelper;
+    private final AppPreference appPreference;
+    private final WeakReference<LoadDataCallback> weakCallback;
+    private final WeakReference<Resources> weakResources;
+    private double progress;
+    private static final double MAX_PROGRESS = 100;
 
     LoadDataAsync(MahasiswaHelper mahasiswaHelper, AppPreference preference, LoadDataCallback callback, Resources resources) {
         this.mahasiswaHelper = mahasiswaHelper;
@@ -62,8 +62,8 @@ public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
 
             progress = 30;
             publishProgress((int) progress);
-            Double progressMaxInsert = 80.0;
-            Double progressDiff = (progressMaxInsert - progress) / mahasiswaModels.size();
+            double progressMaxInsert = 80.0;
+            double progressDiff = (progressMaxInsert - progress) / mahasiswaModels.size();
 
             boolean isInsertSuccess;
 
@@ -146,7 +146,7 @@ public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
             // Close helper ketika proses query sudah selesai
             mahasiswaHelper.close();
 
-            publishProgress((int) maxprogress);
+            publishProgress((int) MAX_PROGRESS);
 
             return isInsertSuccess;
 
@@ -158,7 +158,7 @@ public class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
                     publishProgress(50);
 
                     this.wait(2000);
-                    publishProgress((int) maxprogress);
+                    publishProgress((int) MAX_PROGRESS);
 
                     return true;
                 }

@@ -15,11 +15,11 @@ import static com.dicoding.picodiploma.mypreloaddata.database.DatabaseContract.T
 
 class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static String DATABASE_NAME = "dbmahasiswa";
+    private static final String DATABASE_NAME = "dbmahasiswa";
 
     private static final int DATABASE_VERSION = 1;
 
-    private static String CREATE_TABLE_MAHASISWA = "create table " + TABLE_NAME +
+    private static final String CREATE_TABLE_MAHASISWA = "create table " + TABLE_NAME +
             " (" + _ID + " integer primary key autoincrement, " +
             NAMA + " text not null, " +
             NIM + " text not null);";
