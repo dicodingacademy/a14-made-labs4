@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,16 +33,19 @@ public class FormAddUpdateActivity extends AppCompatActivity
         implements View.OnClickListener {
     private EditText edtTitle, edtDescription;
 
+    private boolean isEdit = false;
+    private Note note;
+    private int position;
+
     public static final String EXTRA_NOTE = "extra_note";
     public static final String EXTRA_POSITION = "extra_position";
-
-    private boolean isEdit = false;
 
     public static final int REQUEST_ADD = 100;
     public static final int REQUEST_UPDATE = 200;
 
-    private Note note;
-    private int position;
+    private final int ALERT_DIALOG_CLOSE = 10;
+    private final int ALERT_DIALOG_DELETE = 20;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,7 +166,6 @@ public class FormAddUpdateActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int ALERT_DIALOG_DELETE = 20;
         switch (item.getItemId()) {
             case R.id.action_delete:
                 showAlertDialog(ALERT_DIALOG_DELETE);
@@ -180,8 +182,6 @@ public class FormAddUpdateActivity extends AppCompatActivity
     public void onBackPressed() {
         showAlertDialog(ALERT_DIALOG_CLOSE);
     }
-
-    private final int ALERT_DIALOG_CLOSE = 10;
 
     /*
     Konfirmasi dialog sebelum proses batal atau hapus
