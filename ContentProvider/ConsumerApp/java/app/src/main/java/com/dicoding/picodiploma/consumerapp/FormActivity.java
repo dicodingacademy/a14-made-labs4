@@ -8,8 +8,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,8 +64,8 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-        String actionBarTitle = null;
-        String btnActionTitle = null;
+        String actionBarTitle;
+        String btnActionTitle;
         if (noteItem != null) {
             isUpdate = true;
             actionBarTitle = "Update";

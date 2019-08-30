@@ -3,8 +3,8 @@ package com.dicoding.picodiploma.consumerapp.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +32,7 @@ public class ConsumerAdapter extends RecyclerView.Adapter<ConsumerAdapter.NoteVi
         this.activity = activity;
     }
 
-    public ArrayList<NoteItem> getListNotes() {
+    private ArrayList<NoteItem> getListNotes() {
         return listNotes;
     }
 
@@ -74,12 +74,10 @@ public class ConsumerAdapter extends RecyclerView.Adapter<ConsumerAdapter.NoteVi
     }
 
     public class NoteViewHolder extends RecyclerView.ViewHolder {
-        final TextView tvTitle, tvDescription, tvDate;
-        View rootView;
+        private final TextView tvTitle, tvDescription, tvDate;
 
         public NoteViewHolder(View itemView) {
             super(itemView);
-            rootView = itemView;
             tvTitle = itemView.findViewById(R.id.tv_item_title);
             tvDescription = itemView.findViewById(R.id.tv_item_description);
             tvDate = itemView.findViewById(R.id.tv_item_date);
