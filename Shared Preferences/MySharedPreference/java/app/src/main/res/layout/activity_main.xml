@@ -5,10 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:padding="16dp"
     tools:context="com.dicoding.picodiploma.mysharedpreference.MainActivity">
 
     <TextView
@@ -21,7 +18,7 @@
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="16dp"
         android:textSize="16sp"
         android:textStyle="bold"
         tools:text="@string/dummy_name" />
@@ -36,7 +33,7 @@
         android:id="@+id/tv_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="16dp"
         android:textSize="16sp"
         android:textStyle="bold"
         tools:text="@string/dummy_email" />
@@ -51,7 +48,7 @@
         android:id="@+id/tv_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="16dp"
         android:textSize="16sp"
         android:textStyle="bold"
         tools:text="@string/dummynumber" />
@@ -66,7 +63,7 @@
         android:id="@+id/tv_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="16dp"
         android:textSize="16sp"
         android:textStyle="bold"
         tools:text="@string/dummyage" />
@@ -81,7 +78,7 @@
         android:id="@+id/tv_is_love_mu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="16dp"
         android:textSize="16sp"
         android:textStyle="bold"
         tools:text="@string/dummyislove" />

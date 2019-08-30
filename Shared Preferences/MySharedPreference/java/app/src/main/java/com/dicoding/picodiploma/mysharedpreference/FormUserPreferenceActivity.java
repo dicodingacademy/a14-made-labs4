@@ -2,7 +2,7 @@ package com.dicoding.picodiploma.mysharedpreference;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,11 +26,11 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     public static final int TYPE_ADD = 1;
     public static final int TYPE_EDIT = 2;
     private int formType;
-    UserModel userModel;
+    private UserModel userModel;
 
-    final String FIELD_REQUIRED = "Field tidak boleh kosong";
-    final String FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik";
-    final String FIELD_IS_NOT_VALID = "Email tidak valid";
+    private final String FIELD_REQUIRED = "Field tidak boleh kosong";
+    private final String FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik";
+    private final String FIELD_IS_NOT_VALID = "Email tidak valid";
 
 
     @Override
@@ -147,7 +147,7 @@ public class FormUserPreferenceActivity extends AppCompatActivity
     /*
     Save data ke dalam preferences
      */
-    void saveUser(String name, String email, String age, String phoneNo, boolean isLoveMU) {
+    private void saveUser(String name, String email, String age, String phoneNo, boolean isLoveMU) {
         UserPreference userPreference = new UserPreference(this);
 
         userModel.setName(name);
