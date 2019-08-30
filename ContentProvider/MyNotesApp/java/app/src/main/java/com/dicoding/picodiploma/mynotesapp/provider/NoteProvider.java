@@ -6,7 +6,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.dicoding.picodiploma.mynotesapp.MainActivity;
 import com.dicoding.picodiploma.mynotesapp.db.NoteHelper;

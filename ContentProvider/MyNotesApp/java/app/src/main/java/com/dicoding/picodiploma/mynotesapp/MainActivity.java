@@ -8,11 +8,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -34,10 +34,6 @@ public class MainActivity extends AppCompatActivity
     private NoteAdapter adapter;
     private static final String EXTRA_STATE = "EXTRA_STATE";
 
-    private static HandlerThread handlerThread;
-    private DataObserver myObserver;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +48,10 @@ public class MainActivity extends AppCompatActivity
 
         progressBar = findViewById(R.id.progressbar);
 
-        handlerThread = new HandlerThread("DataObserver");
+        HandlerThread handlerThread = new HandlerThread("DataObserver");
         handlerThread.start();
         Handler handler = new Handler(handlerThread.getLooper());
-        myObserver = new DataObserver(handler, this);
+        DataObserver myObserver = new DataObserver(handler, this);
         getContentResolver().registerContentObserver(CONTENT_URI, true, myObserver);
 
         FloatingActionButton fabAdd = findViewById(R.id.fab_add);

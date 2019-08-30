@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, LoadNotesCallbac
 
     companion object {
         private const val EXTRA_STATE = "EXTRA_STATE"
-        private lateinit var handlerThread: HandlerThread
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, LoadNotesCallbac
         rv_notes.layoutManager = LinearLayoutManager(this)
         rv_notes.setHasFixedSize(true)
 
-        handlerThread = HandlerThread("DataObserver")
+        val handlerThread = HandlerThread("DataObserver")
         handlerThread.start()
         val handler = Handler(handlerThread.looper)
 
