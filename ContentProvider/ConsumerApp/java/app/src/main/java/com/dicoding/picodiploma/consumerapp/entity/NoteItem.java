@@ -62,9 +62,6 @@ public class NoteItem implements Parcelable {
         dest.writeString(this.date);
     }
 
-    public NoteItem() {
-    }
-
     public NoteItem(int id, String title, String description, String date) {
         this.id = id;
         this.title = title;
