@@ -1,9 +1,9 @@
 package com.dicoding.picodiploma.mypreloaddata;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.picodiploma.mypreloaddata.adapter.MahasiswaAdapter;
 import com.dicoding.picodiploma.mypreloaddata.database.MahasiswaHelper;
@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 public class MahasiswaActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    MahasiswaAdapter mahasiswaAdapter;
-    MahasiswaHelper mahasiswaHelper;
+    private RecyclerView recyclerView;
+    private MahasiswaAdapter mahasiswaAdapter;
+    private MahasiswaHelper mahasiswaHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

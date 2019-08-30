@@ -23,7 +23,7 @@ import static com.dicoding.picodiploma.mypreloaddata.database.DatabaseContract.T
 
 public class MahasiswaHelper {
 
-    private DatabaseHelper dataBaseHelper;
+    private final DatabaseHelper dataBaseHelper;
     private static MahasiswaHelper INSTANCE;
 
     private SQLiteDatabase database;

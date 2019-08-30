@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/imageView"
-        android:padding="@dimen/activity_horizontal_margin"
+        android:padding="16dp"
         android:text="@string/nim" />
 
     <TextView
@@ -19,8 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/txt_nim"
-        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_toEndOf="@id/txt_nim"
+        android:padding="16dp"
         android:text="@string/name" />
 
     <ImageView

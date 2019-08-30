@@ -1,7 +1,7 @@
 package com.dicoding.picodiploma.mypreloaddata.adapter;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by dicoding on 12/6/2016.
  */
 public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.MahasiswaHolder> {
-    private ArrayList<MahasiswaModel> listMahasiswa = new ArrayList<>();
+    private final ArrayList<MahasiswaModel> listMahasiswa = new ArrayList<>();
 
     public MahasiswaAdapter() {
     }
@@ -63,8 +63,8 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
     }
 
     class MahasiswaHolder extends RecyclerView.ViewHolder {
-        private TextView textViewNim;
-        private TextView textViewName;
+        private final TextView textViewNim;
+        private final TextView textViewName;
 
         MahasiswaHolder(View itemView) {
             super(itemView);
