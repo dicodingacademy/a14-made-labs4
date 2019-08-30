@@ -6,17 +6,17 @@ import android.provider.BaseColumns;
  * Created by dicoding on 10/12/2017.
  */
 
-class DatabaseContract {
+public class DatabaseContract {
 
-    static final class NoteColumns implements BaseColumns {
-        static final String TABLE_NAME = "note";
+    public static final class NoteColumns implements BaseColumns {
+        public static final String TABLE_NAME = "note";
 
         //Note title
-        static final String TITLE = "title";
+        public static final String TITLE = "title";
         //Note description
-        static final String DESCRIPTION = "description";
+        public static final String DESCRIPTION = "description";
         //Note date
-        static final String DATE = "date";
+        public static final String DATE = "date";
 
     }
 }
