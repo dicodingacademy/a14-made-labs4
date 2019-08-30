@@ -4,11 +4,11 @@ public class FileModel {
     private String filename;
     private String data;
 
-    String getFilename() {
+    public String getFilename() {
         return filename;
     }
 
-    void setFilename(String filename) {
+    public void setFilename(String filename) {
         this.filename = filename;
     }
 

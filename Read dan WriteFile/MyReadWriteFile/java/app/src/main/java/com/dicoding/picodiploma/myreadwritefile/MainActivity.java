@@ -3,7 +3,7 @@ package com.dicoding.picodiploma.myreadwritefile;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,13 +15,13 @@ import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnNew;
-    Button btnOpen;
-    Button btnSave;
-    EditText editContent;
-    EditText editTitle;
+    private Button btnNew;
+    private Button btnOpen;
+    private Button btnSave;
+    private EditText editContent;
+    private EditText editTitle;
 
-    File path;
+    private File path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Clear semua data yang sudah ditampilkan
      */
-    public void newFile() {
+    private void newFile() {
 
         editTitle.setText("");
         editContent.setText("");
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toast.makeText(this, "Loading " + fileModel.getFilename() + " data", Toast.LENGTH_SHORT).show();
     }
 
-    public void openFile() {
+    private void openFile() {
         showList();
     }
 
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Method untuk save data, nama file akan diambil dari editTitle
      */
-    public void saveFile() {
+    private void saveFile() {
         if (editTitle.getText().toString().isEmpty()) {
             Toast.makeText(this, "Title harus diisi terlebih dahulu", Toast.LENGTH_SHORT).show();
         } else if (editContent.getText().toString().isEmpty()) {
