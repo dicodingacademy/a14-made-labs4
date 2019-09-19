@@ -11,8 +11,6 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var path: File
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,17 +19,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         button_open.setOnClickListener(this)
         button_save.setOnClickListener(this)
 
-        /*
-        Path dengan tipe data file digunakan untuk menampung data yang digunakan sebagai penyimpanan write dan read
-        Method getFilesDir() berfungsi untuk mendapatkan pengembalian file dari direktori yang ada di android.
-         */
-        path = filesDir
     }
 
     override fun onClick(view: View) {
         when (view.id) {
             R.id.button_new -> newFile()
-            R.id.button_open -> openFile()
+            R.id.button_open -> showList()
             R.id.button_save -> saveFile()
         }
     }
@@ -40,27 +33,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
      * Clear semua data yang sudah ditampilkan
      */
     private fun newFile() {
-
         edit_title.setText("")
         edit_file.setText("")
-
         Toast.makeText(this, "Clearing file", Toast.LENGTH_SHORT).show()
-    }
-
-    /**
-     * Method untuk load data
-     *
-     * @param title nama file
-     */
-    private fun loadData(title: String) {
-        val fileModel = FileHelper.readFromFile(this, title)
-        edit_title.setText(fileModel.filename)
-        edit_file.setText(fileModel.data)
-        Toast.makeText(this, "Loading " + fileModel.filename + " data", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun openFile() {
-        showList()
     }
 
     /**
@@ -68,8 +43,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
      */
     private fun showList() {
         val arrayList = ArrayList<String>()
-        Collections.addAll(arrayList, *path.list())
-
+        /*
+        Path dengan tipe data file digunakan untuk menampung data yang digunakan sebagai penyimpanan write dan read
+        Method getFilesDir() berfungsi untuk mendapatkan pengembalian file dari direktori yang ada di android.
+        */
+        val path: File = filesDir
+        Collections.addAll(arrayList, *path.list() as Array<String>)
         val items = arrayList.toTypedArray<CharSequence>()
 
         val builder = AlertDialog.Builder(this)
@@ -79,6 +58,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         alert.show()
     }
 
+    private fun loadData(title: String) {
+        val fileModel = FileHelper.readFromFile(this, title)
+        edit_title.setText(fileModel.filename)
+        edit_file.setText(fileModel.data)
+        Toast.makeText(this, "Loading " + fileModel.filename + " data", Toast.LENGTH_SHORT).show()
+    }
     /**
      * Method untuk save data, nama file akan diambil dari edit_title
      */

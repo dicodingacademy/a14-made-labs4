@@ -21,8 +21,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText editContent;
     private EditText editTitle;
 
-    private File path;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +36,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnOpen.setOnClickListener(this);
         btnSave.setOnClickListener(this);
 
-         /*
-        Path dengan tipe data file digunakan untuk menampung data yang digunakan sebagai penyimpanan write dan read
-        Method getFilesDir() berfungsi untuk mendapatkan pengembalian file dari direktori yang ada di android.
-         */
-        path = getFilesDir();
     }
 
     @Override
@@ -53,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 newFile();
                 break;
             case R.id.button_open:
-                openFile();
+                showList();
                 break;
             case R.id.button_save:
                 saveFile();
@@ -65,27 +58,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Clear semua data yang sudah ditampilkan
      */
     private void newFile() {
-
         editTitle.setText("");
         editContent.setText("");
-
         Toast.makeText(this, "Clearing file", Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * Method untuk load data
-     *
-     * @param title nama file
-     */
-    private void loadData(String title) {
-        FileModel fileModel = FileHelper.readFromFile(this, title);
-        editTitle.setText(fileModel.getFilename());
-        editContent.setText(fileModel.getData());
-        Toast.makeText(this, "Loading " + fileModel.getFilename() + " data", Toast.LENGTH_SHORT).show();
-    }
-
-    private void openFile() {
-        showList();
     }
 
     /**
@@ -93,10 +68,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void showList() {
         ArrayList<String> arrayList = new ArrayList<>();
-        Collections.addAll(arrayList, path.list());
 
+        /*
+        Path dengan tipe data file digunakan untuk menampung data yang digunakan sebagai penyimpanan write dan read
+        Method getFilesDir() berfungsi untuk mendapatkan pengembalian file dari direktori yang ada di android.
+         */
+        Collections.addAll(arrayList, getFilesDir().list());
         final CharSequence[] items = arrayList.toArray(new CharSequence[arrayList.size()]);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Pilih file yang diinginkan");
         builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -106,6 +84,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void loadData(String title) {
+        FileModel fileModel = FileHelper.readFromFile(this, title);
+        editTitle.setText(fileModel.getFilename());
+        editContent.setText(fileModel.getData());
+        Toast.makeText(this, "Loading " + fileModel.getFilename() + " data", Toast.LENGTH_SHORT).show();
     }
 
     /**

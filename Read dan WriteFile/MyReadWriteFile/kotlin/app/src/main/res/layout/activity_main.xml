@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     android:padding="16dp"
-    tools:context="com.dicoding.picodiploma.myreadwritefile.MainActivity">
+    tools:context=".MainActivity">
 
     <EditText
         android:id="@+id/edit_file"
