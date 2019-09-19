@@ -26,18 +26,11 @@ class MediaService : Service(), MediaPlayerCallback {
     private var mMediaPlayer: MediaPlayer? = null
 
     companion object {
-        const val PLAY = 0
-        const val STOP = 1
         const val ACTION_CREATE = "com.dicoding.picodiploma.mysound.mediaservice.create"
         const val ACTION_DESTROY = "com.dicoding.picodiploma.mysound.mediaservice.destroy"
-        const val CHANNEL_DEFAULT_IMPORTANCE = "Channel_Test"
-        const val ONGOING_NOTIFICATION_ID = 1
+        const val PLAY = 0
+        const val STOP = 1
     }
-
-    /**
-     * Method incomingHandler sebagai handler untuk aksi dari onklik button di MainActivity
-     */
-    private val mMessenger = Messenger(IncomingHandler(this))
 
     /*
     Ketika kelas service terbentuk, secara otomatis akan memanggil method init()
@@ -104,23 +97,21 @@ class MediaService : Service(), MediaPlayerCallback {
                     .setUsage(AudioAttributes.USAGE_MEDIA)
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .build()
-            mMediaPlayer?.run {
-                setAudioAttributes(attribute)
-            }
+            mMediaPlayer?.setAudioAttributes(attribute)
         } else {
-            mMediaPlayer?.run { setAudioStreamType(AudioManager.STREAM_MUSIC) }
+            mMediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
         }
         val afd = applicationContext.resources.openRawResourceFd(R.raw.guitar_background)
         try {
-            mMediaPlayer?.run { setDataSource(afd.fileDescriptor, afd.startOffset, afd.length) }
+            mMediaPlayer?.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
         } catch (e: IOException) {
             e.printStackTrace()
         }
 
-        mMediaPlayer?.setOnPreparedListener() /**
+        /**
          * Called when MediaPlayer is ready
          */
-        {
+        mMediaPlayer?.setOnPreparedListener(){
             isReady = true
             mMediaPlayer?.start()
             showNotif()
@@ -165,6 +156,9 @@ class MediaService : Service(), MediaPlayerCallback {
      * Digunakan ketika media service berjalan, maka akan muncul notif
      */
     private fun showNotif() {
+        val CHANNEL_DEFAULT_IMPORTANCE = "Channel_Test"
+        val ONGOING_NOTIFICATION_ID = 1
+
         val notificationIntent = Intent(this, MainActivity::class.java)
         notificationIntent.flags = Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT
 
@@ -199,6 +193,11 @@ class MediaService : Service(), MediaPlayerCallback {
     private fun stopNotif() {
         stopForeground(false)
     }
+
+    /**
+     * Method incomingHandler sebagai handler untuk aksi dari onklik button di MainActivity
+     */
+    private val mMessenger = Messenger(IncomingHandler(this))
 
     internal class IncomingHandler(playerCallback: MediaPlayerCallback) : Handler() {
 

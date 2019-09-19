@@ -8,6 +8,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -27,12 +28,12 @@ import java.lang.ref.WeakReference;
 
 public class MediaService extends Service implements MediaPlayerCallback {
     private final String TAG = MediaService.class.getSimpleName();
-    public final static int PLAY = 0;
-    public final static int STOP = 1;
-    public final static String ACTION_CREATE = "com.dicoding.picodiploma.mysound.mediaservice.create";
-    public final static String ACTION_DESTROY = "com.dicoding.picodiploma.mysound.mediaservice.destroy";
     private boolean isReady;
     private MediaPlayer mMediaPlayer = null;
+    public final static String ACTION_CREATE = "com.dicoding.picodiploma.mysound.mediaservice.create";
+    public final static String ACTION_DESTROY = "com.dicoding.picodiploma.mysound.mediaservice.destroy";
+    public final static int PLAY = 0;
+    public final static int STOP = 1;
 
     /*
     Ketika kelas service terbentuk, secara otomatis akan memanggil method init()
@@ -104,7 +105,15 @@ public class MediaService extends Service implements MediaPlayerCallback {
     */
     private void init() {
         mMediaPlayer = new MediaPlayer();
-        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AudioAttributes attribute = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build();
+            mMediaPlayer.setAudioAttributes(attribute);
+        } else {
+            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        }
 
         AssetFileDescriptor afd = getApplicationContext().getResources().openRawResourceFd(R.raw.guitar_background);
         try {
