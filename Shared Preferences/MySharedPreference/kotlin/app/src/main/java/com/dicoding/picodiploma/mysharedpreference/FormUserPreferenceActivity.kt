@@ -5,25 +5,36 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.isDigitsOnly
 import kotlinx.android.synthetic.main.activity_form_user_preference.*
 
 class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
 
-    private var formType: Int = 0
+    companion object {
+        const val EXTRA_TYPE_FORM = "extra_type_form"
+        const val EXTRA_RESULT = "extra_result"
+        const val RESULT_CODE = 101
+
+        const val TYPE_ADD = 1
+        const val TYPE_EDIT = 2
+
+        private const val FIELD_REQUIRED = "Field tidak boleh kosong"
+        private const val FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik"
+        private const val FIELD_IS_NOT_VALID = "Email tidak valid"
+    }
+
     private lateinit var userModel: UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form_user_preference)
 
-        val intent = intent
-        userModel = intent.getParcelableExtra("USER")
-        val btnSave = findViewById<Button>(R.id.btn_save)
-        btnSave.setOnClickListener(this)
+        btn_save.setOnClickListener(this)
 
-        formType = getIntent().getIntExtra(EXTRA_TYPE_FORM, 0)
+        userModel = intent.getParcelableExtra("USER") as UserModel
+        val formType = getIntent().getIntExtra(EXTRA_TYPE_FORM, 0)
 
         var actionBarTitle = ""
         var btnTitle = ""
@@ -43,15 +54,8 @@ class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
         supportActionBar?.title = actionBarTitle
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        btnSave.text = btnTitle
+        btn_save.text = btnTitle
 
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun showPreferenceInForm() {
@@ -68,18 +72,18 @@ class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View) {
         if (view.id == R.id.btn_save) {
-            val name = edt_name.text.toString().trim { it <= ' ' }
-            val email = edt_email.text.toString().trim { it <= ' ' }
-            val age = edt_age.text.toString().trim { it <= ' ' }
-            val phoneNo = edt_phone.text.toString().trim { it <= ' ' }
+            val name = edt_name.text.toString().trim()
+            val email = edt_email.text.toString().trim()
+            val age = edt_age.text.toString().trim()
+            val phoneNo = edt_phone.text.toString().trim()
             val isLoveMU = rg_love_mu.checkedRadioButtonId == R.id.rb_yes
 
-            if (TextUtils.isEmpty(name)) {
+            if (name.isEmpty()) {
                 edt_name.error = FIELD_REQUIRED
                 return
             }
 
-            if (TextUtils.isEmpty(email)) {
+            if (email.isEmpty()) {
                 edt_email.error = FIELD_REQUIRED
                 return
             }
@@ -89,17 +93,17 @@ class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
                 return
             }
 
-            if (TextUtils.isEmpty(age)) {
+            if (age.isEmpty()) {
                 edt_age.error = FIELD_REQUIRED
                 return
             }
 
-            if (TextUtils.isEmpty(phoneNo)) {
+            if (phoneNo.isEmpty()) {
                 edt_phone.error = FIELD_REQUIRED
                 return
             }
 
-            if (!TextUtils.isDigitsOnly(phoneNo)) {
+            if (!phoneNo.isDigitsOnly()) {
                 edt_phone.error = FIELD_DIGIT_ONLY
                 return
             }
@@ -126,7 +130,7 @@ class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
         userModel.phoneNumber = phoneNo
         userModel.isLove = isLoveMU
 
-        userPreference.user = userModel
+        userPreference.setUser(userModel)
         Toast.makeText(this, "Data tersimpan", Toast.LENGTH_SHORT).show()
     }
 
@@ -138,20 +142,13 @@ class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
      */
 
     private fun isValidEmail(email: CharSequence): Boolean {
-        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    companion object {
-
-        const val EXTRA_TYPE_FORM = "extra_type_form"
-        const val EXTRA_RESULT = "extra_result"
-        const val RESULT_CODE = 101
-
-        const val TYPE_ADD = 1
-        const val TYPE_EDIT = 2
-        
-        private const val FIELD_REQUIRED = "Field tidak boleh kosong"
-        private const val FIELD_DIGIT_ONLY = "Hanya boleh terisi numerik"
-        private const val FIELD_IS_NOT_VALID = "Email tidak valid"
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

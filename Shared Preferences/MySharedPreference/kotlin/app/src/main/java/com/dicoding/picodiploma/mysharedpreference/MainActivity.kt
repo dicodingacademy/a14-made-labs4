@@ -21,13 +21,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btn_save.setOnClickListener(this)
-
         supportActionBar?.title = "My User Preference"
 
         mUserPreference = UserPreference(this)
 
         showExistingPreference()
+
+        btn_save.setOnClickListener(this)
 
     }
 
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     Menampilkan preference yang ada
      */
     private fun showExistingPreference() {
-        userModel = mUserPreference.user
+        userModel = mUserPreference.getUser()
         populateView(userModel)
         checkForm(userModel)
     }

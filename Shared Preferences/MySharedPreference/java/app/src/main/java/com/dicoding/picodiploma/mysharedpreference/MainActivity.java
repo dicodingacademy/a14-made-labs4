@@ -7,8 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity
-        implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tvName, tvAge, tvPhoneNo, tvEmail, tvIsLoveMU;
     private Button btnSave;
@@ -31,7 +30,6 @@ public class MainActivity extends AppCompatActivity
         tvEmail = findViewById(R.id.tv_email);
         tvIsLoveMU = findViewById(R.id.tv_is_love_mu);
         btnSave = findViewById(R.id.btn_save);
-        btnSave.setOnClickListener(this);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("My User Preference");
@@ -40,6 +38,8 @@ public class MainActivity extends AppCompatActivity
         mUserPreference = new UserPreference(this);
 
         showExistingPreference();
+
+        btnSave.setOnClickListener(this);
 
     }
 
