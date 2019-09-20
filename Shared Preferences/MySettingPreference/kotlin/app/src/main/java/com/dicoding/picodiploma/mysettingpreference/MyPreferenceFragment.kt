@@ -40,11 +40,11 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSha
         LOVE = resources.getString(R.string.key_love)
 
         /* Masing masing Preference dicocokan berdasarkan dari KEY preference tersebut*/
-        namePreference = findPreference(NAME) as EditTextPreference
-        emailPreference = findPreference(EMAIL) as EditTextPreference
-        agePreference = findPreference(AGE) as EditTextPreference
-        phonePreference = findPreference(PHONE) as EditTextPreference
-        isLoveMuPreference = findPreference(LOVE) as CheckBoxPreference
+        namePreference = findPreference<EditTextPreference> (NAME) as EditTextPreference
+        emailPreference = findPreference<EditTextPreference>(EMAIL) as EditTextPreference
+        agePreference = findPreference<EditTextPreference>(AGE) as EditTextPreference
+        phonePreference = findPreference<EditTextPreference>(PHONE) as EditTextPreference
+        isLoveMuPreference = findPreference<CheckBoxPreference>(LOVE) as CheckBoxPreference
     }
 
     /*
