@@ -14,6 +14,19 @@ import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Compa
 
 internal class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
+    companion object {
+
+        private const val DATABASE_NAME = "dbnoteapp"
+
+        private const val DATABASE_VERSION = 1
+
+        private val SQL_CREATE_TABLE_NOTE = "CREATE TABLE $TABLE_NAME" +
+                " ($NoteColumns._ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " $NoteColumns.TITLE TEXT NOT NULL," +
+                " $NoteColumns.DESCRIPTION TEXT NOT NULL," +
+                " $NoteColumns.DATE TEXT NOT NULL)"
+    }
+
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(SQL_CREATE_TABLE_NOTE)
     }
@@ -28,18 +41,5 @@ internal class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATA
         */
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
-    }
-
-    companion object {
-
-        private const val DATABASE_NAME = "dbnoteapp"
-
-        private const val DATABASE_VERSION = 1
-
-        private val SQL_CREATE_TABLE_NOTE = "CREATE TABLE $TABLE_NAME" +
-                " ($NoteColumns._ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " $NoteColumns.TITLE TEXT NOT NULL," +
-                " $NoteColumns.DESCRIPTION TEXT NOT NULL," +
-                " $NoteColumns.DATE TEXT NOT NULL)"
     }
 }

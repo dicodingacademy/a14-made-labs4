@@ -20,14 +20,6 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
     private var position: Int = 0
     private lateinit var noteHelper: NoteHelper
 
-    private val currentDate: String
-        get() {
-            val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
-            val date = Date()
-
-            return dateFormat.format(date)
-        }
-
     companion object {
         const val EXTRA_NOTE = "extra_note"
         const val EXTRA_POSITION = "extra_position"
@@ -36,15 +28,13 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
         const val REQUEST_UPDATE = 200
         const val RESULT_UPDATE = 201
         const val RESULT_DELETE = 301
-        private const val ALERT_DIALOG_CLOSE = 10
-        private const val ALERT_DIALOG_DELETE = 20
+        const val ALERT_DIALOG_CLOSE = 10
+        const val ALERT_DIALOG_DELETE = 20
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_add_update)
-
-        btn_submit.setOnClickListener(this)
 
         noteHelper = NoteHelper.getInstance(applicationContext)
 
@@ -73,7 +63,6 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
 
         supportActionBar?.title = actionBarTitle
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
 
         btn_submit.text = btnTitle
     }
@@ -110,7 +99,7 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
                     Toast.makeText(this@NoteAddUpdateActivity, "Gagal mengupdate data", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                note?.date = currentDate
+                note?.date = getCurrentDate()
                 val result = noteHelper.insertNote(note as Note)
 
                 if (result > 0) {
@@ -122,6 +111,13 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    private fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
+        val date = Date()
+
+        return dateFormat.format(date)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -143,6 +139,7 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
         showAlertDialog(ALERT_DIALOG_CLOSE)
     }
 
+
     /*
     Konfirmasi dialog sebelum proses batal atau hapus
     close = 10
@@ -162,7 +159,6 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         val alertDialogBuilder = AlertDialog.Builder(this)
-
         alertDialogBuilder.setTitle(dialogTitle)
         alertDialogBuilder
                 .setMessage(dialogMessage)
@@ -185,6 +181,5 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
                 .setNegativeButton("Tidak") { dialog, id -> dialog.cancel() }
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
-
     }
 }

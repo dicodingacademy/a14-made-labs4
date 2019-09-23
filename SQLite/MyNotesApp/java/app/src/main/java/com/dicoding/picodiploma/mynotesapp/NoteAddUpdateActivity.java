@@ -21,25 +21,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class NoteAddUpdateActivity extends AppCompatActivity
-        implements View.OnClickListener {
+public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText edtTitle, edtDescription;
     private Button btnSubmit;
 
+    private boolean isEdit = false;
+    private Note note;
+    private int position;
+    private NoteHelper noteHelper;
+
     public static final String EXTRA_NOTE = "extra_note";
     public static final String EXTRA_POSITION = "extra_position";
-
-    private boolean isEdit = false;
     public static final int REQUEST_ADD = 100;
     public static final int RESULT_ADD = 101;
     public static final int REQUEST_UPDATE = 200;
     public static final int RESULT_UPDATE = 201;
     public static final int RESULT_DELETE = 301;
-
-    private Note note;
-    private int position;
-
-    private NoteHelper noteHelper;
+    private final int ALERT_DIALOG_CLOSE = 10;
+    private final int ALERT_DIALOG_DELETE = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,6 @@ public class NoteAddUpdateActivity extends AppCompatActivity
         edtTitle = findViewById(R.id.edt_title);
         edtDescription = findViewById(R.id.edt_description);
         btnSubmit = findViewById(R.id.btn_submit);
-        btnSubmit.setOnClickListener(this);
 
         noteHelper = NoteHelper.getInstance(getApplicationContext());
 
@@ -83,6 +81,9 @@ public class NoteAddUpdateActivity extends AppCompatActivity
         }
 
         btnSubmit.setText(btnTitle);
+
+        btnSubmit.setOnClickListener(this);
+
     }
 
     @Override
@@ -132,6 +133,13 @@ public class NoteAddUpdateActivity extends AppCompatActivity
         }
     }
 
+    private String getCurrentDate() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+
+        return dateFormat.format(date);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (isEdit) {
@@ -158,9 +166,6 @@ public class NoteAddUpdateActivity extends AppCompatActivity
         showAlertDialog(ALERT_DIALOG_CLOSE);
     }
 
-    private final int ALERT_DIALOG_CLOSE = 10;
-    private final int ALERT_DIALOG_DELETE = 20;
-
     /*
     Konfirmasi dialog sebelum proses batal atau hapus
     close = 10
@@ -179,7 +184,6 @@ public class NoteAddUpdateActivity extends AppCompatActivity
         }
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
         alertDialogBuilder.setTitle(dialogTitle);
         alertDialogBuilder
                 .setMessage(dialogMessage)
@@ -208,13 +212,5 @@ public class NoteAddUpdateActivity extends AppCompatActivity
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-
-    }
-
-    private String getCurrentDate() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
-        Date date = new Date();
-
-        return dateFormat.format(date);
     }
 }

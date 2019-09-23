@@ -18,15 +18,13 @@ import com.dicoding.picodiploma.mynotesapp.entity.Note;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import static com.dicoding.picodiploma.mynotesapp.NoteAddUpdateActivity.REQUEST_UPDATE;
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, LoadNotesCallback {
-    private RecyclerView rvNotes;
+public class MainActivity extends AppCompatActivity implements LoadNotesCallback {
     private ProgressBar progressBar;
-    private FloatingActionButton fabAdd;
-    private static final String EXTRA_STATE = "EXTRA_STATE";
+    private RecyclerView rvNotes;
     private NoteAdapter adapter;
+    private FloatingActionButton fabAdd;
     private NoteHelper noteHelper;
+    private static final String EXTRA_STATE = "EXTRA_STATE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,20 +34,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle("Notes");
 
+        progressBar = findViewById(R.id.progressbar);
         rvNotes = findViewById(R.id.rv_notes);
         rvNotes.setLayoutManager(new LinearLayoutManager(this));
         rvNotes.setHasFixedSize(true);
-
-        noteHelper = NoteHelper.getInstance(getApplicationContext());
-
-        noteHelper.open();
-
-        progressBar = findViewById(R.id.progressbar);
-        fabAdd = findViewById(R.id.fab_add);
-        fabAdd.setOnClickListener(this);
-
         adapter = new NoteAdapter(this);
         rvNotes.setAdapter(adapter);
+
+        fabAdd = findViewById(R.id.fab_add);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, NoteAddUpdateActivity.class);
+                startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD);
+            }
+        });
+
+        noteHelper = NoteHelper.getInstance(getApplicationContext());
+        noteHelper.open();
 
         /*
         Cek jika savedInstaceState null makan akan melakukan proses asynctask nya
@@ -62,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (list != null) {
                 adapter.setListNotes(list);
             }
-
         }
     }
 
@@ -70,14 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(EXTRA_STATE, adapter.getListNotes());
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.fab_add) {
-            Intent intent = new Intent(MainActivity.this, NoteAddUpdateActivity.class);
-            startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD);
-        }
     }
 
     @Override
@@ -152,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
             // Update dan Delete memiliki request code sama akan tetapi result codenya berbeda
-            else if (requestCode == REQUEST_UPDATE) {
+            else if (requestCode == NoteAddUpdateActivity.REQUEST_UPDATE) {
                 /*
                 Akan dipanggil jika result codenya  UPDATE
                 Semua data di load kembali dari awal
@@ -196,4 +189,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void showSnackbarMessage(String message) {
         Snackbar.make(rvNotes, message, Snackbar.LENGTH_SHORT).show();
     }
+}
+
+interface LoadNotesCallback {
+    void preExecute();
+    void postExecute(ArrayList<Note> notes);
 }

@@ -6,7 +6,6 @@ import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns._ID
-import androidx.core.content.contentValuesOf
 import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Companion.DATE
 import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Companion.DESCRIPTION
 import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Companion.TABLE_NAME
@@ -14,12 +13,11 @@ import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Compa
 import com.dicoding.picodiploma.mynotesapp.entity.Note
 import java.util.*
 
-
 /**
  * Created by sidiqpermana on 11/23/16.
  */
 
-class NoteHelper private constructor(context: Context) {
+class NoteHelper(context: Context) {
 
     companion object {
         private const val DATABASE_TABLE = TABLE_NAME
@@ -62,29 +60,28 @@ class NoteHelper private constructor(context: Context) {
      *
      * @return hasil getGetAllNotes berbentuk array model note
      */
-    val getAllNotes: ArrayList<Note>
-        get() {
-            val arrayList = ArrayList<Note>()
-            val cursor = database.query(DATABASE_TABLE, null, null, null, null, null,
-                    "$_ID ASC", null)
-            cursor.moveToFirst()
-            var note: Note
-            if (cursor.count > 0) {
-                do {
-                    note = Note()
-                    note.id = cursor.getInt(cursor.getColumnIndexOrThrow(_ID))
-                    note.title = cursor.getString(cursor.getColumnIndexOrThrow(TITLE))
-                    note.description = cursor.getString(cursor.getColumnIndexOrThrow(DESCRIPTION))
-                    note.date = cursor.getString(cursor.getColumnIndexOrThrow(DATE))
+    fun getAllNotes(): ArrayList<Note> {
+        val arrayList = ArrayList<Note>()
+        val cursor = database.query(DATABASE_TABLE, null, null, null, null, null,
+                "$_ID ASC", null)
+        cursor.moveToFirst()
+        var note: Note
+        if (cursor.count > 0) {
+            do {
+                note = Note()
+                note.id = cursor.getInt(cursor.getColumnIndexOrThrow(_ID))
+                note.title = cursor.getString(cursor.getColumnIndexOrThrow(TITLE))
+                note.description = cursor.getString(cursor.getColumnIndexOrThrow(DESCRIPTION))
+                note.date = cursor.getString(cursor.getColumnIndexOrThrow(DATE))
 
-                    arrayList.add(note)
-                    cursor.moveToNext()
+                arrayList.add(note)
+                cursor.moveToNext()
 
-                } while (!cursor.isAfterLast)
-            }
-            cursor.close()
-            return arrayList
+            } while (!cursor.isAfterLast)
         }
+        cursor.close()
+        return arrayList
+    }
 
     /**
      * Gunakan method ini untuk insertNote
@@ -93,13 +90,13 @@ class NoteHelper private constructor(context: Context) {
      * @return id dari data yang baru saja dimasukkan
      */
     fun insertNote(note: Note): Long {
-        val args = contentValuesOf(
-                TITLE to note.title,
-                DESCRIPTION to note.description,
-                DATE to note.date
-        )
+        val args = ContentValues()
+        args.put(TITLE, note.title)
+        args.put(DESCRIPTION, note.description)
+        args.put(DATE, note.date)
         return database.insert(DATABASE_TABLE, null, args)
     }
+
 
     /**
      * Gunakan method ini untuk updateNote
@@ -108,11 +105,10 @@ class NoteHelper private constructor(context: Context) {
      * @return int jumlah dari row yang ter-updateNote, jika tidak ada yang diupdate maka nilainya 0
      */
     fun updateNote(note: Note): Int {
-        val args = contentValuesOf(
-                TITLE to note.title,
-                DESCRIPTION to note.description,
-                DATE to note.date
-        )
+        val args = ContentValues()
+        args.put(TITLE, note.title)
+        args.put(DESCRIPTION, note.description)
+        args.put(DATE, note.date)
         return database.update(DATABASE_TABLE, args, _ID + "= '" + note.id + "'", null)
     }
 
