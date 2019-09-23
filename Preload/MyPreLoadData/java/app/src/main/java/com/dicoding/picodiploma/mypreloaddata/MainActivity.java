@@ -25,35 +25,13 @@ import static com.dicoding.picodiploma.mypreloaddata.services.DataManagerService
 
 public class MainActivity extends AppCompatActivity implements HandlerCallback {
     private ProgressBar progressBar;
-    private Messenger mActivityMessenger;
 
     Messenger mBoundService;
     boolean mServiceBound;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        progressBar = findViewById(R.id.progress_bar);
-
-        Intent mBoundServiceIntent = new Intent(MainActivity.this, DataManagerService.class);
-        mActivityMessenger = new Messenger(new IncomingHandler(this));
-        mBoundServiceIntent.putExtra(DataManagerService.ACTIVITY_HANDLER, mActivityMessenger);
-
-        bindService(mBoundServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        unbindService(mServiceConnection);
-    }
-
     /*
-     Service Connection adalah interface yang digunakan untuk menghubungkan antara boundservice dengan activity
-      */
+    Service Connection adalah interface yang digunakan untuk menghubungkan antara boundservice dengan activity
+    */
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
@@ -68,6 +46,32 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
         }
 
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        progressBar = findViewById(R.id.progress_bar);
+
+        Intent mBoundServiceIntent = new Intent(MainActivity.this, DataManagerService.class);
+        Messenger mActivityMessenger = new Messenger(new IncomingHandler(this));
+        mBoundServiceIntent.putExtra(DataManagerService.ACTIVITY_HANDLER, mActivityMessenger);
+
+        bindService(mBoundServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unbindService(mServiceConnection);
+    }
+
+    @Override
+    public void onPreparation() {
+        Toast.makeText(this, "MEMULAI MEMUAT DATA", Toast.LENGTH_LONG).show();
+    }
 
     @Override
     public void updateProgress(long progress) {
@@ -93,10 +97,6 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
         finish();
     }
 
-    @Override
-    public void onPreparation() {
-        Toast.makeText(this, "MEMULAI MEMUAT DATA", Toast.LENGTH_LONG).show();
-    }
 
     private static class IncomingHandler extends Handler {
 

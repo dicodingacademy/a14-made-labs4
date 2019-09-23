@@ -15,6 +15,15 @@ import com.dicoding.picodiploma.mypreloaddata.database.DatabaseContract.TABLE_NA
 
 internal class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
+    companion object {
+
+        private const val DATABASE_NAME = "dbmahasiswa"
+
+        private const val DATABASE_VERSION = 1
+
+        private val CREATE_TABLE_MAHASISWA = "create table $TABLE_NAME ($_ID integer primary key autoincrement, $NAMA text not null, $NIM text not null);"
+    }
+
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(CREATE_TABLE_MAHASISWA)
     }
@@ -29,14 +38,5 @@ internal class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATA
          */
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
-    }
-
-    companion object {
-
-        private const val DATABASE_NAME = "dbmahasiswa"
-
-        private const val DATABASE_VERSION = 1
-
-        private val CREATE_TABLE_MAHASISWA = "create table $TABLE_NAME ($_ID integer primary key autoincrement, $NAMA text not null, $NIM text not null);"
     }
 }

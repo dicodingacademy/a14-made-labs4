@@ -20,34 +20,22 @@ import java.util.*
 class MahasiswaHelper(context: Context) {
 
     private val dataBaseHelper: DatabaseHelper = DatabaseHelper(context)
-
     private lateinit var database: SQLiteDatabase
 
-    /**
-     * Gunakan method ini untuk mendapatkan semua data mahasiswa
-     *
-     * @return hasil query mahasiswa model di dalam arraylist
-     */
-    val allData: ArrayList<MahasiswaModel>
-        get() {
-            val cursor = database.query(TABLE_NAME, null, null, null, null, null, "$_ID ASC", null)
-            cursor.moveToFirst()
-            val arrayList = ArrayList<MahasiswaModel>()
-            var mahasiswaModel: MahasiswaModel
-            if (cursor.count > 0) {
-                do {
-                    mahasiswaModel = MahasiswaModel()
-                    mahasiswaModel.id = cursor.getInt(cursor.getColumnIndexOrThrow(_ID))
-                    mahasiswaModel.name = cursor.getString(cursor.getColumnIndexOrThrow(NAMA))
-                    mahasiswaModel.nim = cursor.getString(cursor.getColumnIndexOrThrow(NIM))
+    companion object {
+        private var INSTANCE: MahasiswaHelper? = null
 
-                    arrayList.add(mahasiswaModel)
-                    cursor.moveToNext()
-                } while (!cursor.isAfterLast)
+        fun getInstance(context: Context): MahasiswaHelper {
+            if (INSTANCE == null) {
+                synchronized(SQLiteOpenHelper::class.java) {
+                    if (INSTANCE == null) {
+                        INSTANCE = MahasiswaHelper(context)
+                    }
+                }
             }
-            cursor.close()
-            return arrayList
+            return INSTANCE as MahasiswaHelper
         }
+    }
 
     @Throws(SQLException::class)
     fun open() {
@@ -59,6 +47,44 @@ class MahasiswaHelper(context: Context) {
 
         if (database.isOpen)
             database.close()
+    }
+
+    /**
+     * Gunakan method ini untuk mendapatkan semua data mahasiswa
+     *
+     * @return hasil query mahasiswa model di dalam arraylist
+     */
+    fun getAllData(): ArrayList<MahasiswaModel> {
+        val cursor = database.query(TABLE_NAME, null, null, null, null, null, "$_ID ASC", null)
+        cursor.moveToFirst()
+        val arrayList = ArrayList<MahasiswaModel>()
+        var mahasiswaModel: MahasiswaModel
+        if (cursor.count > 0) {
+            do {
+                mahasiswaModel = MahasiswaModel()
+                mahasiswaModel.id = cursor.getInt(cursor.getColumnIndexOrThrow(_ID))
+                mahasiswaModel.name = cursor.getString(cursor.getColumnIndexOrThrow(NAMA))
+                mahasiswaModel.nim = cursor.getString(cursor.getColumnIndexOrThrow(NIM))
+
+                arrayList.add(mahasiswaModel)
+                cursor.moveToNext()
+            } while (!cursor.isAfterLast)
+        }
+        cursor.close()
+        return arrayList
+    }
+
+    /**
+     * Gunakan method ini untuk query insert
+     *
+     * @param mahasiswaModel inputan model mahasiswa
+     * @return id dari data mahasiswa yang baru saja dimasukkan
+     */
+    fun insert(mahasiswaModel: MahasiswaModel): Long {
+        val initialValues = ContentValues()
+        initialValues.put(NAMA, mahasiswaModel.name)
+        initialValues.put(NIM, mahasiswaModel.nim)
+        return database.insert(TABLE_NAME, null, initialValues)
     }
 
     /**
@@ -86,20 +112,6 @@ class MahasiswaHelper(context: Context) {
         }
         cursor.close()
         return arrayList
-    }
-
-    /**
-     * Gunakan method ini untuk query insert
-     *
-     * @param mahasiswaModel inputan model mahasiswa
-     * @return id dari data mahasiswa yang baru saja dimasukkan
-     */
-    fun insert(mahasiswaModel: MahasiswaModel): Long {
-        val initialValues = contentValuesOf(
-                NAMA to mahasiswaModel.name,
-                NIM to mahasiswaModel.nim
-        )
-        return database.insert(TABLE_NAME, null, initialValues)
     }
 
     /**
@@ -136,7 +148,6 @@ class MahasiswaHelper(context: Context) {
         stmt.bindString(2, mahasiswaModel.nim)
         stmt.execute()
         stmt.clearBindings()
-
     }
 
     /**
@@ -162,18 +173,4 @@ class MahasiswaHelper(context: Context) {
         return database.delete(TABLE_NAME, "$_ID = '$id'", null)
     }
 
-    companion object {
-        private var INSTANCE: MahasiswaHelper? = null
-
-        fun getInstance(context: Context): MahasiswaHelper {
-            if (INSTANCE == null) {
-                synchronized(SQLiteOpenHelper::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = MahasiswaHelper(context)
-                    }
-                }
-            }
-            return INSTANCE as MahasiswaHelper
-        }
-    }
 }

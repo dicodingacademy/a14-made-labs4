@@ -13,27 +13,20 @@ import java.util.ArrayList;
 
 public class MahasiswaActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private MahasiswaAdapter mahasiswaAdapter;
-    private MahasiswaHelper mahasiswaHelper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mahasiswa);
-        recyclerView = findViewById(R.id.recyclerview);
 
-        mahasiswaHelper = new MahasiswaHelper(this);
-        mahasiswaAdapter = new MahasiswaAdapter();
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        MahasiswaAdapter mahasiswaAdapter = new MahasiswaAdapter();
         recyclerView.setAdapter(mahasiswaAdapter);
 
+        MahasiswaHelper mahasiswaHelper = new MahasiswaHelper(this);
         mahasiswaHelper.open();
-
         // Ambil semua data mahasiswa di database
         ArrayList<MahasiswaModel> mahasiswaModels = mahasiswaHelper.getAllData();
-
         mahasiswaHelper.close();
 
         mahasiswaAdapter.setData(mahasiswaModels);

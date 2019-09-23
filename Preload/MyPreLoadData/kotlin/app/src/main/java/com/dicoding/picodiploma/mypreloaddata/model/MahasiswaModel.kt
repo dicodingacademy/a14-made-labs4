@@ -11,9 +11,4 @@ data class MahasiswaModel(
         var id: Int = 0,
         var name: String? = null,
         var nim: String? = null
-) : Parcelable {
-    constructor(name: String, nim: String) : this() {
-        this.name = name
-        this.nim = nim
-    }
-}
+) : Parcelable

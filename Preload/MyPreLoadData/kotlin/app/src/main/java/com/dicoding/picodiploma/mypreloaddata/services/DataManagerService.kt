@@ -19,13 +19,12 @@ import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 class DataManagerService : Service(), CoroutineScope {
+    private lateinit var job: Job
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
     private val TAG = DataManagerService::class.java.simpleName
     private var mActivityMessenger: Messenger? = null
-    private lateinit var job: Job
-    private var progress: Double = 0.toDouble()
 
     companion object {
         const val PREPARATION_MESSAGE = 0
@@ -113,6 +112,7 @@ class DataManagerService : Service(), CoroutineScope {
         val mahasiswaHelper = MahasiswaHelper.getInstance(applicationContext)
         val appPreference = AppPreference(applicationContext)
 
+
         val firstRun = appPreference.firstRun as Boolean
         /*
          * Jika first run true maka melakukan proses pre load,
@@ -126,7 +126,7 @@ class DataManagerService : Service(), CoroutineScope {
 
             mahasiswaHelper.open()
 
-            progress = 30.0
+            var progress = 30.0
             publishProgress(progress.toInt())
             val progressMaxInsert = 80.0
             val progressDiff = (progressMaxInsert - progress) / mahasiswaModels.size
@@ -198,7 +198,6 @@ class DataManagerService : Service(), CoroutineScope {
 //                    mahasiswaHelper.insert(model)
 //                    progress += progressDiff
 //                    publishProgress(progress.toInt())
-//
 //                }
 //
 //                isInsertSuccess = true
@@ -259,7 +258,9 @@ class DataManagerService : Service(), CoroutineScope {
 
                 val mahasiswaModel: MahasiswaModel
 
-                mahasiswaModel = MahasiswaModel(splitstr[0], splitstr[1])
+                mahasiswaModel = MahasiswaModel()
+                mahasiswaModel.name = splitstr[0]
+                mahasiswaModel.nim = splitstr[1]
                 mahasiswaModels.add(mahasiswaModel)
             } while (line != null)
         } catch (e: Exception) {

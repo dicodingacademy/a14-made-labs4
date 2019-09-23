@@ -22,10 +22,9 @@ class NoteHelper(context: Context) {
     companion object {
         private const val DATABASE_TABLE = TABLE_NAME
         private lateinit var dataBaseHelper: DatabaseHelper
-        private var INSTANCE: NoteHelper? = null
-
         private lateinit var database: SQLiteDatabase
 
+        private var INSTANCE: NoteHelper? = null
         fun getInstance(context: Context): NoteHelper {
             if (INSTANCE == null) {
                 synchronized(SQLiteOpenHelper::class.java) {

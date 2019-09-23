@@ -16,11 +16,6 @@ public class MahasiswaModel implements Parcelable {
 
     }
 
-    public MahasiswaModel(String name, String nim) {
-        this.name = name;
-        this.nim = nim;
-    }
-
     public String getNim() {
         return nim;
     }

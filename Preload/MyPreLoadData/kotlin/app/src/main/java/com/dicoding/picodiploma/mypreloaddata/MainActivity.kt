@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.ref.WeakReference
 
 class MainActivity : AppCompatActivity(), HandlerCallback {
-    private lateinit var mActivityMessenger: Messenger
 
     private lateinit var mBoundService: Messenger
     private var mServiceBound: Boolean = false
@@ -44,7 +43,7 @@ class MainActivity : AppCompatActivity(), HandlerCallback {
         setContentView(R.layout.activity_main)
 
         val mBoundServiceIntent = Intent(this@MainActivity, DataManagerService::class.java)
-        mActivityMessenger = Messenger(IncomingHandler(this))
+        val mActivityMessenger = Messenger(IncomingHandler(this))
         mBoundServiceIntent.putExtra(DataManagerService.ACTIVITY_HANDLER, mActivityMessenger)
 
         bindService(mBoundServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE)
@@ -55,6 +54,10 @@ class MainActivity : AppCompatActivity(), HandlerCallback {
         super.onDestroy()
 
         unbindService(mServiceConnection)
+    }
+
+    override fun onPreparation() {
+        Toast.makeText(this, "MEMULAI MEMUAT DATA", Toast.LENGTH_LONG).show()
     }
 
     override fun updateProgress(progress: Long) {
@@ -76,11 +79,7 @@ class MainActivity : AppCompatActivity(), HandlerCallback {
         finish()
     }
 
-    override fun onPreparation() {
-        Toast.makeText(this, "MEMULAI MEMUAT DATA", Toast.LENGTH_LONG).show()
-    }
-
-    private class IncomingHandler constructor(callback: HandlerCallback) : Handler() {
+    private class IncomingHandler (callback: HandlerCallback) : Handler() {
 
         private var weakCallback: WeakReference<HandlerCallback> = WeakReference(callback)
 

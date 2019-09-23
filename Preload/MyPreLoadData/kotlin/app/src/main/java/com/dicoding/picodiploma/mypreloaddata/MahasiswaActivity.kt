@@ -9,24 +9,18 @@ import kotlinx.android.synthetic.main.activity_mahasiswa.*
 
 class MahasiswaActivity : AppCompatActivity() {
 
-    private lateinit var mahasiswaAdapter: MahasiswaAdapter
-    private lateinit var mahasiswaHelper: MahasiswaHelper
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mahasiswa)
 
-        mahasiswaHelper = MahasiswaHelper(this)
-        mahasiswaAdapter = MahasiswaAdapter()
         recyclerview.layoutManager = LinearLayoutManager(this)
-
+        val mahasiswaAdapter = MahasiswaAdapter()
         recyclerview.adapter = mahasiswaAdapter
 
+        val mahasiswaHelper = MahasiswaHelper(this)
         mahasiswaHelper.open()
-
         // Ambil semua data mahasiswa di database
-        val mahasiswaModels = mahasiswaHelper.allData
-
+        val mahasiswaModels = mahasiswaHelper.getAllData()
         mahasiswaHelper.close()
 
         mahasiswaAdapter.setData(mahasiswaModels)

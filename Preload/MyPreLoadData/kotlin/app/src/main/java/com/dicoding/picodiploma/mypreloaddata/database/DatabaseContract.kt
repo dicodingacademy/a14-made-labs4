@@ -12,11 +12,8 @@ internal object DatabaseContract {
 
     internal class MahasiswaColumns : BaseColumns {
         companion object {
-            // Mahasiswa nama
             const val NAMA = "nama"
-            // Mahasiswa nim
             const val NIM = "nim"
         }
-
     }
 }

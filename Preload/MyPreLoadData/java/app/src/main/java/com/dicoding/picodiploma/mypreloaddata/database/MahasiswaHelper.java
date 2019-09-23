@@ -24,9 +24,9 @@ import static com.dicoding.picodiploma.mypreloaddata.database.DatabaseContract.T
 public class MahasiswaHelper {
 
     private final DatabaseHelper dataBaseHelper;
-    private static MahasiswaHelper INSTANCE;
-
     private SQLiteDatabase database;
+
+    private static MahasiswaHelper INSTANCE;
 
     public MahasiswaHelper(Context context) {
         dataBaseHelper = new DatabaseHelper(context);
@@ -52,33 +52,6 @@ public class MahasiswaHelper {
 
         if (database.isOpen())
             database.close();
-    }
-
-    /**
-     * Gunakan method ini untuk cari NIM berdasarkan nama mahasiswa
-     *
-     * @param nama nama yang dicari
-     * @return NIM dari mahasiswa
-     */
-    public ArrayList<MahasiswaModel> getDataByName(String nama) {
-        Cursor cursor = database.query(TABLE_NAME, null, NAMA + " LIKE ?", new String[]{nama}, null, null, _ID + " ASC", null);
-        cursor.moveToFirst();
-        ArrayList<MahasiswaModel> arrayList = new ArrayList<>();
-        MahasiswaModel mahasiswaModel;
-        if (cursor.getCount() > 0) {
-            do {
-                mahasiswaModel = new MahasiswaModel();
-                mahasiswaModel.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
-                mahasiswaModel.setName(cursor.getString(cursor.getColumnIndexOrThrow(NAMA)));
-                mahasiswaModel.setNim(cursor.getString(cursor.getColumnIndexOrThrow(NIM)));
-
-                arrayList.add(mahasiswaModel);
-                cursor.moveToNext();
-
-            } while (!cursor.isAfterLast());
-        }
-        cursor.close();
-        return arrayList;
     }
 
     /**
@@ -120,6 +93,33 @@ public class MahasiswaHelper {
         initialValues.put(NAMA, mahasiswaModel.getName());
         initialValues.put(NIM, mahasiswaModel.getNim());
         return database.insert(TABLE_NAME, null, initialValues);
+    }
+
+    /**
+     * Gunakan method ini untuk cari NIM berdasarkan nama mahasiswa
+     *
+     * @param nama nama yang dicari
+     * @return NIM dari mahasiswa
+     */
+    public ArrayList<MahasiswaModel> getDataByName(String nama) {
+        Cursor cursor = database.query(TABLE_NAME, null, NAMA + " LIKE ?", new String[]{nama}, null, null, _ID + " ASC", null);
+        cursor.moveToFirst();
+        ArrayList<MahasiswaModel> arrayList = new ArrayList<>();
+        MahasiswaModel mahasiswaModel;
+        if (cursor.getCount() > 0) {
+            do {
+                mahasiswaModel = new MahasiswaModel();
+                mahasiswaModel.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
+                mahasiswaModel.setName(cursor.getString(cursor.getColumnIndexOrThrow(NAMA)));
+                mahasiswaModel.setNim(cursor.getString(cursor.getColumnIndexOrThrow(NIM)));
+
+                arrayList.add(mahasiswaModel);
+                cursor.moveToNext();
+
+            } while (!cursor.isAfterLast());
+        }
+        cursor.close();
+        return arrayList;
     }
 
     /**
