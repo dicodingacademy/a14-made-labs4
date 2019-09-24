@@ -14,6 +14,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.nio.file.Files.size
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: NoteAdapter
@@ -49,11 +55,17 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             progressbar.visibility = View.VISIBLE
             GlobalScope.launch(Dispatchers.Main) {
-                val notes = async(Dispatchers.IO) {
+                val deferredNotes = async(Dispatchers.IO) {
                     noteHelper.getAllNotes()
                 }
                 progressbar.visibility = View.INVISIBLE
-                adapter.listNotes = notes.await()
+                val notes = deferredNotes.await()
+                if (notes.size > 0) {
+                    adapter.listNotes = notes
+                } else {
+                    adapter.listNotes = ArrayList()
+                    showSnackbarMessage("Tidak ada data saat ini")
+                }
             }
         } else {
             val list = savedInstanceState.getParcelableArrayList<Note>(EXTRA_STATE)

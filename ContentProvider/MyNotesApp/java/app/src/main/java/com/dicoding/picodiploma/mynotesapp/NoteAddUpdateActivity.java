@@ -29,7 +29,7 @@ import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumn
 import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.DESCRIPTION;
 import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.TITLE;
 
-public class FormAddUpdateActivity extends AppCompatActivity
+public class NoteAddUpdateActivity extends AppCompatActivity
         implements View.OnClickListener {
     private EditText edtTitle, edtDescription;
 
@@ -140,14 +140,14 @@ public class FormAddUpdateActivity extends AppCompatActivity
                     // Gunakan uri dari intent activity ini
                     // content://com.dicoding.picodiploma.mynotesapp/note/id
                     getContentResolver().update(getIntent().getData(), values, null, null);
-                    Toast.makeText(FormAddUpdateActivity.this, "Satu item berhasil diedit", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NoteAddUpdateActivity.this, "Satu item berhasil diedit", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     values.put(DATE, getCurrentDate());
                     note.setDate(getCurrentDate());
                     // Gunakan content uri untuk insert
                     // content://com.dicoding.picodiploma.mynotesapp/note/
-                    Toast.makeText(FormAddUpdateActivity.this, "Satu item berhasil disimpan", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NoteAddUpdateActivity.this, "Satu item berhasil disimpan", Toast.LENGTH_SHORT).show();
                     getContentResolver().insert(CONTENT_URI, values);
 
                     finish();
@@ -217,7 +217,7 @@ public class FormAddUpdateActivity extends AppCompatActivity
                             // Gunakan uri dari intent activity ini
                             // content://com.dicoding.picodiploma.mynotesapp/note/id
                             getContentResolver().delete(getIntent().getData(), null, null);
-                            Toast.makeText(FormAddUpdateActivity.this, "Satu item berhasil dihapus", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(NoteAddUpdateActivity.this, "Satu item berhasil dihapus", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }
