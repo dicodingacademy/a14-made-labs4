@@ -55,75 +55,66 @@ public class NoteHelper {
             database.close();
     }
 
+
     /**
-     * Gunakan method ini untuk ambil semua note yang ada
-     * Otomatis di parsing ke dalam model Note
+     * Ambil data dari semua note yang ada di dalam database
      *
-     * @return hasil getAllNotes berbentuk array model note
+     * @return cursor hasil queryAll
      */
-    public ArrayList<Note> getAllNotes() {
-        ArrayList<Note> arrayList = new ArrayList<>();
-        Cursor cursor = database.query(DATABASE_TABLE, null,
-                null,
-                null,
-                null,
-                null,
-                _ID + " ASC",
-                null);
-        cursor.moveToFirst();
-        Note note;
-        if (cursor.getCount() > 0) {
-            do {
-                note = new Note();
-                note.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
-                note.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));
-                note.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(DESCRIPTION)));
-                note.setDate(cursor.getString(cursor.getColumnIndexOrThrow(DATE)));
-
-                arrayList.add(note);
-                cursor.moveToNext();
-
-            } while (!cursor.isAfterLast());
-        }
-        cursor.close();
-        return arrayList;
+    public Cursor queryAll() {
+        return database.query(DATABASE_TABLE
+                , null
+                , null
+                , null
+                , null
+                , null
+                , _ID + " ASC");
     }
 
     /**
-     * Gunakan method ini untuk getAllNotes insertNote
+     * Ambil data dari note berdasarakan parameter id
      *
-     * @param note model note yang akan dimasukkan
-     * @return id dari data yang baru saja dimasukkan
+     * @param id id note yang dicari
+     * @return cursor hasil queryAll
      */
-    public long insertNote(Note note) {
-        ContentValues args = new ContentValues();
-        args.put(TITLE, note.getTitle());
-        args.put(DESCRIPTION, note.getDescription());
-        args.put(DATE, note.getDate());
-        return database.insert(DATABASE_TABLE, null, args);
+    public Cursor queryById(String id) {
+        return database.query(DATABASE_TABLE, null
+                , _ID + " = ?"
+                , new String[]{id}
+                , null
+                , null
+                , null
+                , null);
     }
 
     /**
-     * Gunakan method ini untuk getAllNotes updateNote
+     * Simpan data ke dalam database
      *
-     * @param note model note yang akan diubah
-     * @return int jumlah dari row yang ter-updateNote, jika tidak ada yang diupdate maka nilainya 0
+     * @param values nilai data yang akan di simpan
+     * @return long id dari data yang baru saja di masukkan
      */
-    public int updateNote(Note note) {
-        ContentValues args = new ContentValues();
-        args.put(TITLE, note.getTitle());
-        args.put(DESCRIPTION, note.getDescription());
-        args.put(DATE, note.getDate());
-        return database.update(DATABASE_TABLE, args, _ID + "= '" + note.getId() + "'", null);
+    public long insert(ContentValues values) {
+        return database.insert(DATABASE_TABLE, null, values);
     }
 
     /**
-     * Gunakan method ini untuk getAllNotes deleteNote
+     * Update data dalam database
      *
-     * @param id id yang akan di deleteNote
-     * @return int jumlah row yang di deleteNote
+     * @param id     data dengan id berapa yang akan di update
+     * @param values nilai data baru
+     * @return int jumlah data yang ter-update
      */
-    public int deleteNote(int id) {
-        return database.delete(TABLE_NAME, _ID + " = '" + id + "'", null);
+    public int update(String id, ContentValues values) {
+        return database.update(DATABASE_TABLE, values, _ID + " = ?", new String[]{id});
+    }
+
+    /**
+     * Delete data dalam database
+     *
+     * @param id data dengan id berapa yang akan di delete
+     * @return int jumlah data yang ter-delete
+     */
+    public int deleteById(String id) {
+        return database.delete(DATABASE_TABLE, _ID + " = ?", new String[]{id});
     }
 }

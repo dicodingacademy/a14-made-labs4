@@ -14,11 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.nio.file.Files.size
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
+import com.dicoding.picodiploma.mynotesapp.helper.MappingHelper
 
 
 class MainActivity : AppCompatActivity() {
@@ -53,24 +49,29 @@ class MainActivity : AppCompatActivity() {
         jika tidak,akan mengambil arraylist nya dari yang sudah di simpan
          */
         if (savedInstanceState == null) {
-            progressbar.visibility = View.VISIBLE
-            GlobalScope.launch(Dispatchers.Main) {
-                val deferredNotes = async(Dispatchers.IO) {
-                    noteHelper.getAllNotes()
-                }
-                progressbar.visibility = View.INVISIBLE
-                val notes = deferredNotes.await()
-                if (notes.size > 0) {
-                    adapter.listNotes = notes
-                } else {
-                    adapter.listNotes = ArrayList()
-                    showSnackbarMessage("Tidak ada data saat ini")
-                }
-            }
+            loadNotesAsync()
         } else {
             val list = savedInstanceState.getParcelableArrayList<Note>(EXTRA_STATE)
             if (list != null) {
                 adapter.listNotes = list
+            }
+        }
+    }
+
+    private fun loadNotesAsync() {
+        GlobalScope.launch(Dispatchers.Main) {
+            progressbar.visibility = View.VISIBLE
+            val deferredNotes = async(Dispatchers.IO) {
+                val cursor = noteHelper.queryAll()
+                MappingHelper.mapCursorToArrayList(cursor)
+            }
+            progressbar.visibility = View.INVISIBLE
+            val notes = deferredNotes.await()
+            if (notes.size > 0) {
+                adapter.listNotes = notes
+            } else {
+                adapter.listNotes = ArrayList()
+                showSnackbarMessage("Tidak ada data saat ini")
             }
         }
     }

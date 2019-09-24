@@ -1,8 +1,11 @@
 package com.dicoding.picodiploma.mynotesapp;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import com.dicoding.picodiploma.mynotesapp.helper.MappingHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -115,8 +118,8 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
 
         @Override
         protected ArrayList<Note> doInBackground(Void... voids) {
-
-            return weakNoteHelper.get().getAllNotes();
+            Cursor dataCursor = weakNoteHelper.get().queryAll();
+            return MappingHelper.mapCursorToArrayList(dataCursor);
         }
 
         @Override

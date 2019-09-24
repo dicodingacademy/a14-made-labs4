@@ -62,6 +62,13 @@ public class Note implements Parcelable {
     public Note() {
     }
 
+    public Note(int id, String title, String description, String date) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.date = date;
+    }
+
     private Note(Parcel in) {
         this.id = in.readInt();
         this.title = in.readString();

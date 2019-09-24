@@ -1,5 +1,6 @@
 package com.dicoding.picodiploma.mynotesapp;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.DATE;
+import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.DESCRIPTION;
+import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.TITLE;
 
 public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText edtTitle, edtDescription;
@@ -107,11 +112,16 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
             intent.putExtra(EXTRA_NOTE, note);
             intent.putExtra(EXTRA_POSITION, position);
 
+            // Gunakan contentvalues untuk menampung data
+            ContentValues values = new ContentValues();
+            values.put(TITLE, title);
+            values.put(DESCRIPTION, description);
+
             /*
             Jika merupakan edit maka setresultnya UPDATE, dan jika bukan maka setresultnya ADD
             */
             if (isEdit) {
-                long result = noteHelper.updateNote(note);
+                long result = noteHelper.update(String.valueOf(note.getId()), values);
                 if (result > 0) {
                     setResult(RESULT_UPDATE, intent);
                     finish();
@@ -120,7 +130,8 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
                 }
             } else {
                 note.setDate(getCurrentDate());
-                long result = noteHelper.insertNote(note);
+                values.put(DATE, getCurrentDate());
+                long result = noteHelper.insert(values);
 
                 if (result > 0) {
                     note.setId((int) result);
@@ -193,7 +204,7 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
                         if (isDialogClose) {
                             finish();
                         } else {
-                            long result = noteHelper.deleteNote(note.getId());
+                            long result = noteHelper.deleteById(String.valueOf(note.getId()));
                             if (result > 0) {
                                 Intent intent = new Intent();
                                 intent.putExtra(EXTRA_POSITION, position);

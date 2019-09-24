@@ -1,5 +1,6 @@
 package com.dicoding.picodiploma.mynotesapp
 
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -8,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract
 import com.dicoding.picodiploma.mynotesapp.db.NoteHelper
 import com.dicoding.picodiploma.mynotesapp.entity.Note
 import kotlinx.android.synthetic.main.activity_note_add_update.*
@@ -65,6 +67,8 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         btn_submit.text = btnTitle
+
+        btn_submit.setOnClickListener(this)
     }
 
     override fun onClick(view: View) {
@@ -87,11 +91,16 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
             intent.putExtra(EXTRA_NOTE, note)
             intent.putExtra(EXTRA_POSITION, position)
 
+            // Gunakan contentvalues untuk menampung data
+            val values = ContentValues()
+            values.put(DatabaseContract.NoteColumns.TITLE, title)
+            values.put(DatabaseContract.NoteColumns.DESCRIPTION, description)
+
             /*
             Jika merupakan edit maka setresultnya UPDATE, dan jika bukan maka setresultnya ADD
             */
             if (isEdit) {
-                val result = noteHelper.updateNote(note as Note).toLong()
+                val result = noteHelper.update(note?.id.toString(), values)
                 if (result > 0) {
                     setResult(RESULT_UPDATE, intent)
                     finish()
@@ -100,7 +109,8 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
                 }
             } else {
                 note?.date = getCurrentDate()
-                val result = noteHelper.insertNote(note as Note)
+                values.put(DatabaseContract.NoteColumns.DATE, getCurrentDate())
+                val result = noteHelper.insert(values)
 
                 if (result > 0) {
                     note?.id = result.toInt()
@@ -167,7 +177,7 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
                     if (isDialogClose) {
                         finish()
                     } else {
-                        val result = noteHelper.deleteNote(note?.id as Int).toLong()
+                        val result = noteHelper.deleteById(note?.id.toString()).toLong()
                         if (result > 0) {
                             val intent = Intent()
                             intent.putExtra(EXTRA_POSITION, position)
