@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dicoding.picodiploma.mynotesapp.CustomOnItemClickListener;
-import com.dicoding.picodiploma.mynotesapp.FormAddUpdateActivity;
+import com.dicoding.picodiploma.mynotesapp.NoteAddUpdateActivity;
 import com.dicoding.picodiploma.mynotesapp.R;
 import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
@@ -57,15 +57,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
         holder.cvNote.setOnClickListener(new CustomOnItemClickListener(position, new CustomOnItemClickListener.OnItemClickCallback() {
             @Override
             public void onItemClicked(View view, int position) {
-                Intent intent = new Intent(activity, FormAddUpdateActivity.class);
-
-                // Set intent dengan data uri row note by id
-                // content://com.dicoding.picodiploma.mynotesapp/note/id
-                Uri uri = Uri.parse(CONTENT_URI + "/" + getListNotes().get(position).getId());
-                intent.setData(uri);
-                intent.putExtra(FormAddUpdateActivity.EXTRA_POSITION, position);
-                intent.putExtra(FormAddUpdateActivity.EXTRA_NOTE, listNotes.get(position));
-                activity.startActivityForResult(intent, FormAddUpdateActivity.REQUEST_UPDATE);
+                Intent intent = new Intent(activity, NoteAddUpdateActivity.class);
+                intent.putExtra(NoteAddUpdateActivity.EXTRA_POSITION, position);
+                intent.putExtra(NoteAddUpdateActivity.EXTRA_NOTE, listNotes.get(position));
+                activity.startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_UPDATE);
             }
         }));
     }

@@ -6,8 +6,6 @@ import android.content.Context
 import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
-import android.os.Handler
-import com.dicoding.picodiploma.mynotesapp.MainActivity
 import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.AUTHORITY
 import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
 import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Companion.TABLE_NAME
@@ -19,24 +17,49 @@ import com.dicoding.picodiploma.mynotesapp.db.NoteHelper
 
 class NoteProvider : ContentProvider() {
 
-    private lateinit var noteHelper: NoteHelper
+    companion object {
+
+        /*
+        Integer digunakan sebagai identifier antara select all sama select by id
+         */
+        private const val NOTE = 1
+        private const val NOTE_ID = 2
+        private lateinit var noteHelper: NoteHelper
+
+        private val sUriMatcher = UriMatcher(UriMatcher.NO_MATCH)
+
+        /*
+        Uri matcher untuk mempermudah identifier dengan menggunakan integer
+        misal
+        uri com.dicoding.picodiploma.mynotesapp dicocokan dengan integer 1
+        uri com.dicoding.picodiploma.mynotesapp/# dicocokan dengan integer 2
+         */
+        init {
+            // content://com.dicoding.picodiploma.mynotesapp/note
+            sUriMatcher.addURI(AUTHORITY, TABLE_NAME, NOTE)
+
+            // content://com.dicoding.picodiploma.mynotesapp/note/id
+            sUriMatcher.addURI(AUTHORITY,
+                    "$TABLE_NAME/#",
+                    NOTE_ID)
+        }
+    }
 
     override fun onCreate(): Boolean {
         noteHelper = NoteHelper.getInstance(context as Context)
-
+        noteHelper.open()
         return true
     }
 
     /*
-    Method query digunakan ketika ingin menjalankan query Select
+    Method queryAll digunakan ketika ingin menjalankan queryAll Select
     Return cursor
      */
     override fun query(uri: Uri, strings: Array<String>?, s: String?, strings1: Array<String>?, s1: String?): Cursor? {
-        noteHelper.open()
         val cursor: Cursor?
         when (sUriMatcher.match(uri)) {
-            NOTE -> cursor = noteHelper.queryProvider()
-            NOTE_ID -> cursor = noteHelper.queryByIdProvider(uri.lastPathSegment.toString())
+            NOTE -> cursor = noteHelper.queryAll()
+            NOTE_ID -> cursor = noteHelper.queryById(uri.lastPathSegment.toString())
             else -> cursor = null
         }
 
@@ -50,62 +73,37 @@ class NoteProvider : ContentProvider() {
 
 
     override fun insert(uri: Uri, contentValues: ContentValues?): Uri? {
-        noteHelper.open()
-        val added: Long = if (sUriMatcher.match(uri) == NOTE) noteHelper.insertProvider(contentValues as ContentValues)
-        else 0
+        val added: Long = when (NOTE) {
+            sUriMatcher.match(uri) -> noteHelper.insert(contentValues)
+            else -> 0
+        }
 
-        context?.contentResolver?.notifyChange(CONTENT_URI, MainActivity.DataObserver(Handler(), context as Context))
+        context?.contentResolver?.notifyChange(CONTENT_URI, null)
 
         return Uri.parse("$CONTENT_URI/$added")
     }
 
 
     override fun update(uri: Uri, contentValues: ContentValues?, s: String?, strings: Array<String>?): Int {
-        noteHelper.open()
-        val updated: Int = if (sUriMatcher.match(uri) == NOTE_ID) noteHelper.updateProvider(uri.lastPathSegment.toString(), contentValues as ContentValues)
-        else 0
+        val updated: Int = when (NOTE_ID) {
+            sUriMatcher.match(uri) -> noteHelper.update(uri.lastPathSegment.toString(),contentValues)
+            else -> 0
+        }
 
-        context?.contentResolver?.notifyChange(CONTENT_URI, MainActivity.DataObserver(Handler(), context as Context))
+        context?.contentResolver?.notifyChange(CONTENT_URI, null)
 
         return updated
     }
 
     override fun delete(uri: Uri, s: String?, strings: Array<String>?): Int {
-        noteHelper.open()
-        val deleted: Int = if (sUriMatcher.match(uri) == NOTE_ID) noteHelper.deleteProvider(uri.lastPathSegment.toString())
-        else 0
+        val deleted: Int = when (NOTE_ID) {
+            sUriMatcher.match(uri) -> noteHelper.deleteById(uri.lastPathSegment.toString())
+            else -> 0
+        }
 
-        context?.contentResolver?.notifyChange(CONTENT_URI, MainActivity.DataObserver(Handler(), context as Context))
+        context?.contentResolver?.notifyChange(CONTENT_URI, null)
 
         return deleted
-    }
-
-    companion object {
-
-        /*
-    Integer digunakan sebagai identifier antara select all sama select by id
-     */
-        private const val NOTE = 1
-        private const val NOTE_ID = 2
-
-        private val sUriMatcher = UriMatcher(UriMatcher.NO_MATCH)
-
-        /*
-    Uri matcher untuk mempermudah identifier dengan menggunakan integer
-    misal
-    uri com.dicoding.picodiploma.mynotesapp dicocokan dengan integer 1
-    uri com.dicoding.picodiploma.mynotesapp/# dicocokan dengan integer 2
-     */
-        init {
-
-            // content://com.dicoding.picodiploma.mynotesapp/note
-            sUriMatcher.addURI(AUTHORITY, TABLE_NAME, NOTE)
-
-            // content://com.dicoding.picodiploma.mynotesapp/note/id
-            sUriMatcher.addURI(AUTHORITY,
-                    "$TABLE_NAME/#",
-                    NOTE_ID)
-        }
     }
 
 }

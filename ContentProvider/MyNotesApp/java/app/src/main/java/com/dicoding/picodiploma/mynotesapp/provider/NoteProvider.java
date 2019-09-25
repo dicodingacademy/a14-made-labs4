@@ -5,10 +5,9 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Handler;
+
 import androidx.annotation.NonNull;
 
-import com.dicoding.picodiploma.mynotesapp.MainActivity;
 import com.dicoding.picodiploma.mynotesapp.db.NoteHelper;
 
 import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.AUTHORITY;
@@ -26,6 +25,7 @@ public class NoteProvider extends ContentProvider {
      */
     private static final int NOTE = 1;
     private static final int NOTE_ID = 2;
+    private NoteHelper noteHelper;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -46,12 +46,10 @@ public class NoteProvider extends ContentProvider {
                 NOTE_ID);
     }
 
-    private NoteHelper noteHelper;
-
     @Override
     public boolean onCreate() {
         noteHelper = NoteHelper.getInstance(getContext());
-
+        noteHelper.open();
         return true;
     }
 
@@ -61,14 +59,13 @@ public class NoteProvider extends ContentProvider {
      */
     @Override
     public Cursor query(@NonNull Uri uri, String[] strings, String s, String[] strings1, String s1) {
-        noteHelper.open();
         Cursor cursor;
         switch (sUriMatcher.match(uri)) {
             case NOTE:
-                cursor = noteHelper.queryProvider();
+                cursor = noteHelper.queryAll();
                 break;
             case NOTE_ID:
-                cursor = noteHelper.queryByIdProvider(uri.getLastPathSegment());
+                cursor = noteHelper.queryById(uri.getLastPathSegment());
                 break;
             default:
                 cursor = null;
@@ -87,18 +84,17 @@ public class NoteProvider extends ContentProvider {
 
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues contentValues) {
-        noteHelper.open();
         long added;
         switch (sUriMatcher.match(uri)) {
             case NOTE:
-                added = noteHelper.insertProvider(contentValues);
+                added = noteHelper.insert(contentValues);
                 break;
             default:
                 added = 0;
                 break;
         }
 
-        getContext().getContentResolver().notifyChange(CONTENT_URI, new MainActivity.DataObserver(new Handler(), getContext()));
+        getContext().getContentResolver().notifyChange(CONTENT_URI, null);
 
         return Uri.parse(CONTENT_URI + "/" + added);
     }
@@ -106,36 +102,34 @@ public class NoteProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
-        noteHelper.open();
         int updated;
         switch (sUriMatcher.match(uri)) {
             case NOTE_ID:
-                updated = noteHelper.updateProvider(uri.getLastPathSegment(), contentValues);
+                updated = noteHelper.update(uri.getLastPathSegment(), contentValues);
                 break;
             default:
                 updated = 0;
                 break;
         }
 
-        getContext().getContentResolver().notifyChange(CONTENT_URI, new MainActivity.DataObserver(new Handler(), getContext()));
+        getContext().getContentResolver().notifyChange(CONTENT_URI, null);
 
         return updated;
     }
 
     @Override
     public int delete(@NonNull Uri uri, String s, String[] strings) {
-        noteHelper.open();
         int deleted;
         switch (sUriMatcher.match(uri)) {
             case NOTE_ID:
-                deleted = noteHelper.deleteProvider(uri.getLastPathSegment());
+                deleted = noteHelper.deleteById(uri.getLastPathSegment());
                 break;
             default:
                 deleted = 0;
                 break;
         }
 
-        getContext().getContentResolver().notifyChange(CONTENT_URI, new MainActivity.DataObserver(new Handler(), getContext()));
+        getContext().getContentResolver().notifyChange(CONTENT_URI, null);
 
         return deleted;
     }

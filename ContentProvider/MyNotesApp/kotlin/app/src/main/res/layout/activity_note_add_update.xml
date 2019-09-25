@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:orientation="vertical"
-    tools:context="com.dicoding.picodiploma.mynotesapp.FormAddUpdateActivity">
+    tools:context=".NoteAddUpdateActivity">
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

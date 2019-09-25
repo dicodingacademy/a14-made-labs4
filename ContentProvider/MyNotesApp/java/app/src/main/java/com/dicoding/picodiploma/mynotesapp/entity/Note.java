@@ -1,15 +1,7 @@
 package com.dicoding.picodiploma.mynotesapp.entity;
 
-import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract;
-
-import static android.provider.BaseColumns._ID;
-import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.getColumnInt;
-import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.getColumnString;
-
 
 /**
  * Created by sidiqpermana on 11/23/16.
@@ -76,13 +68,6 @@ public class Note implements Parcelable {
         this.title = title;
         this.description = description;
         this.date = date;
-    }
-
-    public Note(Cursor cursor) {
-        this.id = getColumnInt(cursor, _ID);
-        this.title = getColumnString(cursor, DatabaseContract.NoteColumns.TITLE);
-        this.description = getColumnString(cursor, DatabaseContract.NoteColumns.DESCRIPTION);
-        this.date = getColumnString(cursor, DatabaseContract.NoteColumns.DATE);
     }
 
     private Note(Parcel in) {
