@@ -97,7 +97,12 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
         Menyembunyikan progressbar, kemudian isi adapter dengan data yang ada
          */
         progressBar.setVisibility(View.INVISIBLE);
-        adapter.setListNotes(notes);
+        if (notes.size() > 0) {
+            adapter.setListNotes(notes);
+        } else {
+            adapter.setListNotes(new ArrayList<Note>());
+            showSnackbarMessage("Tidak ada data saat ini");
+        }
     }
 
     private static class LoadNotesAsync extends AsyncTask<Void, Void, ArrayList<Note>> {

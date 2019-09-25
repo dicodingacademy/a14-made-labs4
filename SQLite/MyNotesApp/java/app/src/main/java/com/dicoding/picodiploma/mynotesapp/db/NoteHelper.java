@@ -62,13 +62,14 @@ public class NoteHelper {
      * @return cursor hasil queryAll
      */
     public Cursor queryAll() {
-        return database.query(DATABASE_TABLE
-                , null
-                , null
-                , null
-                , null
-                , null
-                , _ID + " ASC");
+        return database.query(
+                DATABASE_TABLE,
+                null,
+                null,
+                null,
+                null,
+                null,
+                _ID + " ASC");
     }
 
     /**
