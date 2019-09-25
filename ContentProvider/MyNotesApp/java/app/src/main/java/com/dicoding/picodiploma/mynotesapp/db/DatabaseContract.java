@@ -1,6 +1,5 @@
 package com.dicoding.picodiploma.mynotesapp.db;
 
-import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
 

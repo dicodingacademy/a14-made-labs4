@@ -2,7 +2,7 @@ package com.dicoding.picodiploma.mynotesapp.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,8 +17,6 @@ import com.dicoding.picodiploma.mynotesapp.R;
 import com.dicoding.picodiploma.mynotesapp.entity.Note;
 
 import java.util.ArrayList;
-
-import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
 
 /**
  * Created by sidiqpermana on 11/23/16.
