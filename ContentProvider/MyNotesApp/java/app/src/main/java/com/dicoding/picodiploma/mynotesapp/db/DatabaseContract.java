@@ -13,9 +13,6 @@ public class DatabaseContract {
     public static final String AUTHORITY = "com.dicoding.picodiploma.mynotesapp";
     private static final String SCHEME = "content";
 
-    //
-    private DatabaseContract(){}
-
     /*
     Penggunaan Base Columns akan memudahkan dalam penggunaan suatu table
     Untuk id yang autoincrement sudah default ada di dalam kelas BaseColumns dengan nama field _ID
