@@ -1,12 +1,11 @@
-package com.dicoding.picodiploma.mynotesapp.helper
+package com.dicoding.picodiploma.helper.consumerapp
 
 import android.database.Cursor
-import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Companion.DATE
-import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Companion.DESCRIPTION
-import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Companion.TITLE
-import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Companion._ID
-
-import com.dicoding.picodiploma.mynotesapp.entity.Note
+import com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.Companion.DATE
+import com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.Companion.DESCRIPTION
+import com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.Companion.TITLE
+import com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.Companion._ID
+import com.dicoding.picodiploma.consumerapp.entity.Note
 
 import java.util.ArrayList
 

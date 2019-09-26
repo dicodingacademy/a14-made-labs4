@@ -2,13 +2,14 @@ package com.dicoding.picodiploma.consumerapp.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.picodiploma.consumerapp.CustomOnItemClickListener;
 import com.dicoding.picodiploma.consumerapp.NoteAddUpdateActivity;
@@ -17,22 +18,19 @@ import com.dicoding.picodiploma.consumerapp.entity.Note;
 
 import java.util.ArrayList;
 
-import static com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
-
 /**
- * Created by dicoding on 12/13/2016.
+ * Created by sidiqpermana on 11/23/16.
  */
 
-public class ConsumerAdapter extends RecyclerView.Adapter<ConsumerAdapter.NoteViewHolder> {
-
+public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder> {
     private final ArrayList<Note> listNotes = new ArrayList<>();
     private final Activity activity;
 
-    public ConsumerAdapter(Activity activity) {
+    public NoteAdapter(Activity activity) {
         this.activity = activity;
     }
 
-    private ArrayList<Note> getListNotes() {
+    public ArrayList<Note> getListNotes() {
         return listNotes;
     }
 
@@ -44,26 +42,23 @@ public class ConsumerAdapter extends RecyclerView.Adapter<ConsumerAdapter.NoteVi
 
     @NonNull
     @Override
-    public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_consumer_note, parent, false);
-        return new NoteViewHolder(view);
+    public NoteViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent, false);
+        return new NoteViewholder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NoteViewHolder holder, int i) {
-        holder.tvTitle.setText(getListNotes().get(i).getTitle());
-        holder.tvDate.setText(getListNotes().get(i).getDate());
-        holder.tvDescription.setText(getListNotes().get(i).getDescription());
-        holder.itemView.setOnClickListener(new CustomOnItemClickListener(i, new CustomOnItemClickListener.OnItemClickCallback() {
+    public void onBindViewHolder(@NonNull NoteViewholder holder, int position) {
+        holder.tvTitle.setText(getListNotes().get(position).getTitle());
+        holder.tvDate.setText(getListNotes().get(position).getDate());
+        holder.tvDescription.setText(getListNotes().get(position).getDescription());
+        holder.cvNote.setOnClickListener(new CustomOnItemClickListener(position, new CustomOnItemClickListener.OnItemClickCallback() {
             @Override
             public void onItemClicked(View view, int position) {
                 Intent intent = new Intent(activity, NoteAddUpdateActivity.class);
-
-                // Set intent dengan data uri row note by id
-                // content://com.dicoding.picodiploma.mynotesapp/note/id
-                Uri uri = Uri.parse(CONTENT_URI + "/" + getListNotes().get(position).getId());
-                intent.setData(uri);
-                activity.startActivity(intent);
+                intent.putExtra(NoteAddUpdateActivity.EXTRA_POSITION, position);
+                intent.putExtra(NoteAddUpdateActivity.EXTRA_NOTE, listNotes.get(position));
+                activity.startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_UPDATE);
             }
         }));
     }
@@ -73,14 +68,16 @@ public class ConsumerAdapter extends RecyclerView.Adapter<ConsumerAdapter.NoteVi
         return listNotes.size();
     }
 
-    public class NoteViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tvTitle, tvDescription, tvDate;
+    class NoteViewholder extends RecyclerView.ViewHolder {
+        final TextView tvTitle, tvDescription, tvDate;
+        final CardView cvNote;
 
-        public NoteViewHolder(View itemView) {
+        NoteViewholder(View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tv_item_title);
             tvDescription = itemView.findViewById(R.id.tv_item_description);
             tvDate = itemView.findViewById(R.id.tv_item_date);
+            cvNote = itemView.findViewById(R.id.cv_item_note);
         }
     }
 }

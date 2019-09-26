@@ -4,11 +4,10 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 /**
- * Created by dicoding on 12/13/2016.
+ * Created by sidiqpermana on 11/23/16.
  */
-
 @Parcelize
-class NoteItem (
+class Note (
         var id: Int = 0,
         var title: String? = null,
         var description: String? = null,
