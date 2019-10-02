@@ -2,7 +2,6 @@
 Repository ini berisi kode hasil dari codelab yang ada di **Modul 4 kelas Menjadi Android Developer Expert di Dicoding**.
 Di dalamnya terdapat materi:
 * Read dan Write File
-* SoundPool dan MediaPlayer
 * SharedPreferences
 * SQlite
 * Preload
