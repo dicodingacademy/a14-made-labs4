@@ -34,10 +34,10 @@ internal class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATA
 
         private const val DATABASE_VERSION = 1
 
-        private val SQL_CREATE_TABLE_NOTE = "CREATE TABLE ${DatabaseContract.NoteColumns.TABLE_NAME}" +
-                " (${DatabaseContract.NoteColumns}._ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " ${DatabaseContract.NoteColumns}.TITLE TEXT NOT NULL," +
-                " ${DatabaseContract.NoteColumns}.DESCRIPTION TEXT NOT NULL," +
-                " ${DatabaseContract.NoteColumns}.DATE TEXT NOT NULL)"
+        private const val SQL_CREATE_TABLE_NOTE = "CREATE TABLE ${DatabaseContract.NoteColumns.TABLE_NAME}" +
+                " (${DatabaseContract.NoteColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " ${DatabaseContract.NoteColumns.TITLE} TEXT NOT NULL," +
+                " ${DatabaseContract.NoteColumns.DESCRIPTION} TEXT NOT NULL," +
+                " ${DatabaseContract.NoteColumns.DATE} TEXT NOT NULL)"
     }
 }

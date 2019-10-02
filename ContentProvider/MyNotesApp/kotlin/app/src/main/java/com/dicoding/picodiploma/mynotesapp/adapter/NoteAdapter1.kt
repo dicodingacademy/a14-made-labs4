@@ -2,15 +2,13 @@ package com.dicoding.picodiploma.mynotesapp.adapter
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.picodiploma.mynotesapp.CustomOnItemClickListener
-import com.dicoding.picodiploma.mynotesapp.FormAddUpdateActivity
+import com.dicoding.picodiploma.mynotesapp.NoteAddUpdateActivity
 import com.dicoding.picodiploma.mynotesapp.R
-import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
 import com.dicoding.picodiploma.mynotesapp.entity.Note
 import kotlinx.android.synthetic.main.item_note.view.*
 import java.util.*
@@ -48,15 +46,10 @@ class NoteAdapter(private val activity: Activity) : RecyclerView.Adapter<NoteAda
                 tv_item_description.text = note.description
                 cv_item_note.setOnClickListener(CustomOnItemClickListener(adapterPosition, object : CustomOnItemClickListener.OnItemClickCallback {
                     override fun onItemClicked(view: View, position: Int) {
-                        val intent = Intent(activity, FormAddUpdateActivity::class.java)
-
-                        // Set intent dengan data uri row note by id
-                        // content://com.dicoding.picodiploma.mynotesapp/note/id
-                        val uri = Uri.parse(CONTENT_URI.toString() + "/" + note.id)
-                        intent.data = uri
-                        intent.putExtra(FormAddUpdateActivity.EXTRA_POSITION, position)
-                        intent.putExtra(FormAddUpdateActivity.EXTRA_NOTE, note)
-                        activity.startActivityForResult(intent, FormAddUpdateActivity.REQUEST_UPDATE)
+                        val intent = Intent(activity, NoteAddUpdateActivity::class.java)
+                        intent.putExtra(NoteAddUpdateActivity.EXTRA_POSITION, position)
+                        intent.putExtra(NoteAddUpdateActivity.EXTRA_NOTE, note)
+                        activity.startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_UPDATE)
                     }
                 }))
             }

@@ -1,6 +1,5 @@
 package com.dicoding.picodiploma.consumerapp.db
 
-import android.database.Cursor
 import android.net.Uri
 import android.provider.BaseColumns
 
@@ -11,24 +10,20 @@ import android.provider.BaseColumns
 object DatabaseContract {
 
     // Authority yang digunakan
-    private const val AUTHORITY = "com.dicoding.picodiploma.mynotesapp"
-    private const val SCHEME = "content"
-
+    const val AUTHORITY = "com.dicoding.picodiploma.mynotesapp"
+    const val SCHEME = "content"
 
     /*
     Penggunaan Base Columns akan memudahkan dalam penggunaan suatu table
     Untuk id yang autoincrement sudah default ada di dalam kelas BaseColumns dengan nama field _ID
      */
     class NoteColumns : BaseColumns {
+
         companion object {
-
-            private const val TABLE_NAME = "note"
-
-            //Note title
+            const val TABLE_NAME = "note"
+            const val _ID = "_id"
             const val TITLE = "title"
-            //Note description
             const val DESCRIPTION = "description"
-            //Note date
             const val DATE = "date"
 
             // Base content yang digunakan untuk akses content provider
@@ -37,18 +32,6 @@ object DatabaseContract {
                     .appendPath(TABLE_NAME)
                     .build()
         }
+
     }
-
-
-    /*
-    Digunakan untuk mempermudah akses data di dalam cursor dengan parameter nama column
-    */
-    fun getColumnString(cursor: Cursor, columnName: String): String {
-        return cursor.getString(cursor.getColumnIndex(columnName))
-    }
-
-    fun getColumnInt(cursor: Cursor, columnName: String): Int {
-        return cursor.getInt(cursor.getColumnIndex(columnName))
-    }
-
 }
