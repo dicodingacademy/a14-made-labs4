@@ -34,6 +34,7 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSha
      */
     private fun init() {
         /* Ini digunakan untuk mendapatkan key dari strings.xml*/
+        NAME = resources.getString(R.string.key_name)
         EMAIL = resources.getString(R.string.key_email)
         AGE = resources.getString(R.string.key_age)
         PHONE = resources.getString(R.string.key_phone)
