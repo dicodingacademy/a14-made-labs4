@@ -141,8 +141,7 @@ class MahasiswaHelper(context: Context) {
      * @param mahasiswaModel inputan model mahasiswa
      */
     fun insertTransaction(mahasiswaModel: MahasiswaModel) {
-        val sql = ("INSERT INTO " + TABLE_NAME + " (" + NAMA + ", " + NIM
-                + ") VALUES (?, ?)")
+        val sql = ("INSERT INTO $TABLE_NAME ($NAMA, $NIM) VALUES (?, ?)")
         val stmt = database.compileStatement(sql)
         stmt.bindString(1, mahasiswaModel.name)
         stmt.bindString(2, mahasiswaModel.nim)

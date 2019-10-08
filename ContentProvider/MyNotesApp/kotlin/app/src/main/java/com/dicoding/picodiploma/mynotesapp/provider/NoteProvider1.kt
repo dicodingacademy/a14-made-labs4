@@ -39,9 +39,7 @@ class NoteProvider : ContentProvider() {
             sUriMatcher.addURI(AUTHORITY, TABLE_NAME, NOTE)
 
             // content://com.dicoding.picodiploma.mynotesapp/note/id
-            sUriMatcher.addURI(AUTHORITY,
-                    "$TABLE_NAME/#",
-                    NOTE_ID)
+            sUriMatcher.addURI(AUTHORITY, "$TABLE_NAME/#", NOTE_ID)
         }
     }
 

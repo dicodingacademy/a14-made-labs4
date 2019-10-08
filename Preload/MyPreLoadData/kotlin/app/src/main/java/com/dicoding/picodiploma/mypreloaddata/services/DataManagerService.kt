@@ -2,13 +2,8 @@ package com.dicoding.picodiploma.mypreloaddata.services
 
 import android.app.Service
 import android.content.Intent
-import android.os.IBinder
-import android.os.Message
-import android.os.Messenger
-import android.os.RemoteException
+import android.os.*
 import android.util.Log
-import androidx.core.os.bundleOf
-import com.dicoding.picodiploma.mypreloaddata.R
 import com.dicoding.picodiploma.mypreloaddata.database.MahasiswaHelper
 import com.dicoding.picodiploma.mypreloaddata.model.MahasiswaModel
 import com.dicoding.picodiploma.mypreloaddata.prefs.AppPreference
@@ -17,6 +12,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
 import kotlin.coroutines.CoroutineContext
+
 
 class DataManagerService : Service(), CoroutineScope {
     private lateinit var job: Job
@@ -234,9 +230,8 @@ class DataManagerService : Service(), CoroutineScope {
     private fun publishProgress(progress: Int) {
         try {
             val message = Message.obtain(null, UPDATE_MESSAGE)
-            val bundle = bundleOf(
-                    "KEY_PROGRESS" to progress.toLong()
-            )
+            val bundle = Bundle()
+            bundle.putLong("KEY_PROGRESS", progress.toLong())
             message.data = bundle
             mActivityMessenger?.send(message)
         } catch (e: RemoteException) {
@@ -249,7 +244,7 @@ class DataManagerService : Service(), CoroutineScope {
         var line: String?
         val reader: BufferedReader
         try {
-            val rawText = resources.openRawResource(R.raw.data_mahasiswa)
+            val rawText = resources.openRawResource(com.dicoding.picodiploma.mypreloaddata.R.raw.data_mahasiswa)
 
             reader = BufferedReader(InputStreamReader(rawText))
             do {

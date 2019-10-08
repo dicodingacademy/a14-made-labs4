@@ -67,8 +67,8 @@ class NoteHelper(context: Context) {
                 null,
                 null,
                 null,
-                "$_ID ASC",
-                null)
+                "$_ID ASC"
+        )
     }
 
     /**
@@ -78,7 +78,15 @@ class NoteHelper(context: Context) {
      * @return cursor hasil queryAll
      */
     fun queryById(id: String): Cursor {
-        return database.query(DATABASE_TABLE, null, "$_ID = ?", arrayOf(id), null, null, null, null)
+        return database.query(
+                DATABASE_TABLE,
+                null,
+                "$_ID = ?",
+                arrayOf(id),
+                null,
+                null,
+                null,
+                null)
     }
 
     /**
@@ -109,7 +117,7 @@ class NoteHelper(context: Context) {
      * @return int jumlah data yang ter-delete
      */
     fun deleteById(id: String): Int {
-        return database.delete(TABLE_NAME, "$_ID = '$id'", null)
+        return database.delete(DATABASE_TABLE, "$_ID = '$id'", null)
     }
 
     /**
