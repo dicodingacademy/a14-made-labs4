@@ -73,8 +73,8 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View) {
         if (view.id == R.id.btn_submit) {
-            val title = edt_title.text.toString().trim { it <= ' ' }
-            val description = edt_description.text.toString().trim { it <= ' ' }
+            val title = edt_title.text.toString().trim()
+            val description = edt_description.text.toString().trim()
 
             /*
             Jika fieldnya masih kosong maka tampilkan error
