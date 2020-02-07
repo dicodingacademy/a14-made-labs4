@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.isDigitsOnly
 import kotlinx.android.synthetic.main.activity_form_user_preference.*
 
 class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
@@ -34,7 +33,7 @@ class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
         btn_save.setOnClickListener(this)
 
         userModel = intent.getParcelableExtra("USER") as UserModel
-        val formType = getIntent().getIntExtra(EXTRA_TYPE_FORM, 0)
+        val formType = intent.getIntExtra(EXTRA_TYPE_FORM, 0)
 
         var actionBarTitle = ""
         var btnTitle = ""
@@ -103,7 +102,7 @@ class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
                 return
             }
 
-            if (!phoneNo.isDigitsOnly()) {
+            if (!TextUtils.isDigitsOnly(phoneNo)) {
                 edt_phone.error = FIELD_DIGIT_ONLY
                 return
             }
