@@ -1,36 +1,38 @@
 package com.dicoding.picodiploma.helper.consumerapp
 
 import android.database.Cursor
-import com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.Companion.DATE
-import com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.Companion.DESCRIPTION
-import com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.Companion.TITLE
-import com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.Companion._ID
+import com.dicoding.picodiploma.consumerapp.db.DatabaseContract
 import com.dicoding.picodiploma.consumerapp.entity.Note
 
 import java.util.ArrayList
 
 object MappingHelper {
 
-    fun mapCursorToArrayList(notesCursor: Cursor): ArrayList<Note> {
+    fun mapCursorToArrayList(notesCursor: Cursor?): ArrayList<Note> {
         val notesList = ArrayList<Note>()
 
-        while (notesCursor.moveToNext()) {
-            val id = notesCursor.getInt(notesCursor.getColumnIndexOrThrow(_ID))
-            val title = notesCursor.getString(notesCursor.getColumnIndexOrThrow(TITLE))
-            val description = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DESCRIPTION))
-            val date = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DATE))
-            notesList.add(Note(id, title, description, date))
+        notesCursor?.apply {
+            while (moveToNext()) {
+                val id = getInt(getColumnIndexOrThrow(DatabaseContract.NoteColumns._ID))
+                val title = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.TITLE))
+                val description = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.DESCRIPTION))
+                val date = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.DATE))
+                notesList.add(Note(id, title, description, date))
+            }
         }
-
         return notesList
     }
 
-    fun mapCursorToObject(notesCursor: Cursor): Note {
-        notesCursor.moveToNext()
-        val id = notesCursor.getInt(notesCursor.getColumnIndexOrThrow(_ID))
-        val title = notesCursor.getString(notesCursor.getColumnIndexOrThrow(TITLE))
-        val description = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DESCRIPTION))
-        val date = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DATE))
-        return Note(id, title, description, date)
+    fun mapCursorToObject(notesCursor: Cursor?): Note {
+        var note = Note()
+        notesCursor?.apply {
+            moveToFirst()
+            val id = getInt(getColumnIndexOrThrow(DatabaseContract.NoteColumns._ID))
+            val title = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.TITLE))
+            val description = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.DESCRIPTION))
+            val date = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.DATE))
+            note = Note(id, title, description, date)
+        }
+        return note
     }
 }

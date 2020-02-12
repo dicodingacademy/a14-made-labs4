@@ -5,7 +5,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns._ID
 import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Companion.TABLE_NAME
 
@@ -13,7 +12,7 @@ import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Compa
  * Created by sidiqpermana on 11/23/16.
  */
 
-class NoteHelper (context: Context) {
+class NoteHelper(context: Context) {
     private val dataBaseHelper: DatabaseHelper = DatabaseHelper(context)
 
     private lateinit var database: SQLiteDatabase
@@ -22,16 +21,10 @@ class NoteHelper (context: Context) {
         private const val DATABASE_TABLE = TABLE_NAME
         private var INSTANCE: NoteHelper? = null
 
-        fun getInstance(context: Context): NoteHelper {
-            if (INSTANCE == null) {
-                synchronized(SQLiteOpenHelper::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = NoteHelper(context)
-                    }
+        fun getInstance(context: Context): NoteHelper =
+                INSTANCE ?: synchronized(this) {
+                    INSTANCE ?: NoteHelper(context)
                 }
-            }
-            return INSTANCE as NoteHelper
-        }
     }
 
     @Throws(SQLException::class)

@@ -9,17 +9,18 @@ import java.util.ArrayList
 
 object MappingHelper {
 
-    fun mapCursorToArrayList(notesCursor: Cursor): ArrayList<Note> {
+    fun mapCursorToArrayList(notesCursor: Cursor?): ArrayList<Note> {
         val notesList = ArrayList<Note>()
-        notesCursor.moveToFirst()
-        while (notesCursor.moveToNext()) {
-            val id = notesCursor.getInt(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns._ID))
-            val title = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.TITLE))
-            val description = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.DESCRIPTION))
-            val date = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.DATE))
-            notesList.add(Note(id, title, description, date))
-        }
 
+        notesCursor?.apply {
+            while (moveToNext()) {
+                val id = getInt(getColumnIndexOrThrow(DatabaseContract.NoteColumns._ID))
+                val title = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.TITLE))
+                val description = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.DESCRIPTION))
+                val date = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.DATE))
+                notesList.add(Note(id, title, description, date))
+            }
+        }
         return notesList
     }
 }
