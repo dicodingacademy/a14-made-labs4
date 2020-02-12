@@ -20,26 +20,17 @@ import java.util.*
 
 class NoteHelper(context: Context) {
 
+    private var dataBaseHelper: DatabaseHelper = DatabaseHelper(context)
+    private lateinit var database: SQLiteDatabase
+
     companion object {
         private const val DATABASE_TABLE = TABLE_NAME
-        private lateinit var dataBaseHelper: DatabaseHelper
-        private lateinit var database: SQLiteDatabase
-
         private var INSTANCE: NoteHelper? = null
-        fun getInstance(context: Context): NoteHelper {
-            if (INSTANCE == null) {
-                synchronized(SQLiteOpenHelper::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = NoteHelper(context)
-                    }
-                }
-            }
-            return INSTANCE as NoteHelper
-        }
-    }
 
-    init {
-        dataBaseHelper = DatabaseHelper(context)
+        fun getInstance(context: Context): NoteHelper =
+                INSTANCE ?: synchronized(this) {
+                    INSTANCE ?: NoteHelper(context)
+                }
     }
 
     @Throws(SQLException::class)

@@ -7,26 +7,31 @@ import java.util.*
 
 object MappingHelper {
 
-    fun mapCursorToArrayList(notesCursor: Cursor): ArrayList<Note> {
+    fun mapCursorToArrayList(notesCursor: Cursor?): ArrayList<Note> {
         val notesList = ArrayList<Note>()
 
-        while (notesCursor.moveToNext()) {
-            val id = notesCursor.getInt(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns._ID))
-            val title = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.TITLE))
-            val description = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.DESCRIPTION))
-            val date = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.DATE))
-            notesList.add(Note(id, title, description, date))
+        notesCursor?.apply {
+            while (moveToNext()) {
+                val id = getInt(getColumnIndexOrThrow(DatabaseContract.NoteColumns._ID))
+                val title = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.TITLE))
+                val description = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.DESCRIPTION))
+                val date = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.DATE))
+                notesList.add(Note(id, title, description, date))
+            }
         }
-
         return notesList
     }
 
-    fun mapCursorToObject(notesCursor: Cursor): Note {
-        notesCursor.moveToFirst()
-        val id = notesCursor.getInt(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns._ID))
-        val title = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.TITLE))
-        val description = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.DESCRIPTION))
-        val date = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.DATE))
-        return Note(id, title, description, date)
+    fun mapCursorToObject(notesCursor: Cursor?): Note {
+        var note = Note()
+        notesCursor?.apply {
+            moveToFirst()
+            val id = getInt(getColumnIndexOrThrow(DatabaseContract.NoteColumns._ID))
+            val title = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.TITLE))
+            val description = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.DESCRIPTION))
+            val date = getString(getColumnIndexOrThrow(DatabaseContract.NoteColumns.DATE))
+            note = Note(id, title, description, date)
+        }
+        return note
     }
 }

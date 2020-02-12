@@ -2,7 +2,6 @@ package com.dicoding.picodiploma.mynotesapp
 
 import android.content.Intent
 import android.database.ContentObserver
-import android.database.Cursor
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
@@ -74,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             progressbar.visibility = View.VISIBLE
             val deferredNotes = async(Dispatchers.IO) {
                 // CONTENT_URI = content://com.dicoding.picodiploma.mynotesapp/note
-                val cursor = contentResolver?.query(CONTENT_URI, null, null, null, null) as Cursor
+                val cursor = contentResolver.query(CONTENT_URI, null, null, null, null)
                 MappingHelper.mapCursorToArrayList(cursor)
             }
             val notes = deferredNotes.await()

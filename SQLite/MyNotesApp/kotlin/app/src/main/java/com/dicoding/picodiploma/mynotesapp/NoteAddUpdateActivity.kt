@@ -55,8 +55,10 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
             actionBarTitle = "Ubah"
             btnTitle = "Update"
 
-            note?.let { edt_title.setText(it.title) }
-            note?.let { edt_description.setText(it.description) }
+            note?.let {
+                edt_title.setText(it.title)
+                edt_description.setText(it.description)
+            }
 
         } else {
             actionBarTitle = "Tambah"
