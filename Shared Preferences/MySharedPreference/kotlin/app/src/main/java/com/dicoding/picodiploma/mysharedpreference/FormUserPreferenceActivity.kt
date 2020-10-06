@@ -32,7 +32,7 @@ class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
 
         btn_save.setOnClickListener(this)
 
-        userModel = intent.getParcelableExtra("USER") as UserModel
+        userModel = intent.getParcelableExtra<UserModel>("USER") as UserModel
         val formType = intent.getIntExtra(EXTRA_TYPE_FORM, 0)
 
         var actionBarTitle = ""
