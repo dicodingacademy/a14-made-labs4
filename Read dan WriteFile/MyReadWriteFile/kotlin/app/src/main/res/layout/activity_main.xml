@@ -4,7 +4,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/teal_200"
     android:padding="16dp"
     tools:context=".MainActivity">
 
@@ -32,7 +32,7 @@
         <Button
             android:id="@+id/button_new"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="64dp"
+            android:layout_width="72dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/tiny_margin"
             android:text="@string/file_new" />
@@ -40,7 +40,7 @@
         <Button
             android:id="@+id/button_open"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="64dp"
+            android:layout_width="72dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/tiny_margin"
             android:layout_marginStart="@dimen/tiny_margin"
@@ -49,7 +49,7 @@
         <Button
             android:id="@+id/button_save"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="64dp"
+            android:layout_width="72dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/tiny_margin"
             android:layout_marginStart="@dimen/tiny_margin"

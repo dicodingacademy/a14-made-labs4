@@ -5,19 +5,22 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import com.dicoding.picodiploma.myreadwritefile.databinding.ActivityMainBinding
 import java.io.File
 import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
+    lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        button_new.setOnClickListener(this)
-        button_open.setOnClickListener(this)
-        button_save.setOnClickListener(this)
+        binding.buttonNew.setOnClickListener(this)
+        binding.buttonOpen.setOnClickListener(this)
+        binding.buttonSave.setOnClickListener(this)
 
     }
 
@@ -30,11 +33,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     /**
-     * Clear semua data yang sudah ditampilkan
+     * Clear semua data yang  sudah ditampilkan
      */
     private fun newFile() {
-        edit_title.setText("")
-        edit_file.setText("")
+        binding.editTitle.setText("")
+        binding.editFile.setText("")
         Toast.makeText(this, "Clearing file", Toast.LENGTH_SHORT).show()
     }
 
@@ -60,20 +63,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun loadData(title: String) {
         val fileModel = FileHelper.readFromFile(this, title)
-        edit_title.setText(fileModel.filename)
-        edit_file.setText(fileModel.data)
+        binding.editTitle.setText(fileModel.filename)
+        binding.editFile.setText(fileModel.data)
         Toast.makeText(this, "Loading " + fileModel.filename + " data", Toast.LENGTH_SHORT).show()
     }
     /**
-     * Method untuk save data, nama file akan diambil dari edit_title
+     * Method untuk save data, nama file akan diambil dari binding.editTitle
      */
     private fun saveFile() {
         when {
-            edit_title.text.toString().isEmpty() -> Toast.makeText(this, "Title harus diisi terlebih dahulu", Toast.LENGTH_SHORT).show()
-            edit_file.text.toString().isEmpty() -> Toast.makeText(this, "Kontent harus diisi terlebih dahulu", Toast.LENGTH_SHORT).show()
+            binding.editTitle.text.toString().isEmpty() -> Toast.makeText(this, "Title harus diisi terlebih dahulu", Toast.LENGTH_SHORT).show()
+            binding.editFile.text.toString().isEmpty() -> Toast.makeText(this, "Kontent harus diisi terlebih dahulu", Toast.LENGTH_SHORT).show()
             else -> {
-                val title = edit_title.text.toString()
-                val text = edit_file.text.toString()
+                val title = binding.editTitle.text.toString()
+                val text = binding.editFile.text.toString()
                 val fileModel = FileModel()
                 fileModel.filename = title
                 fileModel.data = text
