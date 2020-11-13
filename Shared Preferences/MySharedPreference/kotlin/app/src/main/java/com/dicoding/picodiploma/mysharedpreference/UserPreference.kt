@@ -1,8 +1,6 @@
 package com.dicoding.picodiploma.mysharedpreference
 
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.content.edit
 
 /**
  * Created by sidiqpermana on 11/17/16.
