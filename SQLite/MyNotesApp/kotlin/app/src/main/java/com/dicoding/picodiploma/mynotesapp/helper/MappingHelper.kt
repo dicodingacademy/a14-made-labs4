@@ -2,10 +2,8 @@ package com.dicoding.picodiploma.mynotesapp.helper
 
 import android.database.Cursor
 import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract
-
 import com.dicoding.picodiploma.mynotesapp.entity.Note
-
-import java.util.ArrayList
+import java.util.*
 
 object MappingHelper {
 

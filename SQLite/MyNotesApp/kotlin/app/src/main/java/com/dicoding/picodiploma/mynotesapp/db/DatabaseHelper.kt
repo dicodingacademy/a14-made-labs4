@@ -3,8 +3,6 @@ package com.dicoding.picodiploma.mynotesapp.db
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.provider.BaseColumns
-
 import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns
 import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.Companion.TABLE_NAME
 

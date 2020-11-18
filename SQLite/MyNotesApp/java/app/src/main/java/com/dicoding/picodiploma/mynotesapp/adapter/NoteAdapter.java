@@ -87,7 +87,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         return listNotes.size();
     }
 
-    class NoteViewHolder extends RecyclerView.ViewHolder {
+    static class NoteViewHolder extends RecyclerView.ViewHolder {
         final TextView tvTitle, tvDescription, tvDate;
         final CardView cvNote;
 

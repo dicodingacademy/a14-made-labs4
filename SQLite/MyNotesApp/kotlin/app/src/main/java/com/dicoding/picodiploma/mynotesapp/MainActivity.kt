@@ -6,20 +6,22 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.mynotesapp.adapter.NoteAdapter
+import com.dicoding.picodiploma.mynotesapp.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.mynotesapp.db.NoteHelper
 import com.dicoding.picodiploma.mynotesapp.entity.Note
+import com.dicoding.picodiploma.mynotesapp.helper.MappingHelper
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import com.dicoding.picodiploma.mynotesapp.helper.MappingHelper
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: NoteAdapter
     private lateinit var noteHelper: NoteHelper
+
+    private lateinit var binding: ActivityMainBinding
 
     companion object {
         private const val EXTRA_STATE = "EXTRA_STATE"
@@ -27,16 +29,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         supportActionBar?.title = "Notes"
 
-        rv_notes.layoutManager = LinearLayoutManager(this)
-        rv_notes.setHasFixedSize(true)
+        binding.rvNotes.layoutManager = LinearLayoutManager(this)
+        binding.rvNotes.setHasFixedSize(true)
         adapter = NoteAdapter(this)
-        rv_notes.adapter = adapter
+        binding.rvNotes.adapter = adapter
 
-        fab_add.setOnClickListener {
+        binding.fabAdd.setOnClickListener {
             val intent = Intent(this@MainActivity, NoteAddUpdateActivity::class.java)
             startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD)
         }
@@ -60,12 +63,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadNotesAsync() {
         GlobalScope.launch(Dispatchers.Main) {
-            progressbar.visibility = View.VISIBLE
+            binding.progressbar.visibility = View.VISIBLE
             val deferredNotes = async(Dispatchers.IO) {
                 val cursor = noteHelper.queryAll()
                 MappingHelper.mapCursorToArrayList(cursor)
             }
-            progressbar.visibility = View.INVISIBLE
+            binding.progressbar.visibility = View.INVISIBLE
             val notes = deferredNotes.await()
             if (notes.size > 0) {
                 adapter.listNotes = notes
@@ -88,10 +91,10 @@ class MainActivity : AppCompatActivity() {
             when (requestCode) {
                 // Akan dipanggil jika request codenya ADD
                 NoteAddUpdateActivity.REQUEST_ADD -> if (resultCode == NoteAddUpdateActivity.RESULT_ADD) {
-                    val note = data.getParcelableExtra<Note>(NoteAddUpdateActivity.EXTRA_NOTE)
+                    val note = data.getParcelableExtra(NoteAddUpdateActivity.EXTRA_NOTE) as Note
 
                     adapter.addItem(note)
-                    rv_notes.smoothScrollToPosition(adapter.itemCount - 1)
+                    binding.rvNotes.smoothScrollToPosition(adapter.itemCount - 1)
 
                     showSnackbarMessage("Satu item berhasil ditambahkan")
                 }
@@ -104,11 +107,11 @@ class MainActivity : AppCompatActivity() {
                         */
                         NoteAddUpdateActivity.RESULT_UPDATE -> {
 
-                            val note = data.getParcelableExtra<Note>(NoteAddUpdateActivity.EXTRA_NOTE)
+                            val note = data.getParcelableExtra(NoteAddUpdateActivity.EXTRA_NOTE) as Note
                             val position = data.getIntExtra(NoteAddUpdateActivity.EXTRA_POSITION, 0)
 
                             adapter.updateItem(position, note)
-                            rv_notes.smoothScrollToPosition(position)
+                            binding.rvNotes.smoothScrollToPosition(position)
 
                             showSnackbarMessage("Satu item berhasil diubah")
                         }
@@ -139,6 +142,6 @@ class MainActivity : AppCompatActivity() {
      * @param message inputan message
      */
     private fun showSnackbarMessage(message: String) {
-        Snackbar.make(rv_notes, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(binding.rvNotes, message, Snackbar.LENGTH_SHORT).show()
     }
 }
