@@ -314,9 +314,7 @@ public class DataManagerService extends Service {
                     line = reader.readLine();
                     String[] splitstr = line.split("\t");
 
-                    MahasiswaModel mahasiswaModel;
-
-                    mahasiswaModel = new MahasiswaModel();
+                    MahasiswaModel mahasiswaModel = new MahasiswaModel();
                     mahasiswaModel.setName(splitstr[0]);
                     mahasiswaModel.setNim(splitstr[1]);
                     mahasiswaModels.add(mahasiswaModel);
