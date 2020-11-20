@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), HandlerCallback {
         finish()
     }
 
-    private class IncomingHandler (callback: HandlerCallback) : Handler() {
+    private class IncomingHandler (callback: HandlerCallback) : Handler(Looper.getMainLooper()) {
 
         private var weakCallback: WeakReference<HandlerCallback> = WeakReference(callback)
 

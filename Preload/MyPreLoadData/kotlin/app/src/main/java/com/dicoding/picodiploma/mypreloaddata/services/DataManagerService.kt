@@ -251,9 +251,7 @@ class DataManagerService : Service(), CoroutineScope {
                 line = reader.readLine()
                 val splitstr = line.split("\t".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 
-                val mahasiswaModel: MahasiswaModel
-
-                mahasiswaModel = MahasiswaModel()
+                val mahasiswaModel = MahasiswaModel()
                 mahasiswaModel.name = splitstr[0]
                 mahasiswaModel.nim = splitstr[1]
                 mahasiswaModels.add(mahasiswaModel)

@@ -29,6 +29,6 @@
         android:layout_height="60dp"
         android:layout_centerVertical="true"
         android:padding="8dp"
-        app:srcCompat="@color/colorAccent" />
+        app:srcCompat="@android:drawable/btn_star" />
 
 </RelativeLayout>

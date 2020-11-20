@@ -3,7 +3,6 @@ package com.dicoding.picodiploma.mypreloaddata.services;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;

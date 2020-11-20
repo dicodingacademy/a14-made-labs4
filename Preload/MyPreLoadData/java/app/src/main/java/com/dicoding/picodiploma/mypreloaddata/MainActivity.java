@@ -8,10 +8,11 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.dicoding.picodiploma.mypreloaddata.services.DataManagerService;
 
@@ -96,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
     public void loadCancel() {
         finish();
     }
-
 
     private static class IncomingHandler extends Handler {
 

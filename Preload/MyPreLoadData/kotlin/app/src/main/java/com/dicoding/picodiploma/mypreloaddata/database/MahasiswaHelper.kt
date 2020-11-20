@@ -6,12 +6,12 @@ import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns._ID
-import androidx.core.content.contentValuesOf
 import com.dicoding.picodiploma.mypreloaddata.database.DatabaseContract.MahasiswaColumns.Companion.NAMA
 import com.dicoding.picodiploma.mypreloaddata.database.DatabaseContract.MahasiswaColumns.Companion.NIM
 import com.dicoding.picodiploma.mypreloaddata.database.DatabaseContract.TABLE_NAME
 import com.dicoding.picodiploma.mypreloaddata.model.MahasiswaModel
 import java.util.*
+import kotlin.jvm.Throws
 
 /**
  * Created by dicoding on 12/1/2016.
