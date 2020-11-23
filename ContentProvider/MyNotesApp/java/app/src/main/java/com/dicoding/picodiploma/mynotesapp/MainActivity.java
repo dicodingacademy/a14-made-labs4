@@ -11,6 +11,7 @@ import android.os.HandlerThread;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,12 +50,9 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
         rvNotes.setAdapter(adapter);
 
         fabAdd = findViewById(R.id.fab_add);
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, NoteAddUpdateActivity.class);
-                startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD);
-            }
+        fabAdd.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, NoteAddUpdateActivity.class);
+            startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD);
         });
 
         HandlerThread handlerThread = new HandlerThread("DataObserver");
@@ -75,19 +73,14 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(EXTRA_STATE, adapter.getListNotes());
     }
 
     @Override
     public void preExecute() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(View.VISIBLE);
-            }
-        });
+        runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
     }
 
     @Override
@@ -96,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
         if (notes.size() > 0) {
             adapter.setListNotes(notes);
         } else {
-            adapter.setListNotes(new ArrayList<Note>());
+            adapter.setListNotes(new ArrayList<>());
             showSnackbarMessage("Tidak ada data saat ini");
         }
     }
