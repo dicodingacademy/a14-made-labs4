@@ -29,7 +29,7 @@ public class DatabaseContract {
         public static final String DATE = "date";
 
         // Base content yang digunakan untuk akses content provider
-        public static final Uri CONTENT_URI = new Uri.Builder().scheme(SCHEME)
+        public static final Uri     CONTENT_URI = new Uri.Builder().scheme(SCHEME)
                 .authority(AUTHORITY)
                 .appendPath(TABLE_NAME)
                 .build();

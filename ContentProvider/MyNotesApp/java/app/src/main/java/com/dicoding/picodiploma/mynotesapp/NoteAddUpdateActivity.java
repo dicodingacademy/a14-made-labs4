@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.mynotesapp;
+ package com.dicoding.picodiploma.mynotesapp;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -34,11 +34,9 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
 
     private boolean isEdit = false;
     private Note note;
-    private int position;
     private Uri uriWithId;
 
     public static final String EXTRA_NOTE = "extra_note";
-    public static final String EXTRA_POSITION = "extra_position";
     public static final int REQUEST_ADD = 100;
     public static final int REQUEST_UPDATE = 200;
     private final int ALERT_DIALOG_CLOSE = 10;
@@ -55,7 +53,6 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
 
         note = getIntent().getParcelableExtra(EXTRA_NOTE);
         if (note != null) {
-            position = getIntent().getIntExtra(EXTRA_POSITION, 0);
             isEdit = true;
         } else {
             note = new Note();

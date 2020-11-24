@@ -33,9 +33,11 @@ public class Note implements Parcelable {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+// --Commented out by Inspection START (24/11/2020 16.48):
+//    public void setDescription(String description) {
+//        this.description = description;
+//    }
+// --Commented out by Inspection STOP (24/11/2020 16.48)
 
     public String getDate() {
         return date;
