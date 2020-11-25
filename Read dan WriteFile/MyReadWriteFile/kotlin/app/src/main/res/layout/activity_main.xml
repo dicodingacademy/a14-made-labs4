@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/teal_200"
@@ -9,7 +8,6 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/edit_file"
         style="@style/Widget.AppCompat.EditText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -56,7 +54,6 @@
             android:text="@string/file_save" />
 
         <EditText
-            android:id="@+id/edit_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/tiny_margin"

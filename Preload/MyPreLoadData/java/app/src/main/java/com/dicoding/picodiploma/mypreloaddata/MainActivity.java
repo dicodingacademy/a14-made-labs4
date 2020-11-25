@@ -6,12 +6,14 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dicoding.picodiploma.mypreloaddata.services.DataManagerService;
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
         progressBar = findViewById(R.id.progress_bar);
 
         Intent mBoundServiceIntent = new Intent(MainActivity.this, DataManagerService.class);
-        Messenger mActivityMessenger = new Messenger(new IncomingHandler(this));
+        Messenger mActivityMessenger = new Messenger(new IncomingHandler(this).handleMessage());
         mBoundServiceIntent.putExtra(DataManagerService.ACTIVITY_HANDLER, mActivityMessenger);
 
         bindService(mBoundServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
         finish();
     }
 
-    private static class IncomingHandler extends Handler {
+    private static class IncomingHandler {
 
         final WeakReference<HandlerCallback> weakCallback;
 
@@ -106,28 +108,34 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
             weakCallback = new WeakReference<>(callback);
         }
 
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case PREPARATION_MESSAGE:
-                    weakCallback.get().onPreparation();
-                    break;
-                case UPDATE_MESSAGE:
-                    Bundle bundle = msg.getData();
-                    long progress = bundle.getLong("KEY_PROGRESS");
-                    weakCallback.get().updateProgress(progress);
-                    break;
-                case SUCCESS_MESSAGE:
-                    weakCallback.get().loadSuccess();
-                    break;
-                case FAILED_MESSAGE:
-                    weakCallback.get().loadFailed();
-                    break;
-                case CANCEL_MESSAGE:
-                    weakCallback.get().loadCancel();
-                    break;
-            }
+        Handler handleMessage() {
+            return new Handler(Looper.getMainLooper()){
+                @Override
+                public void handleMessage(@NonNull Message msg) {
+                    super.handleMessage(msg);
+                    switch (msg.what) {
+                        case PREPARATION_MESSAGE:
+                            weakCallback.get().onPreparation();
+                            break;
+                        case UPDATE_MESSAGE:
+                            Bundle bundle = msg.getData();
+                            long progress = bundle.getLong("KEY_PROGRESS");
+                            weakCallback.get().updateProgress(progress);
+                            break;
+                        case SUCCESS_MESSAGE:
+                            weakCallback.get().loadSuccess();
+                            break;
+                        case FAILED_MESSAGE:
+                            weakCallback.get().loadFailed();
+                            break;
+                        case CANCEL_MESSAGE:
+                            weakCallback.get().loadCancel();
+                            break;
+                    }
+                }
+            };
         }
+
     }
 }
 

@@ -11,7 +11,7 @@ import com.dicoding.picodiploma.mysharedpreference.databinding.ActivityFormUserP
 
 class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
 
-    lateinit var binding: ActivityFormUserPreferenceBinding
+    private lateinit var binding: ActivityFormUserPreferenceBinding
 
     companion object {
         const val EXTRA_TYPE_FORM = "extra_type_form"

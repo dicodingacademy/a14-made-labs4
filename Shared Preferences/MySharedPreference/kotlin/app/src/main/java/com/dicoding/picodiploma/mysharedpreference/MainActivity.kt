@@ -9,7 +9,7 @@ import com.dicoding.picodiploma.mysharedpreference.databinding.ActivityMainBindi
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     
     private lateinit var mUserPreference: UserPreference
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     private var isPreferenceEmpty = false
     private lateinit var userModel: UserModel

@@ -17,7 +17,6 @@ public class FormUserPreferenceActivity extends AppCompatActivity implements Vie
     private EditText edtName, edtEmail, edtPhone, edtAge;
     private RadioGroup rgLoveMu;
     private RadioButton rbYes, rbNo;
-    private Button btnSave;
 
     public static final String EXTRA_TYPE_FORM = "extra_type_form";
     public final static String EXTRA_RESULT = "extra_result";
@@ -44,7 +43,7 @@ public class FormUserPreferenceActivity extends AppCompatActivity implements Vie
         rgLoveMu = findViewById(R.id.rg_love_mu);
         rbYes = findViewById(R.id.rb_yes);
         rbNo = findViewById(R.id.rb_no);
-        btnSave = findViewById(R.id.btn_save);
+        Button btnSave = findViewById(R.id.btn_save);
 
         btnSave.setOnClickListener(this);
 
