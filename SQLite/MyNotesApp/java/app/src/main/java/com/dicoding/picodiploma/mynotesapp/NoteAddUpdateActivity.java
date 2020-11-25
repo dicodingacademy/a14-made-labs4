@@ -1,7 +1,6 @@
 package com.dicoding.picodiploma.mynotesapp;
 
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
@@ -28,7 +27,6 @@ import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumn
 
 public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText edtTitle, edtDescription;
-    private Button btnSubmit;
 
     private boolean isEdit = false;
     private Note note;
@@ -52,7 +50,7 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
 
         edtTitle = findViewById(R.id.edt_title);
         edtDescription = findViewById(R.id.edt_description);
-        btnSubmit = findViewById(R.id.btn_submit);
+        Button btnSubmit = findViewById(R.id.btn_submit);
 
         noteHelper = NoteHelper.getInstance(getApplicationContext());
         noteHelper.open();
@@ -162,13 +160,11 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_delete:
-                showAlertDialog(ALERT_DIALOG_DELETE);
-                break;
-            case android.R.id.home:
-                showAlertDialog(ALERT_DIALOG_CLOSE);
-                break;
+        int id = item.getItemId();
+        if (id == R.id.action_delete) {
+            showAlertDialog(ALERT_DIALOG_DELETE);
+        } else if (id == android.R.id.home) {
+            showAlertDialog(ALERT_DIALOG_CLOSE);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -200,28 +196,22 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
         alertDialogBuilder
                 .setMessage(dialogMessage)
                 .setCancelable(false)
-                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        if (isDialogClose) {
+                .setPositiveButton("Ya", (dialog, id) -> {
+                    if (isDialogClose) {
+                        finish();
+                    } else {
+                        long result = noteHelper.deleteById(String.valueOf(note.getId()));
+                        if (result > 0) {
+                            Intent intent = new Intent();
+                            intent.putExtra(EXTRA_POSITION, position);
+                            setResult(RESULT_DELETE, intent);
                             finish();
                         } else {
-                            long result = noteHelper.deleteById(String.valueOf(note.getId()));
-                            if (result > 0) {
-                                Intent intent = new Intent();
-                                intent.putExtra(EXTRA_POSITION, position);
-                                setResult(RESULT_DELETE, intent);
-                                finish();
-                            } else {
-                                Toast.makeText(NoteAddUpdateActivity.this, "Gagal menghapus data", Toast.LENGTH_SHORT).show();
-                            }
+                            Toast.makeText(NoteAddUpdateActivity.this, "Gagal menghapus data", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
-                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                .setNegativeButton("Tidak", (dialog, id) -> dialog.cancel());
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

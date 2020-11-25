@@ -7,15 +7,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.dicoding.picodiploma.mynotesapp.entity.Note;
-
-import java.util.ArrayList;
-
 import static android.provider.BaseColumns._ID;
-import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.DATE;
-import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.DESCRIPTION;
 import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.TABLE_NAME;
-import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumns.TITLE;
 
 
 /**
