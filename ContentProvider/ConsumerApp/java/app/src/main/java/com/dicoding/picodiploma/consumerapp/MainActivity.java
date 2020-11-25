@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.Looper;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,8 +24,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity implements LoadNotesCallback {
     private ProgressBar progressBar;
@@ -53,9 +50,12 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
         rvNotes.setAdapter(adapter);
 
         fabAdd = findViewById(R.id.fab_add);
-        fabAdd.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, NoteAddUpdateActivity.class);
-            startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, NoteAddUpdateActivity.class);
+                startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD);
+            }
         });
 
         HandlerThread handlerThread = new HandlerThread("DataObserver");
@@ -76,14 +76,19 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
     }
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(EXTRA_STATE, adapter.getListNotes());
     }
 
     @Override
-    public void preExecute()  {
-        runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
+    public void preExecute() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
@@ -92,12 +97,12 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
         if (notes.size() > 0) {
             adapter.setListNotes(notes);
         } else {
-            adapter.setListNotes(new ArrayList<>());
+            adapter.setListNotes(new ArrayList<Note>());
             showSnackbarMessage("Tidak ada data saat ini");
         }
     }
 
-    private static class LoadNoteAsync {
+    private static class LoadNoteAsync extends AsyncTask<Void, Void, ArrayList<Note>> {
 
         private final WeakReference<Context> weakContext;
         private final WeakReference<LoadNotesCallback> weakCallback;
@@ -107,18 +112,23 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
             weakCallback = new WeakReference<>(callback);
         }
 
-        void execute() {
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            Handler anotherHandler = new Handler(Looper.getMainLooper());
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
             weakCallback.get().preExecute();
-            executor.execute(() -> {
-                Context context = weakContext.get();
-                Cursor dataCursor = context.getContentResolver().query(DatabaseContract.NoteColumns.CONTENT_URI, null, null, null, null);
-                ArrayList<Note> notes = MappingHelper.mapCursorToArrayList(dataCursor);
-                anotherHandler.post(() -> {
-                    weakCallback.get().postExecute(notes);
-                });
-            });
+        }
+
+        @Override
+        protected ArrayList<Note> doInBackground(Void... voids) {
+            Context context = weakContext.get();
+            Cursor dataCursor = context.getContentResolver().query(DatabaseContract.NoteColumns.CONTENT_URI, null, null, null, null);
+            return MappingHelper.mapCursorToArrayList(dataCursor);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Note> notes) {
+            super.onPostExecute(notes);
+            weakCallback.get().postExecute(notes);
         }
     }
 
@@ -144,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
             new LoadNoteAsync(context, (LoadNotesCallback) context).execute();
+
         }
     }
 }

@@ -54,6 +54,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
         holder.tvDescription.setText(getListNotes().get(position).getDescription());
         holder.cvNote.setOnClickListener(new CustomOnItemClickListener(position, (view, position1) -> {
             Intent intent = new Intent(activity, NoteAddUpdateActivity.class);
+            intent.putExtra(NoteAddUpdateActivity.EXTRA_POSITION, position1);
             intent.putExtra(NoteAddUpdateActivity.EXTRA_NOTE, listNotes.get(position1));
             activity.startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_UPDATE);
         }));

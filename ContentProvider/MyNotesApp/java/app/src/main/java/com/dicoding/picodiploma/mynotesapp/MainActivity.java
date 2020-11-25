@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.Looper;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -26,8 +25,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity implements LoadNotesCallback {
     private ProgressBar progressBar;
@@ -97,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
         }
     }
 
-    private static class LoadNoteAsync {
+    private static class LoadNoteAsync extends AsyncTask<Void, Void, ArrayList<Note>> {
 
         private final WeakReference<Context> weakContext;
         private final WeakReference<LoadNotesCallback> weakCallback;
@@ -107,18 +104,23 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
             weakCallback = new WeakReference<>(callback);
         }
 
-        void execute() {
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            Handler anotherHandler = new Handler(Looper.getMainLooper());
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
             weakCallback.get().preExecute();
-            executor.execute(() -> {
-                Context context = weakContext.get();
-                Cursor dataCursor = context.getContentResolver().query(DatabaseContract.NoteColumns.CONTENT_URI, null, null, null, null);
-                ArrayList<Note> notes = MappingHelper.mapCursorToArrayList(dataCursor);
-                anotherHandler.post(() -> {
-                    weakCallback.get().postExecute(notes);
-                });
-            });
+        }
+
+        @Override
+        protected ArrayList<Note> doInBackground(Void... voids) {
+            Context context = weakContext.get();
+            Cursor dataCursor = context.getContentResolver().query(DatabaseContract.NoteColumns.CONTENT_URI, null, null, null, null);
+            return MappingHelper.mapCursorToArrayList(dataCursor);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Note> notes) {
+            super.onPostExecute(notes);
+            weakCallback.get().postExecute(notes);
         }
     }
 
