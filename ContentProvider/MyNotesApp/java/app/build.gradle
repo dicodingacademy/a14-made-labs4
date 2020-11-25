@@ -1,12 +1,12 @@
-plugins {
-    id 'com.android.application'
-}
+//noinspection OldTargetApi
+apply plugin: 'com.android.application'
+
 android {
-    compileSdkVersion 30
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.dicoding.picodiploma.mynotesapp"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -17,17 +17,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.13.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
 }

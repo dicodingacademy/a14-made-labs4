@@ -52,11 +52,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
         holder.tvTitle.setText(getListNotes().get(position).getTitle());
         holder.tvDate.setText(getListNotes().get(position).getDate());
         holder.tvDescription.setText(getListNotes().get(position).getDescription());
-        holder.cvNote.setOnClickListener(new CustomOnItemClickListener(position, (view, position1) -> {
-            Intent intent = new Intent(activity, NoteAddUpdateActivity.class);
-            intent.putExtra(NoteAddUpdateActivity.EXTRA_POSITION, position1);
-            intent.putExtra(NoteAddUpdateActivity.EXTRA_NOTE, listNotes.get(position1));
-            activity.startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_UPDATE);
+        holder.cvNote.setOnClickListener(new CustomOnItemClickListener(position, new CustomOnItemClickListener.OnItemClickCallback() {
+            @Override
+            public void onItemClicked(View view, int position) {
+                Intent intent = new Intent(activity, NoteAddUpdateActivity.class);
+                intent.putExtra(NoteAddUpdateActivity.EXTRA_POSITION, position);
+                intent.putExtra(NoteAddUpdateActivity.EXTRA_NOTE, listNotes.get(position));
+                activity.startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_UPDATE);
+            }
         }));
     }
 
@@ -65,7 +68,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewholder
         return listNotes.size();
     }
 
-    static class NoteViewholder extends RecyclerView.ViewHolder {
+    class NoteViewholder extends RecyclerView.ViewHolder {
         final TextView tvTitle, tvDescription, tvDate;
         final CardView cvNote;
 

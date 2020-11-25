@@ -83,10 +83,13 @@ public class NoteProvider extends ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues contentValues) {
         long added;
-        if (sUriMatcher.match(uri) == NOTE) {
-            added = noteHelper.insert(contentValues);
-        } else {
-            added = 0;
+        switch (sUriMatcher.match(uri)) {
+            case NOTE:
+                added = noteHelper.insert(contentValues);
+                break;
+            default:
+                added = 0;
+                break;
         }
 
         getContext().getContentResolver().notifyChange(CONTENT_URI, null);
@@ -98,10 +101,13 @@ public class NoteProvider extends ContentProvider {
     @Override
     public int update(@NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
         int updated;
-        if (sUriMatcher.match(uri) == NOTE_ID) {
-            updated = noteHelper.update(uri.getLastPathSegment(), contentValues);
-        } else {
-            updated = 0;
+        switch (sUriMatcher.match(uri)) {
+            case NOTE_ID:
+                updated = noteHelper.update(uri.getLastPathSegment(), contentValues);
+                break;
+            default:
+                updated = 0;
+                break;
         }
 
         getContext().getContentResolver().notifyChange(CONTENT_URI, null);
@@ -112,10 +118,13 @@ public class NoteProvider extends ContentProvider {
     @Override
     public int delete(@NonNull Uri uri, String s, String[] strings) {
         int deleted;
-        if (sUriMatcher.match(uri) == NOTE_ID) {
-            deleted = noteHelper.deleteById(uri.getLastPathSegment());
-        } else {
-            deleted = 0;
+        switch (sUriMatcher.match(uri)) {
+            case NOTE_ID:
+                deleted = noteHelper.deleteById(uri.getLastPathSegment());
+                break;
+            default:
+                deleted = 0;
+                break;
         }
 
         getContext().getContentResolver().notifyChange(CONTENT_URI, null);
