@@ -8,7 +8,6 @@ import android.os.*
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.dicoding.picodiploma.mypreloaddata.databinding.ActivityMahasiswaBinding
 import com.dicoding.picodiploma.mypreloaddata.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.mypreloaddata.services.DataManagerService
 import com.dicoding.picodiploma.mypreloaddata.services.DataManagerService.Companion.CANCEL_MESSAGE
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity(), HandlerCallback {
         setContentView(binding.root)
 
         val mBoundServiceIntent = Intent(this@MainActivity, DataManagerService::class.java)
-        val mActivityMessenger = Messenger(IncomingHandler(this))
+        val mActivityMessenger = Messenger(IncomingHandler(this).handleMessage())
         mBoundServiceIntent.putExtra(DataManagerService.ACTIVITY_HANDLER, mActivityMessenger)
 
         bindService(mBoundServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE)
@@ -82,21 +81,26 @@ class MainActivity : AppCompatActivity(), HandlerCallback {
         finish()
     }
 
-    private class IncomingHandler (callback: HandlerCallback) : Handler(Looper.getMainLooper()) {
+    private class IncomingHandler(callback: HandlerCallback) {
 
         private var weakCallback: WeakReference<HandlerCallback> = WeakReference(callback)
 
-        override fun handleMessage(msg: Message) {
-            when (msg.what) {
-                PREPARATION_MESSAGE -> weakCallback.get()?.onPreparation()
-                UPDATE_MESSAGE -> {
-                    val bundle = msg.data
-                    val progress = bundle.getLong("KEY_PROGRESS")
-                    weakCallback.get()?.updateProgress(progress)
+        fun handleMessage() : Handler {
+            return object : Handler(Looper.getMainLooper()) {
+                override fun handleMessage(msg: Message) {
+                    super.handleMessage(msg)
+                    when (msg.what) {
+                        PREPARATION_MESSAGE -> weakCallback.get()?.onPreparation()
+                        UPDATE_MESSAGE -> {
+                            val bundle = msg.data
+                            val progress = bundle.getLong("KEY_PROGRESS")
+                            weakCallback.get()?.updateProgress(progress)
+                        }
+                        SUCCESS_MESSAGE -> weakCallback.get()?.loadSuccess()
+                        FAILED_MESSAGE -> weakCallback.get()?.loadFailed()
+                        CANCEL_MESSAGE -> weakCallback.get()?.loadCancel()
+                    }
                 }
-                SUCCESS_MESSAGE -> weakCallback.get()?.loadSuccess()
-                FAILED_MESSAGE -> weakCallback.get()?.loadFailed()
-                CANCEL_MESSAGE -> weakCallback.get()?.loadCancel()
             }
         }
     }
