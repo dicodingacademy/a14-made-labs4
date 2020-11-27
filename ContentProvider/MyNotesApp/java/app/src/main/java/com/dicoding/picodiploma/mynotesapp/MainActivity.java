@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
 
     @Override
     public void preExecute() {
-        runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override

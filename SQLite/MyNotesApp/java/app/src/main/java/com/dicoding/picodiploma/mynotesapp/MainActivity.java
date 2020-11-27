@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
         Callback yang akan dipanggil di onPreExecute Asyntask
         Memunculkan progressbar
         */
-        runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
