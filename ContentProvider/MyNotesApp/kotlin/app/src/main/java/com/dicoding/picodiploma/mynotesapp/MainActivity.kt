@@ -5,6 +5,7 @@ import android.database.ContentObserver
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,10 +62,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             loadNotesAsync()
         } else {
-            val list = savedInstanceState.getParcelableArrayList<Note>(EXTRA_STATE)
-            if (list != null) {
-                adapter.listNotes = list
-            }
+            savedInstanceState.getParcelableArrayList<Note>(EXTRA_STATE)?.also { adapter.listNotes = it }
         }
 
     }
