@@ -54,14 +54,11 @@ class NoteProvider : ContentProvider() {
     Return cursor
      */
     override fun query(uri: Uri, strings: Array<String>?, s: String?, strings1: Array<String>?, s1: String?): Cursor? {
-        val cursor: Cursor?
-        when (sUriMatcher.match(uri)) {
-            NOTE -> cursor = noteHelper.queryAll()
-            NOTE_ID -> cursor = noteHelper.queryById(uri.lastPathSegment.toString())
-            else -> cursor = null
+        return when (sUriMatcher.match(uri)) {
+            NOTE -> noteHelper.queryAll()
+            NOTE_ID -> noteHelper.queryById(uri.lastPathSegment.toString())
+            else -> null
         }
-
-        return cursor
     }
 
 

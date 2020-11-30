@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.consumerapp.adapter
+package com.dicoding.picodiploma.mynotesapp.adapter
 
 import android.app.Activity
 import android.content.Intent
@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.dicoding.picodiploma.consumerapp.R
-import com.dicoding.picodiploma.consumerapp.CustomOnItemClickListener
-import com.dicoding.picodiploma.consumerapp.NoteAddUpdateActivity
-import com.dicoding.picodiploma.consumerapp.databinding.ItemNoteBinding
-import com.dicoding.picodiploma.consumerapp.entity.Note
+import com.dicoding.picodiploma.mynotesapp.CustomOnItemClickListener
+import com.dicoding.picodiploma.mynotesapp.NoteAddUpdateActivity
+import com.dicoding.picodiploma.mynotesapp.R
+import com.dicoding.picodiploma.mynotesapp.databinding.ItemNoteBinding
+import com.dicoding.picodiploma.mynotesapp.entity.Note
 import java.util.*
 
 /**
