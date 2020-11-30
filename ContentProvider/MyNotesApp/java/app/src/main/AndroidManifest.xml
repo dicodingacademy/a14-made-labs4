@@ -21,7 +21,8 @@
         <provider
             android:authorities="com.dicoding.picodiploma.mynotesapp"
             android:name=".provider.NoteProvider"
-            android:exported="true"
+            android:exported="false"
+            android:grantUriPermissions="true"
             android:readPermission="com.dicoding.picodiploma.mynotesapp.READ_DATABASE"
             android:writePermission="com.dicoding.picodiploma.mynotesapp.WRITE_DATABASE" />
     </application>

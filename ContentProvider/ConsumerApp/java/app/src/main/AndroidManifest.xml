@@ -21,5 +21,9 @@
         <activity android:name=".NoteAddUpdateActivity" />
     </application>
 
+    <queries>
+        <package android:name="com.dicoding.picodiploma.mynotesapp" />
+    </queries>
+
 </manifest>
 
