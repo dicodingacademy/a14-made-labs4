@@ -1,7 +1,7 @@
 package com.dicoding.picodiploma.mynotesapp.entity
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * Created by sidiqpermana on 11/23/16.

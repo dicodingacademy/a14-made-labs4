@@ -8,13 +8,14 @@
     tools:context=".MainActivity">
 
     <EditText
+        android:id="@+id/edit_file"
         style="@style/Widget.AppCompat.EditText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/header_linear"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:background="@android:color/white"
         android:gravity="top|start"
         android:inputType="textMultiLine|textNoSuggestions"
@@ -54,10 +55,11 @@
             android:text="@string/file_save" />
 
         <EditText
+            android:id="@+id/edit_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/tiny_margin"
             android:layout_marginStart="@dimen/tiny_margin"
+            android:layout_marginBottom="@dimen/tiny_margin"
             android:layout_weight="1"
             android:background="@android:color/white"
             android:ems="10"

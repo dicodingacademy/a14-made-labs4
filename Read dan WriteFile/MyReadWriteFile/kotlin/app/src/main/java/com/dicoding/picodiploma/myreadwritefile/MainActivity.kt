@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Pilih file yang diinginkan")
-        builder.setItems(items) { dialog, item -> loadData(items[item].toString()) }
+        builder.setItems(items) { _, item -> loadData(items[item].toString()) }
         val alert = builder.create()
         alert.show()
     }
