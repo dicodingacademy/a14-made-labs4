@@ -1,7 +1,7 @@
 package com.dicoding.picodiploma.mypreloaddata.model
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * Created by dicoding on 12/6/2016.

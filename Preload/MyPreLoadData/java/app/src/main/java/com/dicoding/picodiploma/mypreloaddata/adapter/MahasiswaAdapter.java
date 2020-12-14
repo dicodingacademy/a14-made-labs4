@@ -1,16 +1,20 @@
 package com.dicoding.picodiploma.mypreloaddata.adapter;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.picodiploma.mypreloaddata.R;
 import com.dicoding.picodiploma.mypreloaddata.model.MahasiswaModel;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by dicoding on 12/6/2016.
@@ -39,12 +43,9 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
         return new MahasiswaHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull MahasiswaHolder holder, int position) {
-        holder.textViewNim.setText(listMahasiswa.get(position).getNim());
-        holder.textViewName.setText(listMahasiswa.get(position).getName());
-
+        holder.bind(listMahasiswa.get(position));
     }
 
     @Override
@@ -62,15 +63,26 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
         return listMahasiswa.size();
     }
 
-    class MahasiswaHolder extends RecyclerView.ViewHolder {
+    static class MahasiswaHolder extends RecyclerView.ViewHolder {
         private final TextView textViewNim;
         private final TextView textViewName;
+        private final ImageView imageViewIcon;
 
         MahasiswaHolder(View itemView) {
             super(itemView);
 
             textViewNim = itemView.findViewById(R.id.txt_nim);
             textViewName = itemView.findViewById(R.id.txt_name);
+            imageViewIcon = itemView.findViewById(R.id.imageView);
+        }
+
+        void bind(MahasiswaModel mahasiswa) {
+            textViewNim.setText(mahasiswa.getNim());
+            textViewName.setText(mahasiswa.getName());
+
+            Random random = new Random();
+            int color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
+            imageViewIcon.setColorFilter(color);
         }
 
     }

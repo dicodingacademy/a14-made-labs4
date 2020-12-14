@@ -4,11 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import com.dicoding.picodiploma.mysharedpreference.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     
     private lateinit var mUserPreference: UserPreference
+    private lateinit var binding: ActivityMainBinding
 
     private var isPreferenceEmpty = false
     private lateinit var userModel: UserModel
@@ -19,7 +20,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         supportActionBar?.title = "My User Preference"
 
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         showExistingPreference()
 
-        btn_save.setOnClickListener(this)
+        binding.btnSave.setOnClickListener(this)
 
     }
 
@@ -44,21 +46,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     Set tampilan menggunakan preferences
     */
     private fun populateView(userModel: UserModel) {
-        tv_name.text = if (userModel.name.toString().isEmpty()) "Tidak Ada" else userModel.name
-        tv_age.text = if (userModel.age.toString().isEmpty()) "Tidak Ada" else userModel.age.toString()
-        tv_is_love_mu.text = if (userModel.isLove) "Ya" else "Tidak"
-        tv_email.text = if (userModel.email.toString().isEmpty()) "Tidak Ada" else userModel.email
-        tv_phone.text = if (userModel.phoneNumber.toString().isEmpty()) "Tidak Ada" else userModel.phoneNumber
+        binding.tvName.text = if (userModel.name.toString().isEmpty()) "Tidak Ada" else userModel.name
+        binding.tvAge.text = if (userModel.age.toString().isEmpty()) "Tidak Ada" else userModel.age.toString()
+        binding.tvIsLoveMu.text = if (userModel.isLove) "Ya" else "Tidak"
+        binding.tvEmail.text = if (userModel.email.toString().isEmpty()) "Tidak Ada" else userModel.email
+        binding.tvPhone.text = if (userModel.phoneNumber.toString().isEmpty()) "Tidak Ada" else userModel.phoneNumber
     }
 
     private fun checkForm(userModel: UserModel) {
         when {
             userModel.name.toString().isNotEmpty() -> {
-                btn_save.text = getString(R.string.change)
+                binding.btnSave.text = getString(R.string.change)
                 isPreferenceEmpty = false
             }
             else -> {
-                btn_save.text = getString(R.string.save)
+                binding.btnSave.text = getString(R.string.save)
                 isPreferenceEmpty = true
             }
         }

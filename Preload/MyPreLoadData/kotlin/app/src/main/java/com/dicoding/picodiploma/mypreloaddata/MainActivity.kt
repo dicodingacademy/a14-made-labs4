@@ -8,17 +8,18 @@ import android.os.*
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.dicoding.picodiploma.mypreloaddata.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.mypreloaddata.services.DataManagerService
 import com.dicoding.picodiploma.mypreloaddata.services.DataManagerService.Companion.CANCEL_MESSAGE
 import com.dicoding.picodiploma.mypreloaddata.services.DataManagerService.Companion.FAILED_MESSAGE
 import com.dicoding.picodiploma.mypreloaddata.services.DataManagerService.Companion.PREPARATION_MESSAGE
 import com.dicoding.picodiploma.mypreloaddata.services.DataManagerService.Companion.SUCCESS_MESSAGE
 import com.dicoding.picodiploma.mypreloaddata.services.DataManagerService.Companion.UPDATE_MESSAGE
-import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.ref.WeakReference
 
 class MainActivity : AppCompatActivity(), HandlerCallback {
 
+    private lateinit var binding: ActivityMainBinding
     private lateinit var mBoundService: Messenger
     private var mServiceBound: Boolean = false
 
@@ -40,7 +41,8 @@ class MainActivity : AppCompatActivity(), HandlerCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val mBoundServiceIntent = Intent(this@MainActivity, DataManagerService::class.java)
         val mActivityMessenger = Messenger(IncomingHandler(this))
@@ -62,7 +64,7 @@ class MainActivity : AppCompatActivity(), HandlerCallback {
 
     override fun updateProgress(progress: Long) {
         Log.d("PROGRESS", "updateProgress: $progress")
-        progress_bar.progress = progress.toInt()
+        binding.progressBar.progress = progress.toInt()
     }
 
     override fun loadSuccess() {
@@ -79,11 +81,12 @@ class MainActivity : AppCompatActivity(), HandlerCallback {
         finish()
     }
 
-    private class IncomingHandler (callback: HandlerCallback) : Handler() {
+    private class IncomingHandler(callback: HandlerCallback) : Handler(Looper.getMainLooper()) {
 
         private var weakCallback: WeakReference<HandlerCallback> = WeakReference(callback)
 
         override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
             when (msg.what) {
                 PREPARATION_MESSAGE -> weakCallback.get()?.onPreparation()
                 UPDATE_MESSAGE -> {

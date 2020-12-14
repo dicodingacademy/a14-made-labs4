@@ -9,15 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnNew;
-    private Button btnOpen;
-    private Button btnSave;
     private EditText editContent;
     private EditText editTitle;
 
@@ -26,9 +22,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnNew = findViewById(R.id.button_new);
-        btnOpen = findViewById(R.id.button_open);
-        btnSave = findViewById(R.id.button_save);
+        Button btnNew = findViewById(R.id.button_new);
+        Button btnOpen = findViewById(R.id.button_open);
+        Button btnSave = findViewById(R.id.button_save);
         editContent = findViewById(R.id.edit_file);
         editTitle = findViewById(R.id.edit_title);
 
@@ -41,16 +37,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id) {
-            case R.id.button_new:
-                newFile();
-                break;
-            case R.id.button_open:
-                showList();
-                break;
-            case R.id.button_save:
-                saveFile();
-                break;
+        if (id == R.id.button_new) {
+            newFile();
+        } else if (id == R.id.button_open) {
+            showList();
+        } else if (id == R.id.button_save) {
+            saveFile();
         }
     }
 
@@ -77,11 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final CharSequence[] items = arrayList.toArray(new CharSequence[arrayList.size()]);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Pilih file yang diinginkan");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                loadData(items[item].toString());
-            }
-        });
+        builder.setItems(items, (dialog, item) -> loadData(items[item].toString()));
         AlertDialog alert = builder.create();
         alert.show();
     }

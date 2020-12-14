@@ -8,6 +8,8 @@ import android.os.Bundle;
 import com.dicoding.picodiploma.mynotesapp.helper.MappingHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
     private ProgressBar progressBar;
     private RecyclerView rvNotes;
     private NoteAdapter adapter;
-    private FloatingActionButton fabAdd;
     private NoteHelper noteHelper;
     private static final String EXTRA_STATE = "EXTRA_STATE";
 
@@ -44,13 +45,10 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
         adapter = new NoteAdapter(this);
         rvNotes.setAdapter(adapter);
 
-        fabAdd = findViewById(R.id.fab_add);
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, NoteAddUpdateActivity.class);
-                startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD);
-            }
+        FloatingActionButton fabAdd = findViewById(R.id.fab_add);
+        fabAdd.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, NoteAddUpdateActivity.class);
+            startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD);
         });
 
         noteHelper = NoteHelper.getInstance(getApplicationContext());
@@ -71,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(EXTRA_STATE, adapter.getListNotes());
     }
@@ -82,12 +80,7 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
         Callback yang akan dipanggil di onPreExecute Asyntask
         Memunculkan progressbar
         */
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(View.VISIBLE);
-            }
-        });
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -100,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
         if (notes.size() > 0) {
             adapter.setListNotes(notes);
         } else {
-            adapter.setListNotes(new ArrayList<Note>());
+            adapter.setListNotes(new ArrayList<>());
             showSnackbarMessage("Tidak ada data saat ini");
         }
     }

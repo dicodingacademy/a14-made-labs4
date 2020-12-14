@@ -9,11 +9,11 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.consumerapp.adapter.NoteAdapter
+import com.dicoding.picodiploma.consumerapp.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
 import com.dicoding.picodiploma.consumerapp.entity.Note
-import com.dicoding.picodiploma.helper.consumerapp.MappingHelper
+import com.dicoding.picodiploma.consumerapp.helper.MappingHelper
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -24,23 +24,24 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: NoteAdapter
-
+    private lateinit var binding: ActivityMainBinding
     companion object {
         private const val EXTRA_STATE = "EXTRA_STATE"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         supportActionBar?.title = "Consumer Notes"
 
-        rv_notes.layoutManager = LinearLayoutManager(this)
-        rv_notes.setHasFixedSize(true)
+        binding.rvNotes.layoutManager = LinearLayoutManager(this)
+        binding.rvNotes.setHasFixedSize(true)
         adapter = NoteAdapter(this)
-        rv_notes.adapter = adapter
+        binding.rvNotes.adapter = adapter
 
-        fab_add.setOnClickListener {
+        binding.fabAdd.setOnClickListener {
             val intent = Intent(this@MainActivity, NoteAddUpdateActivity::class.java)
             startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD)
         }
@@ -60,29 +61,26 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             loadNotesAsync()
         } else {
-            val list = savedInstanceState.getParcelableArrayList<Note>(EXTRA_STATE)
-            if (list != null) {
-                adapter.listNotes = list
-            }
+            savedInstanceState.getParcelableArrayList<Note>(EXTRA_STATE)?.also { adapter.listNotes = it }
         }
 
     }
 
     private fun loadNotesAsync() {
         GlobalScope.launch(Dispatchers.Main) {
-            progressbar.visibility = View.VISIBLE
+            binding.progressbar.visibility = View.VISIBLE
             val deferredNotes = async(Dispatchers.IO) {
                 // CONTENT_URI = content://com.dicoding.picodiploma.mynotesapp/note
                 val cursor = contentResolver?.query(CONTENT_URI, null, null, null, null)
                 MappingHelper.mapCursorToArrayList(cursor)
             }
             val notes = deferredNotes.await()
-            progressbar.visibility = View.INVISIBLE
+            binding.progressbar.visibility = View.INVISIBLE
             if (notes.size > 0) {
                 adapter.listNotes = notes
             } else {
                 adapter.listNotes = ArrayList()
-                showSnackbarMessage("Tidak ada data saat ini")
+                showSnackBarMessage("Tidak ada data saat ini")
             }
         }
     }
@@ -98,7 +96,7 @@ class MainActivity : AppCompatActivity() {
      *
      * @param message inputan message
      */
-    private fun showSnackbarMessage(message: String) {
-        Snackbar.make(rv_notes, message, Snackbar.LENGTH_SHORT).show()
+    private fun showSnackBarMessage(message: String) {
+        Snackbar.make(binding.rvNotes, message, Snackbar.LENGTH_SHORT).show()
     }
 }

@@ -6,12 +6,15 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.dicoding.picodiploma.mypreloaddata.services.DataManagerService;
 
@@ -97,17 +100,18 @@ public class MainActivity extends AppCompatActivity implements HandlerCallback {
         finish();
     }
 
-
-    private static class IncomingHandler extends Handler {
+    private static class IncomingHandler extends Handler{
 
         final WeakReference<HandlerCallback> weakCallback;
 
         IncomingHandler(HandlerCallback callback) {
+            super(Looper.getMainLooper());
             weakCallback = new WeakReference<>(callback);
         }
 
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
             switch (msg.what) {
                 case PREPARATION_MESSAGE:
                     weakCallback.get().onPreparation();

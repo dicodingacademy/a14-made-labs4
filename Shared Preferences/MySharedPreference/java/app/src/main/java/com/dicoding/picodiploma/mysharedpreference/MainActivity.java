@@ -79,11 +79,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(MainActivity.this, FormUserPreferenceActivity.class);
             if (isPreferenceEmpty) {
                 intent.putExtra(FormUserPreferenceActivity.EXTRA_TYPE_FORM, FormUserPreferenceActivity.TYPE_ADD);
-                intent.putExtra("USER", userModel);
             } else {
                 intent.putExtra(FormUserPreferenceActivity.EXTRA_TYPE_FORM, FormUserPreferenceActivity.TYPE_EDIT);
-                intent.putExtra("USER", userModel);
             }
+            intent.putExtra("USER", userModel);
             startActivityForResult(intent, REQUEST_CODE);
         }
     }

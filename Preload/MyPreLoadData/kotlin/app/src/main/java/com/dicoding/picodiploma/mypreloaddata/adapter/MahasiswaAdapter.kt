@@ -1,16 +1,14 @@
 package com.dicoding.picodiploma.mypreloaddata.adapter
 
-import androidx.recyclerview.widget.RecyclerView
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-
+import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.picodiploma.mypreloaddata.R
+import com.dicoding.picodiploma.mypreloaddata.databinding.ItemMahasiswaRowBinding
 import com.dicoding.picodiploma.mypreloaddata.model.MahasiswaModel
-import kotlinx.android.synthetic.main.item_mahasiswa_row.view.*
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by dicoding on 12/6/2016.
@@ -45,11 +43,14 @@ class MahasiswaAdapter : RecyclerView.Adapter<MahasiswaAdapter.MahasiswaHolder>(
     override fun getItemCount(): Int = listMahasiswa.size
 
     inner class MahasiswaHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val binding = ItemMahasiswaRowBinding.bind(itemView)
         fun bind(mahasiswa: MahasiswaModel) {
-            with(itemView){
-                txt_nim.text = mahasiswa.nim
-                txt_name.text = mahasiswa.name
-            }
+            binding.txtNim.text = mahasiswa.nim
+            binding.txtName.text = mahasiswa.name
+
+            val random = Random()
+            val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
+            binding.imageView.setColorFilter(color)
         }
     }
 }

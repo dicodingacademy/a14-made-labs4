@@ -1,7 +1,6 @@
 package com.dicoding.picodiploma.mynotesapp;
 
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,15 +30,12 @@ import static com.dicoding.picodiploma.mynotesapp.db.DatabaseContract.NoteColumn
 
 public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText edtTitle, edtDescription;
-    private Button btnSubmit;
 
     private boolean isEdit = false;
     private Note note;
-    private int position;
     private Uri uriWithId;
 
     public static final String EXTRA_NOTE = "extra_note";
-    public static final String EXTRA_POSITION = "extra_position";
     public static final int REQUEST_ADD = 100;
     public static final int REQUEST_UPDATE = 200;
     private final int ALERT_DIALOG_CLOSE = 10;
@@ -52,11 +48,10 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
 
         edtTitle = findViewById(R.id.edt_title);
         edtDescription = findViewById(R.id.edt_description);
-        btnSubmit = findViewById(R.id.btn_submit);
+        Button btnSubmit = findViewById(R.id.btn_submit);
 
         note = getIntent().getParcelableExtra(EXTRA_NOTE);
         if (note != null) {
-            position = getIntent().getIntExtra(EXTRA_POSITION, 0);
             isEdit = true;
         } else {
             note = new Note();
@@ -129,7 +124,6 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
                 // content://com.dicoding.picodiploma.mynotesapp/note/id
                 getContentResolver().update(uriWithId, values, null, null);
                 Toast.makeText(NoteAddUpdateActivity.this, "Satu item berhasil diedit", Toast.LENGTH_SHORT).show();
-                finish();
             } else {
                 note.setDate(getCurrentDate());
                 values.put(DATE, getCurrentDate());
@@ -137,8 +131,8 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
                 // content://com.dicoding.picodiploma.mynotesapp/note/
                 getContentResolver().insert(CONTENT_URI, values);
                 Toast.makeText(NoteAddUpdateActivity.this, "Satu item berhasil disimpan", Toast.LENGTH_SHORT).show();
-                finish();
             }
+            finish();
         }
     }
 
@@ -159,13 +153,11 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_delete:
-                showAlertDialog(ALERT_DIALOG_DELETE);
-                break;
-            case android.R.id.home:
-                showAlertDialog(ALERT_DIALOG_CLOSE);
-                break;
+        int id = item.getItemId();
+        if (id == R.id.action_delete) {
+            showAlertDialog(ALERT_DIALOG_DELETE);
+        } else if (id == android.R.id.home) {
+            showAlertDialog(ALERT_DIALOG_CLOSE);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -197,24 +189,16 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
         alertDialogBuilder
                 .setMessage(dialogMessage)
                 .setCancelable(false)
-                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        if (isDialogClose) {
-                            finish();
-                        } else {
-                            // Gunakan uriWithId untuk delete
-                            // content://com.dicoding.picodiploma.mynotesapp/note/id
-                            getContentResolver().delete(uriWithId, null, null);
-                            Toast.makeText(NoteAddUpdateActivity.this, "Satu item berhasil dihapus", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
+                .setPositiveButton("Ya", (dialog, id) -> {
+                    if (!isDialogClose) {
+                        // Gunakan uriWithId untuk delete
+                        // content://com.dicoding.picodiploma.mynotesapp/note/id
+                        getContentResolver().delete(uriWithId, null, null);
+                        Toast.makeText(NoteAddUpdateActivity.this, "Satu item berhasil dihapus", Toast.LENGTH_SHORT).show();
                     }
+                    finish();
                 })
-                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                .setNegativeButton("Tidak", (dialog, id) -> dialog.cancel());
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

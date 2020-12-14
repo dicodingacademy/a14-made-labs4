@@ -9,10 +9,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.dicoding.picodiploma.mynotesapp.databinding.ActivityNoteAddUpdateBinding
 import com.dicoding.picodiploma.mynotesapp.db.DatabaseContract
 import com.dicoding.picodiploma.mynotesapp.db.NoteHelper
 import com.dicoding.picodiploma.mynotesapp.entity.Note
-import kotlinx.android.synthetic.main.activity_note_add_update.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -21,6 +21,8 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
     private var note: Note? = null
     private var position: Int = 0
     private lateinit var noteHelper: NoteHelper
+
+    private lateinit var binding: ActivityNoteAddUpdateBinding
 
     companion object {
         const val EXTRA_NOTE = "extra_note"
@@ -36,7 +38,8 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_note_add_update)
+        binding = ActivityNoteAddUpdateBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         noteHelper = NoteHelper.getInstance(applicationContext)
         noteHelper.open()
@@ -57,8 +60,8 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
             btnTitle = "Update"
 
             note?.let {
-                edt_title.setText(it.title)
-                edt_description.setText(it.description)
+                binding.edtTitle.setText(it.title)
+                binding.edtDescription.setText(it.description)
             }
 
         } else {
@@ -69,21 +72,21 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
         supportActionBar?.title = actionBarTitle
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        btn_submit.text = btnTitle
+        binding.btnSubmit.text = btnTitle
 
-        btn_submit.setOnClickListener(this)
+        binding.btnSubmit.setOnClickListener(this)
     }
 
     override fun onClick(view: View) {
         if (view.id == R.id.btn_submit) {
-            val title = edt_title.text.toString().trim()
-            val description = edt_description.text.toString().trim()
+            val title = binding.edtTitle.text.toString().trim()
+            val description = binding.edtDescription.text.toString().trim()
 
             /*
             Jika fieldnya masih kosong maka tampilkan error
              */
             if (title.isEmpty()) {
-                edt_title.error = "Field can not be blank"
+                binding.edtTitle.error = "Field can not be blank"
                 return
             }
 
@@ -176,7 +179,7 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
         alertDialogBuilder
                 .setMessage(dialogMessage)
                 .setCancelable(false)
-                .setPositiveButton("Ya") { dialog, id ->
+                .setPositiveButton("Ya") { _, _ ->
                     if (isDialogClose) {
                         finish()
                     } else {
@@ -191,7 +194,7 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     }
                 }
-                .setNegativeButton("Tidak") { dialog, id -> dialog.cancel() }
+                .setNegativeButton("Tidak") { dialog, _ -> dialog.cancel() }
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
     }

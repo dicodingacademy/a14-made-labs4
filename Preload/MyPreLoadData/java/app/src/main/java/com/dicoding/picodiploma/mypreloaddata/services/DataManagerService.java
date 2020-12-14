@@ -3,10 +3,10 @@ package com.dicoding.picodiploma.mypreloaddata.services;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DataManagerService extends Service {
     private final String TAG = DataManagerService.class.getSimpleName();
@@ -50,7 +52,7 @@ public class DataManagerService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        loadData.cancel(true);
+        loadData.cancel();
         Log.d(TAG, "onDestroy: ");
     }
 
@@ -72,7 +74,7 @@ public class DataManagerService extends Service {
     @Override
     public boolean onUnbind(Intent intent) {
         Log.d(TAG, "onUnbind: ");
-        loadData.cancel(true);
+        loadData.cancel();
         return super.onUnbind(intent);
     }
 
@@ -129,104 +131,104 @@ public class DataManagerService extends Service {
         }
     }
 
-    public static class LoadDataAsync extends AsyncTask<Void, Integer, Boolean> {
+    public static class LoadDataAsync {
         private final String TAG = LoadDataAsync.class.getSimpleName();
         private final WeakReference<Context> context;
         private final WeakReference<LoadDataCallback> weakCallback;
         private static final double MAX_PROGRESS = 100;
+        private boolean isCancelled = false;
+        private boolean isInsertSuccess = false;
 
         LoadDataAsync(Context context, LoadDataCallback callback) {
             this.context = new WeakReference<>(context);
             this.weakCallback = new WeakReference<>(callback);
         }
 
-        /*
-        Persiapan sebelum proses dimulai
-        Berjalan di Main Thread
-         */
-        @Override
-        protected void onPreExecute() {
-            weakCallback.get().onPreLoad();
-        }
+        void execute() {
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Handler handler = new Handler(Looper.getMainLooper());
 
-        /*
-        Proses background terjadi di method doInBackground
-         */
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // Panggil preference first run
-            MahasiswaHelper mahasiswaHelper = MahasiswaHelper.getInstance(context.get());
-            AppPreference appPreference = new AppPreference(context.get());
-            Boolean firstRun = appPreference.getFirstRun();
             /*
-             * Jika first run true maka melakukan proses pre load,
-             * Jika first run false maka akan langsung menuju home
-             */
-            if (firstRun) {
+            Persiapan sebelum proses dimulai
+            Berjalan di Main Thread
+            */
+            weakCallback.get().onPreLoad();
+
+            /*
+            Proses background terjadi di method doInBackground
+            */
+            executor.execute(() -> {
+                // Panggil preference first run
+                MahasiswaHelper mahasiswaHelper = MahasiswaHelper.getInstance(context.get());
+                AppPreference appPreference = new AppPreference(context.get());
+                Boolean firstRun = appPreference.getFirstRun();
+                /*
+                 * Jika first run true maka melakukan proses pre load,
+                 * Jika first run false maka akan langsung menuju home
+                 */
+                if (firstRun) {
             /*
             Load raw data dari file txt ke dalam array model mahasiswa
             */
-                ArrayList<MahasiswaModel> mahasiswaModels = preLoadRaw();
+                    ArrayList<MahasiswaModel> mahasiswaModels = preLoadRaw();
 
-                mahasiswaHelper.open();
+                    mahasiswaHelper.open();
 
-                double progress = 30;
-                publishProgress((int) progress);
-                double progressMaxInsert = 80.0;
-                double progressDiff = (progressMaxInsert - progress) / mahasiswaModels.size();
+                    double progress = 30;
+                    weakCallback.get().onProgressUpdate((int) progress);
+                    double progressMaxInsert = 80.0;
+                    double progressDiff = (progressMaxInsert - progress) / mahasiswaModels.size();
 
-                boolean isInsertSuccess;
+                    /*
+                     * Gunakan kode ini untuk query insert yang transactional
+                     * Begin Transaction
+                     */
+                    try {
 
-                /*
-                 * Gunakan kode ini untuk query insert yang transactional
-                 * Begin Transaction
-                 */
-                try {
+                        mahasiswaHelper.beginTransaction();
 
-                    mahasiswaHelper.beginTransaction();
-
-                    for (MahasiswaModel model : mahasiswaModels) {
-                        //Jika service atau activity dalam keadaan destroy maka akan menghentikan perulangan
-                        if (isCancelled()) {
-                            break;
-                        } else {
-                            mahasiswaHelper.insertTransaction(model);
-                            progress += progressDiff;
-                            publishProgress((int) progress);
+                        for (MahasiswaModel model : mahasiswaModels) {
+                            //Jika service atau activity dalam keadaan destroy maka akan menghentikan perulangan
+                            if (isCancelled) {
+                                break;
+                            } else {
+                                mahasiswaHelper.insertTransaction(model);
+                                progress += progressDiff;
+                                weakCallback.get().onProgressUpdate((int) progress);
+                            }
                         }
-                    }
 
-                    //Jika service atau activity dalam keadaan destroy maka data insert tidak di essekusi
-                    if (isCancelled()) {
-                        isInsertSuccess = false;
-                        appPreference.setFirstRun(true);
-                        weakCallback.get().onLoadCancel();
-                    } else {
-                        // Jika semua proses telah di set success maka akan di commit ke database
-                        mahasiswaHelper.setTransactionSuccess();
-                        isInsertSuccess = true;
+                        //Jika service atau activity dalam keadaan destroy maka data insert tidak di essekusi
+                        if (isCancelled) {
+                            isInsertSuccess = false;
+                            appPreference.setFirstRun(true);
+                            weakCallback.get().onLoadCancel();
+                        } else {
+                            // Jika semua proses telah di set success maka akan di commit ke database
+                            mahasiswaHelper.setTransactionSuccess();
+                            isInsertSuccess = true;
 
                     /*
                      Set preference first run ke false
                      Agar proses preload tidak dijalankan untuk kedua kalinya
                      */
-                        appPreference.setFirstRun(false);
+                            appPreference.setFirstRun(false);
+                        }
+                    } catch (Exception e) {
+                        // Jika gagal maka do nothing
+                        Log.e(TAG, "doInBackground: Exception");
+                        isInsertSuccess = false;
+
+                    } finally {
+                        // Transaction
+                        mahasiswaHelper.endTransaction();
                     }
-                } catch (Exception e) {
-                    // Jika gagal maka do nothing
-                    Log.e(TAG, "doInBackground: Exception");
-                    isInsertSuccess = false;
 
-                } finally {
-                    // Transaction
-                    mahasiswaHelper.endTransaction();
-                }
-
-                /*
-                 * ==============================================================
-                 * End Transaction
-                 * ==============================================================
-                 */
+                    /*
+                     * ==============================================================
+                     * End Transaction
+                     * ==============================================================
+                     */
 
 
 
@@ -253,49 +255,42 @@ public class DataManagerService extends Service {
 //                }
 
 
-                // Close helper ketika proses query sudah selesai
-                mahasiswaHelper.close();
+                    // Close helper ketika proses query sudah selesai
+                    mahasiswaHelper.close();
+                    weakCallback.get().onProgressUpdate((int) MAX_PROGRESS);
+                } else {
+                    try {
+                        synchronized (this) {
+                            this.wait(2000);
 
-                publishProgress((int) MAX_PROGRESS);
+                            weakCallback.get().onProgressUpdate(50);
 
-                return isInsertSuccess;
-
-            } else {
-                try {
-                    synchronized (this) {
-                        this.wait(2000);
-
-                        publishProgress(50);
-
-                        this.wait(2000);
-                        publishProgress((int) MAX_PROGRESS);
-
-                        return true;
+                            this.wait(2000);
+                            weakCallback.get().onProgressUpdate((int) MAX_PROGRESS);
+                            isInsertSuccess = true;
+                        }
+                    } catch (Exception e) {
+                        isInsertSuccess = false;
                     }
-                } catch (Exception e) {
-                    return false;
                 }
-            }
+
+                handler.post(() -> {
+                    /*
+                    Setelah proses selesai
+                    Berjalan di Main Thread
+                    */
+
+                    if (isInsertSuccess) {
+                        weakCallback.get().onLoadSuccess();
+                    } else {
+                        weakCallback.get().onLoadFailed();
+                    }
+                });
+            });
         }
 
-        //Update prosesnya
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            weakCallback.get().onProgressUpdate(values[0]);
-        }
-
-        /*
-        Setelah proses selesai
-        Berjalan di Main Thread
-        */
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if (result) {
-                weakCallback.get().onLoadSuccess();
-            } else {
-                weakCallback.get().onLoadFailed();
-            }
-
+        void cancel() {
+            isCancelled = true;
         }
 
         /**
@@ -315,9 +310,7 @@ public class DataManagerService extends Service {
                     line = reader.readLine();
                     String[] splitstr = line.split("\t");
 
-                    MahasiswaModel mahasiswaModel;
-
-                    mahasiswaModel = new MahasiswaModel();
+                    MahasiswaModel mahasiswaModel = new MahasiswaModel();
                     mahasiswaModel.setName(splitstr[0]);
                     mahasiswaModel.setNim(splitstr[1]);
                     mahasiswaModels.add(mahasiswaModel);

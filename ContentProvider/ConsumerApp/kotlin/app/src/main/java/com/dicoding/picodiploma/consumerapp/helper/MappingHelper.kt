@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.helper.consumerapp
+package com.dicoding.picodiploma.consumerapp.helper
 
 import android.database.Cursor
 import com.dicoding.picodiploma.consumerapp.db.DatabaseContract

@@ -9,17 +9,19 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.dicoding.picodiploma.consumerapp.databinding.ActivityNoteAddUpdateBinding
 import com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
 import com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.Companion.DATE
 import com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.Companion.DESCRIPTION
 import com.dicoding.picodiploma.consumerapp.db.DatabaseContract.NoteColumns.Companion.TITLE
 import com.dicoding.picodiploma.consumerapp.entity.Note
-import com.dicoding.picodiploma.helper.consumerapp.MappingHelper
-import kotlinx.android.synthetic.main.activity_note_add_update.*
+import com.dicoding.picodiploma.consumerapp.helper.MappingHelper
 import java.text.SimpleDateFormat
 import java.util.*
 
 class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
+
+    private lateinit var binding: ActivityNoteAddUpdateBinding
     private var isEdit = false
     private var note: Note? = null
     private var position: Int = 0
@@ -36,7 +38,8 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_note_add_update)
+        binding = ActivityNoteAddUpdateBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         note = intent.getParcelableExtra(EXTRA_NOTE)
         if (note != null) {
@@ -64,8 +67,8 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
             actionBarTitle = "Ubah"
             btnTitle = "Update"
 
-            note?.let { edt_title.setText(it.title) }
-            note?.let { edt_description.setText(it.description) }
+            note?.let { binding.edtTitle.setText(it.title) }
+            note?.let { binding.edtDescription.setText(it.description) }
 
         } else {
             actionBarTitle = "Tambah"
@@ -74,22 +77,22 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
 
         supportActionBar?.title = actionBarTitle
 
-        btn_submit.text = btnTitle
+        binding.btnSubmit.text = btnTitle
 
-        btn_submit.setOnClickListener(this)
+        binding.btnSubmit.setOnClickListener(this)
     }
 
 
     override fun onClick(view: View) {
         if (view.id == R.id.btn_submit) {
-            val title = edt_title.text.toString().trim()
-            val description = edt_description.text.toString().trim()
+            val title = binding.edtTitle.text.toString().trim()
+            val description = binding.edtDescription.text.toString().trim()
 
             /*
             Jika fieldnya masih kosong maka tampilkan error
              */
             if (title.isEmpty()) {
-                edt_title.error = "Field can not be blank"
+                binding.edtTitle.error = "Field can not be blank"
                 return
             }
 
@@ -168,7 +171,7 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
         alertDialogBuilder
                 .setMessage(dialogMessage)
                 .setCancelable(false)
-                .setPositiveButton("Ya") { dialog, id ->
+                .setPositiveButton("Ya") { _, _ ->
                     if (isDialogClose) {
                         finish()
                     } else {
@@ -179,7 +182,7 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
                         finish()
                     }
                 }
-                .setNegativeButton("Tidak") { dialog, id -> dialog.cancel() }
+                .setNegativeButton("Tidak") { dialog, _ -> dialog.cancel() }
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
     }
