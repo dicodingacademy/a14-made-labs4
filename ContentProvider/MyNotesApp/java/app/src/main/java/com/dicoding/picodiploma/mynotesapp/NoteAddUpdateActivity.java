@@ -36,8 +36,6 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
     private Uri uriWithId;
 
     public static final String EXTRA_NOTE = "extra_note";
-    public static final int REQUEST_ADD = 100;
-    public static final int REQUEST_UPDATE = 200;
     private final int ALERT_DIALOG_CLOSE = 10;
     private final int ALERT_DIALOG_DELETE = 20;
 
