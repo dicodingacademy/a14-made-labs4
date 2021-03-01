@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
         FloatingActionButton fabAdd = findViewById(R.id.fab_add);
         fabAdd.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, NoteAddUpdateActivity.class);
-            startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD);
+            startActivity(intent);
         });
 
         HandlerThread handlerThread = new HandlerThread("DataObserver");
