@@ -16,10 +16,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: NoteAdapter
-    private lateinit var noteHelper: NoteHelper
 
     private lateinit var binding: ActivityMainBinding
 
@@ -44,13 +42,6 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD)
         }
 
-        noteHelper = NoteHelper.getInstance(applicationContext)
-        noteHelper.open()
-
-        /*
-        Cek jika savedInstaceState null makan akan melakukan proses asynctask nya
-        jika tidak,akan mengambil arraylist nya dari yang sudah di simpan
-         */
         if (savedInstanceState == null) {
             loadNotesAsync()
         } else {
@@ -64,10 +55,13 @@ class MainActivity : AppCompatActivity() {
     private fun loadNotesAsync() {
         GlobalScope.launch(Dispatchers.Main) {
             binding.progressbar.visibility = View.VISIBLE
+            val noteHelper = NoteHelper.getInstance(applicationContext)
+            noteHelper.open()
             val deferredNotes = async(Dispatchers.IO) {
                 val cursor = noteHelper.queryAll()
                 MappingHelper.mapCursorToArrayList(cursor)
             }
+            noteHelper.close()
             binding.progressbar.visibility = View.INVISIBLE
             val notes = deferredNotes.await()
             if (notes.size > 0) {
@@ -129,11 +123,6 @@ class MainActivity : AppCompatActivity() {
                     }
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        noteHelper.close()
     }
 
     /**

@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
             weakCallback.get().preExecute();
             executor.execute(() -> {
                 Context context = weakContext.get();
+
                 Cursor dataCursor = context.getContentResolver().query(DatabaseContract.NoteColumns.CONTENT_URI, null, null, null, null);
                 ArrayList<Note> notes = MappingHelper.mapCursorToArrayList(dataCursor);
 
